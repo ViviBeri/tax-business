@@ -79,3 +79,13 @@ nav.open a{padding:12px 0;width:100%;font-size:16px}
 .msme-apply input,.msme-apply select,.msme-apply textarea{display:block;width:100%;margin-top:6px;padding:12px;border:1px solid #d7dee8;border-radius:10px;font:inherit;background:#fff}
 .msme-apply textarea{min-height:100px;resize:vertical}
 @media(max-width:800px){.msme-grid{grid-template-columns:1fr}.msme-list,.msme-apply-grid{grid-template-columns:1fr}.msme-nav{position:static}}
+
+/* Deep service-page components */
+.msme-section p,.msme-section li{color:var(--muted)}
+.msme-section .panel p,.msme-section .panel li{color:var(--muted)}
+.msme-source{line-height:1.5}
+.msme-section .steps{margin-top:16px}
+.msme-section .steps .step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.msme-section .steps .step>b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff}
+.msme-fee .btn.primary:hover{background:#f3f5fa!important}
+@media(max-width:800px){.msme-section .steps{grid-template-columns:1fr}}
