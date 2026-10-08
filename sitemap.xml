@@ -1,24 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://viviberi.github.io/tax-business/</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/gst.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/itr.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/fssai.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/pan.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/msme.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/trademark.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/dsc.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/business-registration.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/gst-registration.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/services/gst-filing.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/tools/gst-calculator.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/tools/gst-checklist.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/tools/fssai-checklist.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/tools/itr-checklist.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/privacy.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/terms.html</loc><lastmod>2026-10-08</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/locations/gst-registration-puducherry.html</loc><lastmod>2026-10-09</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/locations/fssai-puducherry.html</loc><lastmod>2026-10-09</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/locations/itr-filing-puducherry.html</loc><lastmod>2026-10-09</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/locations/msme-udyam-puducherry.html</loc><lastmod>2026-10-09</lastmod></url>
-<url><loc>https://viviberi.github.io/tax-business/tools/invoice-generator.html</loc></url><url><loc>https://viviberi.github.io/tax-business/tools/quotation-generator.html</loc></url><url><loc>https://viviberi.github.io/tax-business/tools/gst-eligibility-checker.html</loc></url><url><loc>https://viviberi.github.io/tax-business/tools/fssai-type-finder.html</loc></url><url><loc>https://viviberi.github.io/tax-business/tools/msme-category-checker.html</loc></url><url><loc>https://viviberi.github.io/tax-business/tools/business-compliance-checker.html</loc></url></urlset>
+  <url><loc>https://viviberi.github.io/tax-business/</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/chidambaram.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/cuddalore.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/fssai-puducherry.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/gst-registration-puducherry.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/itr-filing-puducherry.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/karaikal.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/mayiladuthurai.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/msme-udyam-puducherry.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/panruti.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/puducherry.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/tindivanam.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/tiruvannamalai.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/locations/villupuram.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/privacy.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/business-registration.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/dsc.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/fssai.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/gst-filing.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/gst-registration.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/gst.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/itr.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/msme.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/pan.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/services/trademark.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/terms.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/business-compliance-checker.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/fssai-checklist.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/fssai-type-finder.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/gst-calculator.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/gst-checklist.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/gst-eligibility-checker.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/invoice-generator.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/itr-checklist.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/msme-category-checker.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/tools/quotation-generator.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/who-we-help/food-businesses.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/who-we-help/home-based-businesses.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/who-we-help/manufacturers.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/who-we-help/new-businesses.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/who-we-help/online-sellers.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/who-we-help/professionals-freelancers.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/who-we-help/retail-traders.html</loc></url>
+  <url><loc>https://viviberi.github.io/tax-business/who-we-help/salons-clinics.html</loc></url>
+</urlset>
