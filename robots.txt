@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://viviberi.github.io/tax-business/sitemap.xml
