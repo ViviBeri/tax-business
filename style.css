@@ -110,10 +110,10 @@ nav.open a{padding:12px 0;width:100%;font-size:16px}
 .page-visual.location-only .page-visual-inner{grid-template-columns:1fr}.page-visual.location-only .page-visual-copy{max-width:760px}.page-visual.location-only{min-height:230px}.page-visual.location-only .page-visual-inner{min-height:230px}
 @media(max-width:700px){.page-visual{min-height:0;margin:20px 0 24px}.page-visual-inner{grid-template-columns:1fr;padding:22px 20px;gap:10px;min-height:0}.page-visual-art{min-height:150px}.page-visual-art img{max-height:190px}.page-visual.location-only .page-visual-inner{min-height:0}.page-visual:after{background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.72))}}
 
-/* Visibility fix: location and service background watermarks */
+/* Visibility fix: make location watermark clearly visible while preserving text contrast */
 .page-visual::before {
   opacity: 0.28 !important;
-  filter: saturate(0.9) contrast(1);
+  filter: saturate(0.9) contrast(1) !important;
 }
 
 .page-visual::after {
@@ -139,4 +139,3 @@ nav.open a{padding:12px 0;width:100%;font-size:16px}
     ) !important;
   }
 }
-
