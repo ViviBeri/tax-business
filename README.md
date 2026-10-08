@@ -24,3 +24,14 @@ Government/statutory/third-party charges, where applicable, are separate from KV
 Google Analytics 4 (G-KFP95JFETM). Events: `whatsapp_click`, `call_click`, `generate_lead` (form), `select_service`, `language_switch`. No names or phone numbers are sent to Google.
 
 KVB ENTERPRISES is an independent professional assistance service and is not a government department.
+
+## Free Tools
+
+- Invoice Generator
+- Quotation Generator
+- GST Calculator
+- GST Eligibility Guide
+- FSSAI Type Finder
+- MSME Category Checker
+- What Does My Business Need?
+- GST / FSSAI / ITR Checklists
