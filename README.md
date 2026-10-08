@@ -1,10 +1,10 @@
 # KVB ENTERPRISES Website
-Static mobile-first bilingual website for GitHub Pages.
 
-## Publish
-1. Create a GitHub repository (for example `kvb-enterprises`).
-2. Upload all files/folders from this package.
-3. In GitHub: Settings → Pages → Deploy from branch → `main` → `/root`.
-4. Your free site will be available at your GitHub Pages URL.
+Static bilingual-ready website for GitHub Pages.
 
-Replace/add local landing pages and tools as they are developed. WhatsApp uses +91 90036 33696.
+## Publish on GitHub Pages
+Upload all files and folders to the repository root, then enable **Settings → Pages → Deploy from a branch → main / root**.
+
+Main contact: **Vivian — 90036 33696**
+
+Logo: `assets/logo.png`
