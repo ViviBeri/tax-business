@@ -46,3 +46,36 @@ nav.open a{padding:12px 0;width:100%;font-size:16px}
 .mbar{display:none}
 @media(max-width:700px){.mbar{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:30;box-shadow:0 -6px 20px rgba(41,19,94,.15)}.mbar a{display:flex;justify-content:center;align-items:center;padding:14px;font-weight:850;text-decoration:none;color:#fff;background:var(--green)}.mbar a+a{background:var(--navy)}.floating-wa{display:none}body{padding-bottom:52px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.service-card{transition:none}}
+
+/* MSME / Udyam content-rich service page */
+.msme-nav{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 30px;position:sticky;top:8px;z-index:8;background:rgba(247,249,252,.94);backdrop-filter:blur(8px);padding:10px;border:1px solid var(--line);border-radius:14px}
+.msme-nav a{font-size:13px;font-weight:800;color:var(--navy);text-decoration:none;padding:8px 11px;border-radius:999px;background:#fff;border:1px solid var(--line)}
+.msme-nav a:hover{border-color:var(--green);color:var(--green)}
+.msme-section{scroll-margin-top:90px;margin-top:28px}
+.msme-section h2{color:var(--navy);margin-bottom:10px}
+.msme-section h3{color:var(--navy);margin-bottom:7px}
+.msme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.msme-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.msme-card strong{display:block;font-size:22px;color:var(--green);margin-bottom:4px}
+.msme-card small{color:var(--muted)}
+.msme-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:#fff}
+.msme-table{width:100%;border-collapse:collapse;min-width:620px}
+.msme-table th,.msme-table td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.msme-table th{background:#f3f6fa;color:var(--navy);font-size:13px}
+.msme-table tr:last-child td{border-bottom:0}
+.msme-callout{background:#f1f8f3;border:1px solid #cfe6d7;border-left:5px solid var(--green);border-radius:14px;padding:17px 18px;margin:16px 0}
+.msme-warning{background:#fff8ed;border:1px solid #f0d7ad;border-left:5px solid var(--orange);border-radius:14px;padding:17px 18px;margin:16px 0}
+.msme-fee{background:linear-gradient(135deg,#29135e,#1f7a42);color:#fff;border-radius:18px;padding:24px}
+.msme-fee h2,.msme-fee h3{color:#fff}
+.msme-fee .fee{font-size:38px;font-weight:950;line-height:1;margin:7px 0 10px}
+.msme-fee p{color:#dce7e2}
+.msme-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 30px;padding-left:20px}
+.msme-list li{margin:4px 0}
+.msme-source{font-size:12px;color:var(--muted)}
+.msme-source a{color:var(--blue);font-weight:750}
+.msme-apply{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+.msme-apply-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.msme-apply label{font-weight:800;font-size:13px;color:var(--navy)}
+.msme-apply input,.msme-apply select,.msme-apply textarea{display:block;width:100%;margin-top:6px;padding:12px;border:1px solid #d7dee8;border-radius:10px;font:inherit;background:#fff}
+.msme-apply textarea{min-height:100px;resize:vertical}
+@media(max-width:800px){.msme-grid{grid-template-columns:1fr}.msme-list,.msme-apply-grid{grid-template-columns:1fr}.msme-nav{position:static}}
