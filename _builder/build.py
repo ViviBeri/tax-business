@@ -38,7 +38,7 @@ SV = [
   ["GST registration assistance", "GSTR-1 and GSTR-3B filing support", "Monthly GST compliance", "Amendment and cancellation assistance", "Reconciliation and documentation support"],
   ["PAN and Aadhaar of the proprietor, partners or directors", "Passport-size photograph", "Business address proof (for example rent agreement or electricity bill)", "Bank account details"]),
  ("itr", "Income Tax / ITR", "வருமான வரி / ITR", "Individual and business ITR preparation, tax compliance support and CA coordination where required.", "தனிநபர் மற்றும் வணிக ITR தயாரிப்பு மற்றும் வரி இணக்க உதவி.",
-  ["Individual ITR filing", "Business and professional ITR filing", "Tax compliance support", "CA coordination where required"],
+  ["Individual ITR filing", "Business and professional ITR filing", "Tax compliance support", "Tax audit support, carried out through a Chartered Accountant where required"],
   ["PAN and Aadhaar", "Form 16 or income details", "Bank statements and interest certificates", "Investment and deduction proofs", "For business: turnover and expense details"]),
  ("fssai", "FSSAI", "FSSAI", "New registration/licence, renewal and modification assistance for eligible food businesses.", "உணவு வணிகங்களுக்கான புதிய பதிவு/உரிமம், புதுப்பிப்பு மற்றும் மாற்ற உதவி.",
   ["New FSSAI registration or licence", "Renewal assistance", "Modification and updates", "Guidance on which type suits your food business"],
@@ -88,7 +88,9 @@ def header(r):
             f'<button class="menu" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false">☰</button></div></div></header>')
 
 def foot(r):
-    return (f'<a class="floating-wa" href="{wa("Hello Vivian, I would like to know about your services.")}" target="_blank" rel="noopener" aria-label="WhatsApp KVB ENTERPRISES" data-loc="floating">{ICON}</a>'
+    bar = (f'<div class="mbar"><a href="{wa("Hello Vivian, I would like to know about your services.")}" target="_blank" rel="noopener" data-loc="mobile-bar">{ICON}WhatsApp</a>'
+           + T("a", "Call", "அழைக்க", x=f'href="tel:+{PH}" data-loc="mobile-bar"') + '</div>')
+    return (bar + f'<a class="floating-wa" href="{wa("Hello Vivian, I would like to know about your services.")}" target="_blank" rel="noopener" aria-label="WhatsApp KVB ENTERPRISES" data-loc="floating">{ICON}</a>'
             f'<footer><div class="wrap footer"><div class="footer-brand"><img src="{r}assets/logo.png" alt="KVB ENTERPRISES logo" width="44" height="44" loading="lazy">'
             f'<div><b>KVB ENTERPRISES</b><p>Tax &amp; Business Compliance Services</p></div></div>'
             f'<div>GST • ITR • FSSAI • PAN • MSME • Trademark • DSC<br>Puducherry &amp; nearby areas</div>'
@@ -100,8 +102,12 @@ def btn(href, en, ta, cls="primary", loc="", ico=False, ext=True):
     return f'<a class="btn {cls}" href="{href}"{t} data-loc="{loc}">{ICON if ico else ""}<span data-en="{E(en)}" data-ta="{E(ta)}">{en}</span></a>'
 
 def price(s):
-    p = str(PR.get(s, "")).strip()
-    return T("em", f"Starting from ₹{p}", f"₹{p} முதல்", "price") if p else T("em", "Get a quote", "விலை விவரம் பெறுக", "price")
+    L = PR.get(s) or []
+    if not L:
+        return T("em", "Get a quote", "விலை விவரம் பெறுக", "price")
+    en = "<br>".join(f"{a} from ₹{c}{d}" for a, b, c, d in L)
+    ta = "<br>".join(f"{b or a} ₹{c}{d} முதல்" for a, b, c, d in L)
+    return T("em", en, ta, "price")
 
 STEPS = [("WhatsApp us", "WhatsApp செய்யுங்கள்", "Tell us what service you need.", "உங்களுக்குத் தேவையான சேவையைச் சொல்லுங்கள்."),
          ("Share documents", "ஆவணங்களை பகிருங்கள்", "We'll tell you exactly which documents are required.", "தேவையான ஆவணங்கள் என்னவென்று தெளிவாகச் சொல்வோம்."),
@@ -187,15 +193,17 @@ def svc(x):
     b = head("../", t, f"{en}: {d} Personal support from KVB ENTERPRISES in Puducherry and nearby areas.", f"services/{s}.html") + header("../")
     msg = wa(f"Hello Vivian, I need assistance with {en}.")
     rel = "".join(f'<a href="{o[0]}.html">{o[1]}</a>' for o in SV if o[0] != s)
-    b += (f'<main class="service-page"><div class="wrap"><a class="back" href="../index.html#services">← All services</a>{T("h1", en, ta)}{T("p", d, dta, "intro")}'
-          '<div class="service-grid"><div><section class="panel"><h2>What we can help with</h2><ul>' + "".join(f"<li>{i}</li>" for i in items) + "</ul></section>"
-          '<section class="panel" style="margin-top:20px"><h2>Documents commonly needed</h2><ul>' + "".join(f"<li>{i}</li>" for i in docs)
+    b += f'<main class="service-page"><div class="wrap"><a class="back" href="../index.html#services">← All services</a>{T("h1", en, ta)}{T("p", d, dta, "intro")}'
+    if s == "gst":
+        b += '<div class="gst-split"><a href="gst-registration.html"><b>GST Registration</b><span>New registration and application assistance →</span></a><a href="gst-filing.html"><b>GST Return Filing</b><span>GSTR-1, GSTR-3B and monthly compliance →</span></a></div>'
+    b += ('<div class="service-grid"><div><section class="panel"><h2>What we can help with</h2><ul>' + "".join(f"<li>{E(i)}</li>" for i in items) + "</ul></section>"
+          '<section class="panel" style="margin-top:20px"><h2>Documents commonly needed</h2><ul>' + "".join(f"<li>{E(i)}</li>" for i in docs)
           + '</ul><p class="note">The exact list depends on your case. We confirm it with you on WhatsApp before you start.</p></section>'
-          '<section class="panel" style="margin-top:20px"><h2>Pricing</h2><p>' + price(s) + f'</p>{T("p", NOTE_EN, NOTE_TA, "note")}</section></div>'
+          '<section class="panel" style="margin-top:20px"><h2>Pricing</h2><p>' + price(s) + f'</p>{T("p", NOTE_EN, NOTE_TA, "note")}{xnote(s)}</section></div>'
           f'<aside class="panel cta-panel"><h2>Need assistance?</h2><p>Tell Vivian what you need and get the document and process guidance for your case.</p>'
           + btn(msg, "WhatsApp 90036 33696", "WhatsApp 90036 33696", "primary wide", s, True) + '<div style="height:10px"></div>' + btn(f"tel:+{PH}", "Call now", "இப்போது அழைக்கவும்", "secondary wide", s, False, False)
           + '<p>Tamil &amp; English. Local assistance in Puducherry and nearby areas.</p></aside></div>'
-          '<h2 style="margin-top:40px">How it works</h2>' + steps() + f'<div class="related">{rel}</div></div></main>')
+          '<h2 style="margin-top:40px">How it works</h2>' + steps() + faqhtml(s) + f'<div class="related">{rel}</div></div></main>')
     w(f"services/{s}.html", b + foot("../"))
 
 CSS = r"""
@@ -230,14 +238,17 @@ body{font-family:Inter,system-ui,-apple-system,"Segoe UI","Noto Sans Tamil","Nir
 .nb-list li{padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.14);font-size:13px;font-weight:700}
 .contact-box select,.contact-box textarea{display:block;width:100%;margin-top:6px;padding:12px;border:1px solid #d7dee8;border-radius:10px;font:inherit;background:#fff}
 .note{font-size:13px;color:var(--muted)}
-.related{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.gst-split{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:26px 0}.gst-split a{display:flex;flex-direction:column;gap:5px;padding:20px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--navy);text-decoration:none;box-shadow:0 5px 18px rgba(16,35,63,.04)}.gst-split a:hover{border-color:var(--green);transform:translateY(-2px)}.gst-split b{font-size:18px}.gst-split span{font-size:13px;color:var(--muted)}.gst-split{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:26px 0}.gst-split a{display:flex;flex-direction:column;gap:5px;padding:20px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--navy);text-decoration:none;box-shadow:0 5px 18px rgba(16,35,63,.04)}.gst-split a:hover{border-color:var(--green);transform:translateY(-2px)}.gst-split b{font-size:18px}.gst-split span{font-size:13px;color:var(--muted)}.related{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
 .related a{padding:9px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--navy);font-weight:750;text-decoration:none;font-size:14px}
 .cta-panel .note,.cta-panel p{color:#d7e0ea}
 @media(max-width:900px){
+.gst-split{grid-template-columns:1fr}
 .menu{display:block}.nav{gap:8px}
 nav.open{display:flex;position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:flex-start;gap:0;background:#fff;border-bottom:1px solid var(--line);padding:8px 4% 14px;box-shadow:0 14px 30px rgba(41,19,94,.12)}
 nav.open a{padding:12px 0;width:100%;font-size:16px}
 .clients-grid,.steps{grid-template-columns:1fr}}
+.mbar{display:none}
+@media(max-width:700px){.mbar{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:30;box-shadow:0 -6px 20px rgba(41,19,94,.15)}.mbar a{display:flex;justify-content:center;align-items:center;padding:14px;font-weight:850;text-decoration:none;color:#fff;background:var(--green)}.mbar a+a{background:var(--navy)}.floating-wa{display:none}body{padding-bottom:52px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.service-card{transition:none}}
 """
 
@@ -281,11 +292,20 @@ Static website for KVB ENTERPRISES, tax and business compliance assistance in Pu
 ## Structure
 - `index.html`, `services/` are generated by `_builder/build.py`
 - `style.css`, `script.js` styling, language toggle (English/Tamil), form and analytics events
-- `locations/`, `tools/`, `privacy.html`, `terms.html`, `assets/` maintained by hand
+- `locations/`, `tools/`, `privacy.html`, `terms.html` are also generated; `assets/` is maintained by hand
 - `sitemap.xml`, `robots.txt`
 
 ## Updating prices
-Edit `_builder/prices.json` (for example `{"gst": "999"}`), then run `python3 _builder/build.py`. An empty value shows "Get a quote".
+Edit `_builder/prices.json`, then run `python3 _builder/build.py`.
+Current starting/professional fees:
+- GST registration: ₹3,000
+- Monthly GST filing: ₹1,000/month
+- ITR with tax audit support: ₹5,000 onwards
+- FSSAI assistance: ₹4,000
+- MSME/Udyam assistance: ₹1,000
+- Trademark assistance: ₹10,000
+Other services: contact for pricing.
+Government/statutory/third-party charges, where applicable, are separate from KVB ENTERPRISES professional fees.
 
 ## Analytics
 Google Analytics 4 (G-KFP95JFETM). Events: `whatsapp_click`, `call_click`, `generate_lead` (form), `select_service`, `language_switch`. No names or phone numbers are sent to Google.
@@ -293,20 +313,166 @@ Google Analytics 4 (G-KFP95JFETM). Events: `whatsapp_click`, `call_click`, `gene
 KVB ENTERPRISES is an independent professional assistance service and is not a government department.
 """
 
+
+def gst_split_pages():
+    # Dedicated GST registration and GST return-filing pages. Keep gst.html as the GST overview/hub.
+    pages = [
+      ("gst-registration", "GST Registration", "GST registration assistance for eligible businesses in Puducherry and nearby areas.",
+       ["Eligibility and registration guidance", "Document preparation and application assistance", "Business address and promoter details review", "Application follow-up and status guidance"],
+       ["PAN and Aadhaar of proprietor, partners or directors", "Photograph", "Business address proof", "Bank account details where applicable"],
+       "Registration assistance from ₹3,000",
+       [
+        ("Who needs GST registration?", "GST registration depends on the applicable GST rules, including turnover, nature of supplies and other circumstances. We review your business details before advising."),
+        ("Is there a government fee for GST registration?", "Our ₹3,000 starting amount is our professional assistance fee. Applicable statutory or third-party charges, if any, are separate."),
+        ("Can you help after registration?", "Yes. We can also assist with applicable GST return filing and ongoing compliance.")
+       ]),
+      ("gst-filing", "GST Return Filing", "GST return filing and monthly compliance assistance for eligible businesses in Puducherry and nearby areas.",
+       ["GSTR-1 filing assistance", "GSTR-3B filing assistance", "Monthly compliance support", "Reconciliation and documentation support", "Return-related follow-up and correction guidance"],
+       ["Sales and purchase records", "Sales invoices and applicable credit/debit notes", "Purchase and expense records", "GST portal credentials or authorised access as appropriate"],
+       "Monthly GST filing assistance from ₹1,000/month",
+       [
+        ("Which GST returns can you help with?", "We assist eligible businesses with common GST return filing such as GSTR-1 and GSTR-3B, based on the taxpayer's applicable filing requirements."),
+        ("What records should I maintain for GST filing?", "Sales, purchase and expense records, invoices and other relevant GST records should be maintained. We confirm what is needed for your filing."),
+        ("Can you handle GST filing every month?", "Yes. Monthly filing assistance starts from ₹1,000/month, with the final fee confirmed after reviewing the business and filing requirements.")
+       ])
+    ]
+    for slug, title, desc, helps, docs, pricing, faqs in pages:
+        inner = f'<main class="service-page"><div class="wrap"><a class="back" href="../services/gst.html">← GST Services</a><h1>{E(title)}</h1><p class="intro">{E(desc)}</p>'
+        inner += '<div class="service-grid"><div>'
+        inner += '<section class="panel"><h2>What we can help with</h2><ul>' + ''.join(f'<li>{E(x)}</li>' for x in helps) + '</ul></section>'
+        inner += '<section class="panel" style="margin-top:20px"><h2>Documents commonly needed</h2><ul>' + ''.join(f'<li>{E(x)}</li>' for x in docs) + '</ul><p class="note">The exact list depends on your case. We confirm it with you before you start.</p></section>'
+        inner += f'<section class="panel" style="margin-top:20px"><h2>Pricing</h2><p><em class="price">{E(pricing)}</em></p><p class="note">{E(NOTE_EN)}</p></section></div>'
+        inner += f'<aside class="panel cta-panel"><h2>Need assistance?</h2><p>Tell Vivian what you need and get the document and process guidance for your case.</p>'
+        inner += btn(wa(f"Hello Vivian, I need help with {title}."), "WhatsApp 90036 33696", "WhatsApp 90036 33696", "primary wide", slug, True)
+        inner += f'<div style="height:10px"></div>' + btn(f"tel:+{PH}", "Call now", "இப்போது அழைக்கவும்", "secondary wide", slug, False, False) + '<p>Tamil &amp; English. Local assistance in Puducherry and nearby areas.</p></aside></div>'
+        inner += '<h2 style="margin-top:40px">How it works</h2>' + steps()
+        inner += '<h2 style="margin-top:40px">Common questions</h2><div class="faq-list">' + ''.join(f'<details><summary>{E(q)}</summary><p>{E(a)}</p></details>' for q,a in faqs) + '</div>'
+        inner += '<div class="related"><a href="gst.html">GST Services</a><a href="gst-registration.html">GST Registration</a><a href="gst-filing.html">GST Return Filing</a><a href="itr.html">Income Tax / ITR</a></div></div></main>'
+        shell("../", f"{title} in Puducherry | KVB ENTERPRISES", desc + " Personal assistance from KVB ENTERPRISES.", f"services/{slug}.html", inner)
+
 def main():
+    gst_split_pages()
     for x in SV:
         svc(x)
     index()
+    legacy()
     old = os.path.join(O, "style.css")
     base = open(old, encoding="utf-8").read().split("/* V3 */")[0].rstrip() if os.path.exists(old) else ""
     w("style.css", base + "\n" + CSS)
     w("script.js", JS)
     w("README.md", README)
     w("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {S}/sitemap.xml\n")
-    urls = [""] + [f"services/{x[0]}.html" for x in SV] + [f"locations/gst-registration-{l}.html" for l in LOCS] + [f"tools/{t[0]}.html" for t in TOOLS] + ["privacy.html", "terms.html"]
+    urls = [""] + [f"services/{x[0]}.html" for x in SV] + ["services/gst-registration.html", "services/gst-filing.html"] + ["locations/gst-registration-puducherry.html"] + [f"tools/{t[0]}.html" for t in TOOLS] + ["privacy.html", "terms.html"]
     w("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
       + "".join(f"<url><loc>{S}/{u}</loc><lastmod>{TD.isoformat()}</lastmod></url>\n" for u in urls) + "</urlset>\n")
     if not os.path.exists(os.path.join(B, "prices.json")):
         json.dump({x[0]: "" for x in SV}, open(os.path.join(B, "prices.json"), "w"), indent=1)
+
+import re
+EXTRA = {
+ "gst": "GST registration is filed through the official GST portal. Our fee is for professional assistance with documents, the application and follow-up; any applicable statutory or third-party charges are separate.",
+ "msme": "Udyam registration on the official government portal (udyamregistration.gov.in) is free of cost, and you can register yourself there. Our fee is an optional assistance fee for documents and the application. KVB ENTERPRISES is not the government portal.",
+ "fssai": "Government licence or registration fees are separate from our professional fee and depend on the type of licence.",
+ "itr": "Starting price is for ITR with tax audit support. Tax audit, where applicable, is carried out by a Chartered Accountant. Non-audit ITR: contact us for pricing.",
+ "trademark": "Government fees are separate from our professional fee.",
+}
+FAQS = {
+ "gst": [
+  ("Do I need GST registration for my business?", "GST registration depends on factors such as turnover, the nature of your supplies and where you operate. Some businesses are required to register while others may register voluntarily. We review your details before advising."),
+  ("What documents are commonly needed for GST registration?", "Commonly PAN, Aadhaar, photograph, business address proof and bank details. The exact list depends on your business constitution and circumstances."),
+  ("How much is GST registration assistance?", "Our professional assistance starts from ₹3,000. The final quote is confirmed after reviewing your requirements. Government or statutory charges, where applicable, are separate."),
+  ("Can you help with monthly GST returns?", "Yes. We provide assistance with GSTR-1 and GSTR-3B filing and monthly GST compliance. Our current monthly filing assistance starts from ₹1,000/month.")
+ ],
+ "itr": [
+  ("Can you help me file my ITR?", "Yes. We assist individuals, professionals and businesses with ITR preparation and filing based on the information and documents you provide."),
+  ("Can you help if I do not have a CA?", "Yes, we can assist with ITR preparation and filing. Where a tax audit is required, the audit must be carried out by a Chartered Accountant and we coordinate the process with a CA where required."),
+  ("What documents are commonly needed for ITR?", "Common documents may include PAN, Aadhaar, Form 16 or other income details, bank statements, interest certificates and investment or deduction proofs. Business cases may also require turnover and expense information."),
+  ("Do you provide tax audit?", "We provide tax audit support and coordination. Where a tax audit is required, the audit is carried out through a Chartered Accountant.")
+ ],
+ "fssai": [
+  ("Do I need FSSAI for a home bakery?", "A home-based food business may require FSSAI registration or a licence depending on its activity and applicable criteria. Tell us what you make and sell and we can help identify the appropriate category."),
+  ("What is the difference between FSSAI registration and licence?", "FSSAI has different registration/licence categories based on the food business and applicable criteria. We help you identify the category to apply for."),
+  ("Can you help renew or modify an FSSAI registration/licence?", "Yes. We assist with eligible renewal and modification applications and help you prepare the required information."),
+  ("How much does FSSAI assistance cost?", "Our registration/licence assistance starts from ₹4,000. Government licence or registration fees, where applicable, are separate.")
+ ],
+ "msme": [
+  ("Who can apply for Udyam registration?", "Eligible micro, small and medium enterprises can apply subject to the applicable MSME/Udyam rules. Eligibility depends on the enterprise and its activity."),
+  ("Is Udyam registration free?", "Yes. Udyam registration on the official government portal is free. Our ₹1,000 starting amount is an optional professional assistance fee if you want help with the process."),
+  ("Can you update an existing Udyam registration?", "Yes. We can assist with eligible updates and documentation."),
+  ("How much is your Udyam assistance?", "Our professional assistance fee starts from ₹1,000. The government portal itself does not charge a registration fee.")
+ ],
+ "pan": [
+  ("Can you help with PAN correction?", "Yes. We can assist with PAN correction and details-update applications based on the change required and supporting documents."),
+  ("Can you help with a new PAN application?", "Yes. We can guide you through the applicable PAN application process and required documents."),
+  ("Can you help if my PAN details and Aadhaar details do not match?", "Yes. We can help you understand the correction or update process based on the mismatch and the documents available."),
+  ("What documents may be needed for PAN services?", "Requirements depend on the application. We will confirm the appropriate identity, address and supporting documents for your case.")
+ ],
+ "trademark": [
+  ("Can you help register a trademark?", "Yes. We assist with trademark search, application filing and registration-related documentation."),
+  ("Does the trademark fee include government charges?", "Our ₹10,000 starting amount is for registration assistance. Applicable government/statutory fees are separate and depend on the application."),
+  ("Can you check a brand name before filing?", "Yes. We can assist with a preliminary trademark search and explain the next steps. A search does not guarantee registration."),
+  ("How long does trademark registration take?", "The timeline can vary depending on examination, objections, oppositions and other factors. We cannot guarantee an approval date.")
+ ],
+ "dsc": [
+  ("What is a Digital Signature Certificate?", "A DSC is a digital certificate used for electronic signing and authentication on supported services and portals."),
+  ("Can you help with DSC renewal?", "Yes. We assist with eligible DSC applications and renewals."),
+  ("What documents are needed for DSC?", "Requirements vary by certificate type and applicant. We confirm the current requirements before processing."),
+  ("How much does DSC assistance cost?", "Please contact us for the current professional fee because it depends on the DSC type and validity required.")
+ ],
+ "business-registration": [
+  ("Can you help me choose a business structure?", "Yes. We can explain the common registration options and help you identify what information and documentation you should discuss before proceeding."),
+  ("Can you help with a new business setup?", "Yes. We can help you identify registrations and compliance items that may apply to your proposed business."),
+  ("What documents are usually needed?", "Requirements depend on the structure and business activity. Common documents include identity/address proofs, business address details and proposed business information."),
+  ("Do you guarantee registration approval?", "No. Applications are subject to the requirements and decisions of the relevant authorities. We provide documentation and application support.")
+ ],
+}
+def xnote(s):
+    return f'<p class="note">{EXTRA[s]}</p>' if s in EXTRA else ""
+def faqhtml(s):
+    if s not in FAQS: return ""
+    return '<h2 style="margin-top:40px">Common questions</h2><div class="faq-list">' + "".join(f"<details><summary>{E(q)}</summary><p>{E(a)}</p></details>" for q, a in FAQS[s]) + "</div>"
+def rd(p): return open(os.path.join(O, p), encoding="utf-8").read()
+def shell(r, title, desc, path, inner, extra=""):
+    w(path, head(r, title, desc, path, extra) + header(r) + inner + foot(r))
+def old(p):
+    s = rd(p)
+    m = re.search(r"<main.*?</main>", s, re.S).group(0)
+    t = html.unescape(re.search(r"<title>(.*?)</title>", s).group(1))
+    d = re.search(r'<meta name="description" content="(.*?)">', s)
+    return m, t, html.unescape(d.group(1)) if d else ""
+def legacy():
+    gp = "GST registration from ₹3,000 · monthly filing from ₹1,000/month. Final quote after reviewing your requirements."
+    for l in LOCS:
+        p = f"locations/gst-registration-{l}.html"
+        m, t, d = old(p)
+        m = m.replace("<p>Contact us for pricing.</p>", f"<p>{gp}</p>")
+        shell("../", t, d, p, m, "" if l == "puducherry" else '<meta name="robots" content="noindex,follow">')
+    TD2 = {"gst-calculator": "Free GST calculator: work out GST-inclusive or GST-exclusive amounts.", "gst-checklist": "Checklist of documents commonly needed for GST registration.",
+           "fssai-checklist": "Basic information commonly needed for FSSAI applications.", "itr-checklist": "Documents commonly needed before filing your income tax return."}
+    for t_ in TOOLS:
+        p = f"tools/{t_[0]}.html"
+        s0 = rd(p)
+        m, t, d = old(p)
+        sc = re.search(r"<script>function calc.*?</script>", s0, re.S)
+        sc = sc.group(0) if sc else ""
+        if sc and "calculator_use" not in sc:
+            sc = sc.replace("document.getElementById('out').innerHTML", "window.gtag&&gtag('event','calculator_use',{tool:'gst'});document.getElementById('out').innerHTML")
+        cta = ""
+        if t_[0] == "gst-calculator":
+            cta = '<div class="wrap" style="padding-bottom:50px"><p>Need help with GST? ' + btn(wa("Hello Vivian, I need help with GST."), "WhatsApp Vivian", "WhatsApp-ல் பேசுங்கள்", "primary", "calculator", True) + "</p></div>"
+        shell("../", t, TD2[t_[0]], p, m + cta + sc)
+    P = ('<main class="legal"><div class="wrap"><a class="back" href="index.html">← Home</a><h1>Privacy</h1>'
+         "<p>When you contact KVB ENTERPRISES through WhatsApp, phone or the enquiry form, information you provide is used to respond to your request and provide the requested assistance. We do not sell your personal information.</p>"
+         "<p>The enquiry form on this website does not store your details. It opens WhatsApp with your message ready, and the message is sent only when you press send in WhatsApp. WhatsApp's own terms and privacy policy then apply.</p>"
+         "<p>This website uses Google Analytics to understand how visitors use it, such as which pages are viewed and which buttons (WhatsApp, call, enquiry form) are clicked. Google collects this data using cookies or similar technologies. We do not send your name or phone number from the enquiry form to Google Analytics.</p>"
+         "<p>Please do not send passwords, OTPs, card PINs or other highly sensitive authentication information through the enquiry form or WhatsApp. Share identity documents only when we ask for them for your service.</p>"
+         f"<p>Questions about privacy: call or WhatsApp 90036 33696. Last updated: {TD.strftime('%d %B %Y')}.</p></div></main>")
+    Tm = ('<main class="legal"><div class="wrap"><a class="back" href="index.html">← Home</a><h1>Terms</h1>'
+          "<p>KVB ENTERPRISES provides independent professional assistance and documentation support. We are not a government department or authority, and we are not affiliated with any government portal.</p>"
+          "<p>Prices shown on this website are starting prices. The final quote is confirmed after reviewing your requirements and documents, before you proceed. Government fees, statutory charges and third-party charges, where applicable, are separate from our professional fee and may vary by service and case.</p>"
+          "<p>Where a task legally requires a Chartered Accountant or another licensed professional (for example a tax audit), it is carried out by that professional, and we coordinate the process.</p>"
+          "<p>We assist with applications and filings. Approvals, timelines and outcomes are decided by the relevant authorities, and we cannot guarantee them. Information on this website is general and is not tax or legal advice for your specific situation.</p></div></main>")
+    shell("", "Privacy | KVB ENTERPRISES", "How KVB ENTERPRISES uses information you share and website analytics.", "privacy.html", P)
+    shell("", "Terms | KVB ENTERPRISES", "Terms for using KVB ENTERPRISES professional assistance services.", "terms.html", Tm)
 
 main()

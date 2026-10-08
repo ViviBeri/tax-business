@@ -1,10 +1,51 @@
 {
- "gst": "",
- "itr": "",
- "fssai": "",
- "pan": "",
- "msme": "",
- "trademark": "",
- "dsc": "",
- "business-registration": ""
+  "gst": [
+    [
+      "Registration",
+      "பதிவு",
+      "3,000",
+      ""
+    ],
+    [
+      "Monthly filing",
+      "மாதாந்திர தாக்கல்",
+      "1,000",
+      "/month"
+    ]
+  ],
+  "itr": [
+    [
+      "ITR with tax audit support",
+      "தணிக்கை ஆதரவுடன் ITR",
+      "5,000",
+      ""
+    ]
+  ],
+  "fssai": [
+    [
+      "Registration/licence assistance",
+      "பதிவு/உரிம உதவி",
+      "4,000",
+      ""
+    ]
+  ],
+  "msme": [
+    [
+      "Assistance fee",
+      "உதவி கட்டணம்",
+      "1,000",
+      ""
+    ]
+  ],
+  "trademark": [
+    [
+      "Registration assistance",
+      "பதிவு உதவி",
+      "10,000",
+      ""
+    ]
+  ],
+  "pan": [],
+  "dsc": [],
+  "business-registration": []
 }
