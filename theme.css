@@ -47,3 +47,65 @@ body{-webkit-font-smoothing:antialiased;background:radial-gradient(1200px 600px 
 @media (max-width:520px){.topbar .brand img{width:48px;height:40px}.hero-card{transform:none}}
 html,body{overflow-x:hidden;max-width:100%}
 img,svg,video{max-width:100%;height:auto}
+
+/* =========================================================
+   Hero contrast fix — ensures text stays readable over gradient
+   ========================================================= */
+
+/* Darken the middle band of the hero so white text always has contrast */
+.hero{
+  background:
+    radial-gradient(900px 500px at 80% 0%, rgba(34,211,238,.20), transparent 60%),
+    radial-gradient(700px 500px at 10% 100%, rgba(232,185,59,.12), transparent 60%),
+    linear-gradient(135deg, #070c26 0%, #0f1642 45%, #08303f 100%) !important;
+}
+
+/* "Your Business." line — solid white, strong readable shadow */
+.hero h1{
+  color: #ffffff !important;
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.55),
+    0 2px 6px rgba(0,0,0,.55),
+    0 12px 32px rgba(0,0,0,.45) !important;
+}
+
+/* "Our Responsibility." — gold gradient with its own shadow */
+.hero h1 span{
+  background: linear-gradient(180deg, #ffe9a8 0%, #e8b93b 55%, #b98616 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.55));
+}
+
+/* Lead paragraph + trust line + eyebrow — locked to readable values */
+.hero .lead,
+.hero p.lead{
+  color: #eaf1ff !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,.45);
+}
+.hero .trust,
+.hero p.trust{
+  color: #cfd8f3 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+}
+.hero .eyebrow,
+.hero .eyebrow *{
+  color: #7ef0ea !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+}
+
+/* Tamil pages use the same markup, but Tamil glyphs are denser —
+   give them a touch more line-height and slightly bigger size */
+:lang(ta) .hero h1{ line-height: 1.15; letter-spacing: -.2px; }
+:lang(ta) .hero .lead{ line-height: 1.65; }
+
+/* Hero buttons — make sure they don't blend into the dark background */
+.hero .btn.secondary{
+  background: linear-gradient(180deg, #ffffff 0%, #e6eeff 100%) !important;
+  color: #0a1030 !important;
+  border: 1px solid rgba(255,255,255,.55) !important;
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 6px 14px rgba(0,0,0,.35) !important;
+}
