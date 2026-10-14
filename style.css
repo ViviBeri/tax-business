@@ -51,3 +51,5 @@ a.lang{display:inline-flex;align-items:center;justify-content:center;min-height:
 .mbar a svg{margin-right:8px}
 .tool-grid a,.contact-line a{display:inline-block;padding:12px 0}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.service-card{transition:none}}
+.hero h1 span{background:linear-gradient(180deg,#fff6cf 0%,#ffd97a 35%,#f0b73a 70%,#ffd97a 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;filter:drop-shadow(0 1px 0 rgba(0,0,0,.35)) drop-shadow(0 0 20px rgba(240,183,58,.5))!important;text-shadow:none!important}
+.hero h1{color:#fff!important}
