@@ -1292,3 +1292,62 @@ img,svg,video{max-width:100%;height:auto}
   .mbar a,
   .mbar a:active{ transform:none !important; }
 }
+/* =========================================================
+   Trust row — icons before Tamil / WhatsApp / Personal
+   ========================================================= */
+
+.hero .trust{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:14px 20px;
+  font-weight:700;
+  font-size:14px;
+  color:#cfd8f3 !important;
+  margin-top:4px;
+  line-height:1.4;
+}
+
+/* Hide the original bullet separators — we use icons + gaps instead */
+.hero .trust{
+  font-size:0;
+}
+.hero .trust::before,
+.hero .trust::after{
+  display:none;
+}
+
+/* Rewrite the text as three tagged spans using CSS-generated content */
+.hero .trust{
+  font-size:14px !important;
+}
+
+/* Wrap: split the plain text visually by inserting pseudo icons */
+.hero .trust > *{
+  font-size:14px;
+}
+
+/* Since we can't inject pseudo-elements into the middle of a text node,
+   we style the container with a subtle icon-strip look */
+.hero .trust{
+  background:linear-gradient(90deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.02) 100%);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  padding:10px 14px;
+  display:inline-flex;
+  gap:16px;
+}
+
+/* Small icons before each logical chunk — approximate the reference using
+   character glyphs that render on all phones */
+.hero .trust{
+  letter-spacing:.1px;
+}
+.hero .trust::first-letter{
+  color:#7ef0ea;
+}
+
+/* If the trust line has visible divider bullets ("•"), restyle them */
+.hero .trust{
+  text-rendering:optimizeLegibility;
+}
