@@ -340,3 +340,4 @@ img,svg,video{max-width:100%;height:auto}
 @media (prefers-reduced-motion: reduce){
   .hero-illustration{filter:drop-shadow(0 16px 40px rgba(0,0,0,.45))}
 }
+.hero h1{color:#fff !important;text-shadow:0 1px 0 rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.45),0 16px 40px rgba(0,0,0,.35) !important;letter-spacing:-.6px;font-weight:700}.hero h1 span{background:linear-gradient(180deg,#fff6cf 0%,#ffd97a 35%,#f0b73a 70%,#ffd97a 100%) !important;-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;-webkit-text-fill-color:transparent !important;filter:drop-shadow(0 1px 0 rgba(0,0,0,.4)) drop-shadow(0 0 16px rgba(240,183,58,.55)) !important}.hero .lead{color:#eef4ff !important}.hero .trust{color:#c8d2ef !important}.hero .eyebrow{color:#7ef0ea !important}
