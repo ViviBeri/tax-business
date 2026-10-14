@@ -216,4 +216,157 @@ def index():
           + T("p", "KVB ENTERPRISES provides practical tax and business compliance assistance for businesses, professionals and individuals in Puducherry and nearby areas.", "KVB ENTERPRISES புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ள வணிகங்கள், தொழில்முறையாளர்கள் மற்றும் தனிநபர்களுக்கு நடைமுறை வரி மற்றும் வணிக இணக்க உதவி வழங்குகிறது.")
           + "<p>" + L("We focus on clear communication, documentation support and regular follow-up, and we are not a government office or authority.") + "</p></div>"
           + '<div class="about-points"><div><b>' + L("Personal assistance") + '</b><span>' + L("Direct communication and guidance for your requirements.") + '</span></div>'
-          + '<div><b>' + L("Clear process") + '</b><span>' + L("Understand the documents, steps and professional charges before proceeding.") + '</span></div
+                    + '<div><b>' + L("Clear process") + '</b><span>' + L("Understand the documents, steps and professional charges before proceeding.") + '</span></div>'
+          + '</div></div></section>')
+    locs = "".join(f'<a href="{sl(r, "gst-registration-" + l)}">{l.title()}</a>' for l in LOCS)
+    b += ('<section id="locations" class="section"><div class="wrap"><div class="section-head">'
+          + T("h2", "Local assistance across Puducherry and nearby areas.", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ளூர் உதவி.")
+          + T("p", "Choose a location to view the local GST service page.", "உள்ளூர் GST சேவைப் பக்கத்தைப் பார்க்க ஒரு இடத்தைத் தேர்ந்தெடுக்கவும்.")
+          + f'</div><div class="locations">{locs}</div></div></section>')
+    tools = "".join(f'<div><h3>{L(a)}</h3><p>{L(c)}</p><a href="{r}tools/{a}.html">{L(b)}</a></div>'
+                    for a, b, c, d in [(t[0], t[3], t[2], t[1]) for t in TOOLS])
+    b += ('<section id="tools" class="section alt"><div class="wrap"><div class="section-head">'
+          + T("h2", "Useful resources for business owners.", "வணிக உரிமையாளர்களுக்கான பயனுள்ள வளங்கள்.")
+          + f'</div><div class="tool-grid">{tools}</div></div></section>')
+    faq = "".join(f'<details><summary>{L(q)}</summary><p>{L(a)}</p></details>' for q, a in FAQ)
+    b += ('<section class="faq section"><div class="wrap"><div class="section-head">'
+          + T("h2", "Common questions", "அடிக்கடி கேட்கப்படும் கேள்விகள்")
+          + f'</div><div class="faq-list">{faq}</div></div></section>')
+    opts = "".join(f'<option value="{o}">{L(o)}</option>' for o in ["GST Registration", "GST Filing", "Income Tax / ITR", "FSSAI", "PAN Card Services", "MSME / Udyam", "Trademark", "DSC", "Business Registration", "Other"])
+    b += ('<section id="contact" class="contact"><div class="wrap contact-grid"><div>'
+          + T("h2", "Have a compliance question?", "இணக்க கேள்வி உள்ளதா?")
+          + T("p", "Send your requirement and Vivian can explain the process, documents and applicable professional charges.", "உங்கள் தேவையை அனுப்புங்கள், செயல்முறை, ஆவணங்கள் மற்றும் தொழில்முறை கட்டணங்களை விவியன் விளக்குவார்.")
+          + '<div class="contact-line"><strong>Vivian</strong><br>KVB ENTERPRISES<br>'
+          + f'<a href="tel:+{PH}" data-loc="contact">90036 33696</a><br>'
+          + L("Puducherry &amp; nearby areas") + '<br>' + L("WhatsApp enquiries welcome anytime") + '</div></div>'
+          + '<form class="contact-box" id="enquiryForm">'
+          + '<label>' + L("Name *") + '<input name="name" required autocomplete="name"></label>'
+          + '<label>' + L("Phone / WhatsApp number *") + '<input name="phone" type="tel" inputmode="tel" required pattern="[0-9+ ]{10,15}" autocomplete="tel"></label>'
+          + '<label>' + L("Service required") + f'<select name="service" id="service"><option value="">{L("Select a service")}</option>{opts}</select></label>'
+          + '<label>' + L("Your message") + '<textarea name="message" rows="3"></textarea></label>'
+          + '<button class="btn primary wide" type="submit">' + ICON + '<span>' + L("Send enquiry on WhatsApp") + '</span></button>'
+          + '</form></div></section></main>')
+    b += foot(r)
+    return b
+
+def service(s, r, path):
+    slug, en, ta, de, dta, help_items, docs = s
+    title = f"{en} | KVB ENTERPRISES"
+    desc = de
+    b = head(r, title, desc, path, "", [("en", f"services/{slug}.html"), ("ta", f"ta/services/{slug}.html")])
+    b += header(r, ("../" if not r else r) + "ta/services/" + slug + ".html")
+    b += '<main><section class="section"><div class="wrap">'
+    b += '<nav class="crumbs"><a href="' + r + 'index.html">' + L("Home") + '</a> › ' + L(en) + '</nav>'
+    b += T("h1", en, ta)
+    b += T("p", de, dta, "lead")
+    b += '<div class="svc-body"><div>' + T("h2", "What we help with", "நாங்கள் எவ்வாறு உதவுகிறோம்")
+    b += '<ul class="ticks">' + "".join(f'<li>{L(x)}</li>' for x in help_items) + '</ul>'
+    b += T("h2", "Documents typically needed", "பொதுவாக தேவைப்படும் ஆவணங்கள்")
+    b += '<ul class="ticks">' + "".join(f'<li>{L(x)}</li>' for x in docs) + '</ul></div>'
+    b += '<aside class="svc-cta">' + price(slug)
+    b += '<p>' + L(NOTE_EN) + '</p>'
+    b += btn(wa(f"Hello Vivian, I need help with {en}."), "WhatsApp about this", "இதைப் பற்றி WhatsApp", "primary", "service", True)
+    b += btn(f"tel:+{PH}", "Call now", "இப்போது அழைக்கவும்", "secondary", "service", False, False)
+    b += '</aside></div></div></section></main>'
+    b += foot(r)
+    return b
+
+def location(l, r, path):
+    city = l.title()
+    title = f"GST Registration in {city} | KVB ENTERPRISES"
+    desc = f"GST registration and compliance assistance in {city}, Puducherry and nearby areas. WhatsApp and Tamil support."
+    b = head(r, title, desc, path, "", [("en", f"locations/gst-registration-{l}.html")])
+    b += header(r)
+    b += '<main><section class="section"><div class="wrap">'
+    b += '<nav class="crumbs"><a href="' + r + 'index.html">' + L("Home") + '</a> › GST ' + city + '</nav>'
+    b += T("h1", f"GST Registration in {city}", f"{city}-இல் GST பதிவு")
+    b += T("p", f"We provide GST registration and compliance assistance for businesses in {city} and nearby areas of Puducherry and Tamil Nadu.", f"{city} மற்றும் அதைச் சுற்றியுள்ள பகுதிகளில் உள்ள வணிகங்களுக்கு GST பதிவு மற்றும் இணக்க உதவி வழங்குகிறோம்.", "lead")
+    b += '<div class="svc-body"><div>'
+    b += T("h2", "Services available", "கிடைக்கும் சேவைகள்")
+    b += '<ul class="ticks"><li>GST registration</li><li>GSTR-1 / GSTR-3B filing</li><li>Monthly compliance</li><li>Amendment and cancellation</li></ul>'
+    b += T("h2", "Documents typically needed", "பொதுவாக தேவைப்படும் ஆவணங்கள்")
+    b += '<ul class="ticks"><li>PAN and Aadhaar</li><li>Address proof</li><li>Bank details</li><li>Business details</li></ul>'
+    b += '</div><aside class="svc-cta">'
+    b += btn(wa(f"Hello Vivian, I need GST help in {city}."), "WhatsApp about this", "இதைப் பற்றி WhatsApp", "primary", "location", True)
+    b += btn(f"tel:+{PH}", "Call now", "இப்போது அழைக்கவும்", "secondary", "location", False, False)
+    b += '</aside></div></div></section></main>'
+    b += foot(r)
+    return b
+
+def privacy_or_terms():
+    is_privacy = True
+    title = "Privacy Policy | KVB ENTERPRISES"
+    desc = "Privacy policy for KVB ENTERPRISES website."
+    b = head("", title, desc, "privacy.html")
+    b += header("")
+    b += '<main><section class="section"><div class="wrap">' + T("h1", "Privacy Policy", "தனியுரிமைக் கொள்கை")
+    b += "<p>We respect your privacy. This website collects only the information you provide through the enquiry form or WhatsApp. We do not sell or share your information with third parties. Google Analytics 4 may collect anonymous usage data.</p>"
+    b += '</div></section></main>'
+    b += foot("")
+    return b
+
+def terms_page():
+    title = "Terms of Use | KVB ENTERPRISES"
+    desc = "Terms of use for KVB ENTERPRISES website."
+    b = head("", title, desc, "terms.html")
+    b += header("")
+    b += '<main><section class="section"><div class="wrap">' + T("h1", "Terms of Use", "பயன்பாட்டு விதிமுறைகள்")
+    b += "<p>KVB ENTERPRISES is an independent professional assistance service and is not a government department. Information on this site is provided in good faith. Final quotes are confirmed after reviewing requirements and documents.</p>"
+    b += '</div></section></main>'
+    b += foot("")
+    return b
+
+def sitemap():
+    urls = [("", "1.0"), ("ta/", "0.9"), ("privacy.html", "0.3"), ("terms.html", "0.3")]
+    for s in SV:
+        urls.append((f"services/{s[0]}.html", "0.8"))
+        urls.append((f"ta/services/{s[0]}.html", "0.7"))
+    for l in LOCS:
+        urls.append((f"locations/gst-registration-{l}.html", "0.7"))
+    for t in TOOLS:
+        urls.append((f"tools/{t[0]}.html", "0.5"))
+    today = TD.isoformat()
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for u, pri in urls:
+        xml += f'  <url><loc>{S}/{u}</loc><lastmod>{today}</lastmod><priority>{pri}</priority></url>\n'
+    xml += '</urlset>'
+    return xml
+
+def sl(r, slug):
+    return f"{r}services/{slug}.html"
+
+def L(s):
+    if LANG == "ta":
+        m = {"Tax &amp; Business Compliance": "வரி மற்றும் வணிக இணக்கம்",
+             "Home": "முகப்பு", "Services": "சேவைகள்"}
+        return m.get(s, s)
+    return s
+
+def main():
+    global LANG
+    # English
+    LANG = "en"
+    w("index.html", index())
+    for s in SV:
+        w(f"services/{s[0]}.html", service(s, "../", f"services/{s[0]}.html"))
+    for l in LOCS:
+        w(f"locations/gst-registration-{l}.html", location(l, "../", f"locations/gst-registration-{l}.html"))
+    w("privacy.html", privacy_or_terms())
+    w("terms.html", terms_page())
+    # Tamil
+    LANG = "ta"
+    w("ta/index.html", index())
+    for s in SV:
+        w(f"ta/services/{s[0]}.html", service(s, "../../", f"ta/services/{s[0]}.html"))
+    # Sitemap
+    w("sitemap.xml", sitemap())
+    w("sitemap.txt", "\n".join(f"{S}/{u}" for u, _ in [
+        ("", ""), ("ta/", ""), ("privacy.html", ""), ("terms.html", ""),
+        *[(f"services/{s[0]}.html", "") for s in SV],
+        *[(f"ta/services/{s[0]}.html", "") for s in SV],
+        *[(f"locations/gst-registration-{l}.html", "") for l in LOCS],
+        *[(f"tools/{t[0]}.html", "") for t in TOOLS],
+    ]) + "\n")
+
+if __name__ == "__main__":
+    main()
