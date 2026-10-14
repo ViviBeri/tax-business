@@ -235,7 +235,7 @@ def index():
           + '<div class="about-points"><div><b>' + L("Personal assistance") + '</b><span>' + L("Direct communication and guidance for your requirements.") + '</span></div>'
                     + '<div><b>' + L("Clear process") + '</b><span>' + L("Understand the documents, steps and professional charges before proceeding.") + '</span></div>'
           + '</div></div></section>')
-    locs = "".join(f'<a href="{sl(r, "gst-registration-" + l)}">{l.title()}</a>' for l in LOCS)
+    locs = "".join(f'<a href="{r}locations/gst-registration-{l}.html">{l.title()}</a>' for l in LOCS)
     b += ('<section id="locations" class="section"><div class="wrap"><div class="section-head">'
           + T("h2", "Local assistance across Puducherry and nearby areas.", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ளூர் உதவி.")
           + T("p", "Choose a location to view the local GST service page.", "உள்ளூர் GST சேவைப் பக்கத்தைப் பார்க்க ஒரு இடத்தைத் தேர்ந்தெடுக்கவும்.")
