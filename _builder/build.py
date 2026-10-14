@@ -102,8 +102,7 @@ def foot(r):
 
 def btn(href, en, ta, cls="primary", loc="", ico=False, ext=True):
     t = ' target="_blank" rel="noopener"' if ext else ""
-    return f'<a class="btn {cls}" href="{href}"{t} data-loc="{loc}">{ICON if ico else ""}<span>{ta if (LANG == 'ta' and ta) else en}</span></a>'
-
+    return f'<a class="btn {cls}" href="{href}"{t} data-loc="{loc}">{ICON if ico else ""}<span>{ta if (LANG == "ta" and ta) else en}</span></a>'
 def price(s):
     L = PR.get(s) or []
     if not L:
