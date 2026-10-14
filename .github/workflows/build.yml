@@ -1,0 +1,50 @@
+name: Build site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "_builder/**"
+      - "assets/**"
+      - "style.css"
+      - "theme.css"
+      - "script.js"
+      - "ui.js"
+      - ".github/workflows/build.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run builder
+        run: python3 _builder/build.py
+
+      - name: Commit regenerated site
+        run: |
+          git config user.name "kvb-builder[bot]"
+          git config user.email "kvb-builder[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-build: regenerate site [skip ci]"
+            git push
+          fi
