@@ -186,7 +186,9 @@ def index():
     DD = "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் GST, ITR, FSSAI, PAN, MSME/உத்யம், வர்த்தக முத்திரை, DSC உதவி. தமிழ் & ஆங்கிலம், WhatsApp ஆதரவு." if ta_ else "Local tax and business compliance help in Puducherry and nearby areas: GST, ITR, FSSAI, PAN, MSME/Udyam, Trademark, DSC. Tamil & English, WhatsApp support."
     b = head(r, TT, DD, "ta/" if ta_ else "", ld, [("en", ""), ("ta", "ta/"), ("x-default", "")]) + header(r, r + ("" if ta_ else "ta/") + "index.html")
     quick = "".join(f'<a href="{sl(r, s[0])}">{L(SHORT[s[0]])}</a>' for s in SV)
-    b += ('<main id="home"><section class="hero"><div class="wrap hero-grid"><div class="hero-copy">'
+    b += ('<main id="home"><section class="hero">'
+      + f'<img class="hero-illustration" src="{r}assets/hero-illustration.png" alt="" aria-hidden="true" loading="eager" decoding="async">'
+      + '<div class="wrap hero-grid"><div class="hero-copy">'
           + T("div", "Local tax &amp; business compliance", "உள்ளூர் வரி மற்றும் வணிக இணக்க சேவைகள்", "eyebrow")
           + T("h1", "Your Business.<br><span>Our Responsibility.</span>", "உங்கள் தொழில்.<br><span>எங்கள் பொறுப்பு.</span>")
           + T("p", "Professional assistance for GST, Income Tax / ITR, FSSAI, PAN, MSME/Udyam, Trademark, DSC and business registrations.", "GST, வருமான வரி / ITR, FSSAI, PAN, MSME/உத்யம், வர்த்தக முத்திரை, DSC மற்றும் வணிக பதிவுகளுக்கு தொழில்முறை உதவி.", "lead")
