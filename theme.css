@@ -1199,3 +1199,96 @@ img,svg,video{max-width:100%;height:auto}
     color:#ffd97a !important;
   }
 }
+/* =========================================================
+   Bottom bar — rounded card shape for both buttons
+   ========================================================= */
+
+.mbar{
+  padding:8px 10px !important;
+  gap:10px !important;
+  background:linear-gradient(180deg,#0a1030 0%,#131a4a 100%) !important;
+  border-top:1px solid rgba(255,217,122,.25) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 -8px 24px rgba(10,16,48,.35) !important;
+}
+
+.mbar a{
+  border-radius:14px !important;
+  padding:14px 12px !important;
+  position:relative !important;
+  overflow:hidden !important;
+  transform-style:preserve-3d !important;
+  transition:transform .18s cubic-bezier(.2,.7,.2,1), filter .18s cubic-bezier(.2,.7,.2,1) !important;
+}
+
+/* WhatsApp — rounded card, bright 3D green */
+.mbar a:first-child{
+  background:
+    radial-gradient(120% 140% at 50% -20%, rgba(255,255,255,.4), transparent 55%),
+    linear-gradient(180deg,#2befa6 0%,#12c98a 48%,#0a9a68 100%) !important;
+  color:#032a1c !important;
+  text-shadow:0 1px 0 rgba(255,255,255,.4) !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.55),
+    inset 0 -3px 0 rgba(0,0,0,.22),
+    0 8px 18px rgba(18,201,138,.45),
+    0 2px 6px rgba(10,16,48,.25),
+    0 0 0 2px rgba(18,201,138,.15) !important;
+}
+.mbar a:first-child::before{
+  content:"";
+  position:absolute;
+  inset:2px 2px auto 2px;
+  height:45%;
+  border-radius:12px 12px 40% 40%;
+  background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0));
+  pointer-events:none;
+}
+
+/* Call — rounded card, navy with gold accent */
+.mbar a + a{
+  background:
+    radial-gradient(120% 140% at 50% -20%, rgba(255,255,255,.15), transparent 55%),
+    linear-gradient(180deg,#1a2160 0%,#0a1030 100%) !important;
+  color:#ffffff !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.16),
+    inset 0 -3px 0 rgba(0,0,0,.35),
+    inset 2px 0 0 rgba(255,217,122,.25),
+    0 8px 18px rgba(10,16,48,.45),
+    0 2px 6px rgba(10,16,48,.28) !important;
+}
+.mbar a + a::before{
+  content:"";
+  position:absolute;
+  inset:2px 2px auto 2px;
+  height:45%;
+  border-radius:12px 12px 40% 40%;
+  background:linear-gradient(180deg, rgba(255,217,122,.14), rgba(255,217,122,0));
+  pointer-events:none;
+}
+
+.mbar a:active{
+  transform:scale(.96) !important;
+  filter:brightness(.94) !important;
+}
+
+.mbar a svg{
+  width:22px !important;
+  height:22px !important;
+  flex:none !important;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.3)) !important;
+  position:relative !important;
+  z-index:1 !important;
+}
+
+.mbar a > *{
+  position:relative;
+  z-index:1;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .mbar a,
+  .mbar a:active{ transform:none !important; }
+}
