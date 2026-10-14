@@ -604,3 +604,34 @@ img,svg,video{max-width:100%;height:auto}
   .topbar .nav-right nav a::after,
   .topbar .nav-right .lang{transition:none !important;}
 }
+
+/* Mobile logo size bump + header spacing */
+@media (max-width:760px){
+  .topbar .brand{
+    padding:8px 14px !important;
+    gap:12px !important;
+  }
+  .topbar .brand img{
+    width:52px !important;
+    height:52px !important;
+  }
+  .topbar .brand span{
+    font-size:15px !important;
+  }
+  .topbar .brand small{
+    font-size:8.5px !important;
+    letter-spacing:.9px;
+  }
+  .topbar .wrap.nav{
+    min-height:72px;
+  }
+}
+
+/* Very small screens: keep the logo readable */
+@media (max-width:380px){
+  .topbar .brand img{
+    width:46px !important;
+    height:46px !important;
+  }
+  .topbar .brand span{font-size:14px !important;}
+}
