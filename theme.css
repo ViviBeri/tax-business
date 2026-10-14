@@ -297,3 +297,46 @@ img,svg,video{max-width:100%;height:auto}
 @media (prefers-reduced-motion: reduce){
   .tile,.tile:hover{transform:none !important}
 }
+
+/* =========================================================
+   Hero illustration — layered on the right side of the hero
+   ========================================================= */
+
+/* Illustration container: sits to the right of the hero copy on desktop,
+   hides itself if the image fails to load */
+.hero-illustration{
+  position:absolute;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:52%;
+  max-width:640px;
+  height:auto;
+  pointer-events:none;
+  z-index:0;
+  opacity:.95;
+  filter:drop-shadow(0 24px 60px rgba(0,0,0,.5));
+  /* fade the left edge so it blends into the hero gradient */
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 25%);
+  mask-image:linear-gradient(90deg, transparent 0%, #000 25%);
+}
+
+/* Make sure hero text sits above the illustration */
+.hero .wrap.hero-grid{position:relative;z-index:1}
+
+/* On mobile and tablet: hide the illustration entirely — no room, and
+   it would clash with the hero card. Mobile gets the clean version. */
+@media (max-width:900px){
+  .hero-illustration{display:none}
+}
+
+/* On very wide screens: don't let it overwhelm the copy */
+@media (min-width:1400px){
+  .hero-illustration{width:46%;max-width:720px;opacity:.9}
+}
+
+/* Respect reduced motion — the illustration is static, nothing to change,
+   but keep it visible */
+@media (prefers-reduced-motion: reduce){
+  .hero-illustration{filter:drop-shadow(0 16px 40px rgba(0,0,0,.45))}
+}
