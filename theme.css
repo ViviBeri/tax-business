@@ -635,3 +635,73 @@ img,svg,video{max-width:100%;height:auto}
   }
   .topbar .brand span{font-size:14px !important;}
 }
+
+/* Fix hamburger dropdown — ensure it renders above the page and isn't clipped */
+.topbar .wrap.nav{
+  overflow:visible !important;
+}
+.topbar .wrap.nav > .brand{
+  border-radius:14px 0 0 14px;
+}
+.topbar .wrap.nav > .nav-right{
+  border-radius:0 14px 14px 0;
+}
+.topbar{
+  overflow:visible !important;
+}
+
+/* Mobile dropdown: full-width, above the hero, with proper z-index */
+@media (max-width:760px){
+  .topbar{
+    z-index:200 !important;
+  }
+  .topbar .wrap.nav{
+    border-radius:14px;
+    overflow:visible !important;
+  }
+  .topbar .nav-right{
+    border-radius:0 14px 14px 0 !important;
+    position:relative;
+  }
+  .topbar .nav-right nav.open{
+    display:flex !important;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    background:linear-gradient(180deg,#0a1030 0%,#131a4a 100%);
+    padding:8px 0 12px;
+    border-radius:0 0 14px 14px;
+    box-shadow:
+      0 18px 40px rgba(10,16,48,.55),
+      0 4px 10px rgba(10,16,48,.35),
+      inset 0 1px 0 rgba(255,255,255,.08);
+    z-index:9999;
+    margin-top:0;
+  }
+  .topbar .nav-right nav.open a{
+    padding:14px 22px !important;
+    font-size:15px !important;
+    font-weight:700;
+    border-radius:0;
+    width:100%;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    color:#e8eeff !important;
+    white-space:normal;
+    display:block;
+  }
+  .topbar .nav-right nav.open a:last-child{
+    border-bottom:none;
+  }
+  .topbar .nav-right nav.open a:hover,
+  .topbar .nav-right nav.open a:active{
+    background:rgba(255,255,255,.08);
+    color:#ffd97a !important;
+  }
+  .topbar .nav-right nav.open a::after{
+    display:none;
+  }
+}
