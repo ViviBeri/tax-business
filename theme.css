@@ -131,3 +131,169 @@ img,svg,video{max-width:100%;height:auto}
     0 8px 24px rgba(15,185,177,.45),
     0 2px 6px rgba(0,0,0,.25) !important;
 }
+
+
+/* =========================================================
+   Batch 2 — Premium colored service tiles
+   ========================================================= */
+
+/* Container */
+.tiles{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:22px;
+}
+
+/* Tile base */
+.tile{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:10px;
+  padding:20px 12px 18px;
+  border-radius:18px;
+  text-decoration:none;
+  color:#ffffff;
+  font-weight:600;
+  text-align:center;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -3px 0 rgba(0,0,0,.22),
+    0 10px 24px rgba(0,0,0,.30),
+    0 2px 6px rgba(0,0,0,.20);
+  transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s cubic-bezier(.2,.7,.2,1);
+  isolation:isolate;
+  overflow:hidden;
+  min-height:130px;
+}
+
+/* Soft inner rim light */
+.tile::before{
+  content:"";
+  position:absolute;
+  inset:1px 1px auto 1px;
+  height:50%;
+  border-radius:17px 17px 40% 40%;
+  background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0));
+  pointer-events:none;
+}
+
+/* Hover lift */
+.tile:hover{
+  transform:translateY(-5px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -3px 0 rgba(0,0,0,.25),
+    0 18px 36px rgba(0,0,0,.38),
+    0 4px 10px rgba(0,0,0,.22);
+}
+
+/* Icon circle */
+.tile .tile-ico{
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
+  flex-shrink:0;
+}
+.tile .tile-ico svg{
+  width:26px;
+  height:26px;
+  display:block;
+}
+
+/* Tile label */
+.tile b{
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:.2px;
+  line-height:1.15;
+  display:block;
+}
+
+/* Tile caption */
+.tile small{
+  font-size:11.5px;
+  font-weight:500;
+  opacity:.88;
+  line-height:1.25;
+  display:block;
+}
+
+/* ---- Color variants ---- */
+
+/* GST — deep green */
+.tile--gst{
+  background:linear-gradient(180deg,#1fb56a 0%,#0e7d47 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25),0 10px 24px rgba(15,125,71,.4);
+}
+
+/* Income Tax — royal blue */
+.tile--itr{
+  background:linear-gradient(180deg,#3d7bf0 0%,#1a44b8 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25),0 10px 24px rgba(26,68,184,.4);
+}
+
+/* FSSAI — warm orange */
+.tile--fssai{
+  background:linear-gradient(180deg,#f59e3a 0%,#b85a10 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25),0 10px 24px rgba(184,90,16,.4);
+}
+
+/* MSME — purple */
+.tile--msme{
+  background:linear-gradient(180deg,#9a5ce0 0%,#5d2aa8 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25),0 10px 24px rgba(93,42,168,.4);
+}
+
+/* Trademark — red */
+.tile--tm{
+  background:linear-gradient(180deg,#e0443a 0%,#9c1f18 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25),0 10px 24px rgba(156,31,24,.4);
+}
+
+/* PAN — teal */
+.tile--pan{
+  background:linear-gradient(180deg,#18c4b0 0%,#0a7a6d 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25),0 10px 24px rgba(10,122,109,.4);
+}
+
+/* DSC — indigo */
+.tile--dsc{
+  background:linear-gradient(180deg,#6a5cf0 0%,#2e2599 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25),0 10px 24px rgba(46,37,153,.4);
+}
+
+/* Business Registration — deep navy-blue */
+.tile--biz{
+  background:linear-gradient(180deg,#2a72c4 0%,#123a78 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -3px 0 rgba(0,0,0,.25),0 10px 24px rgba(18,58,120,.4);
+}
+
+/* ---- Responsive ---- */
+@media (max-width:640px){
+  .tiles{grid-template-columns:repeat(2,1fr);gap:12px}
+  .tile{min-height:120px;padding:18px 10px 16px;border-radius:16px}
+  .tile b{font-size:14px}
+  .tile small{font-size:11px}
+  .tile .tile-ico{width:40px;height:40px}
+  .tile .tile-ico svg{width:22px;height:22px}
+}
+
+@media (max-width:360px){
+  .tiles{gap:10px}
+  .tile{padding:16px 8px 14px;min-height:112px}
+}
+
+/* Reduced motion — no hover lift */
+@media (prefers-reduced-motion: reduce){
+  .tile,.tile:hover{transform:none !important}
+}
