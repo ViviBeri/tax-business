@@ -36,7 +36,7 @@
   function reveals() {
     if (reduce || !("IntersectionObserver" in window)) return;
     var targets = document.querySelectorAll(
-      ".service-card, .step, .locations a, .tool-grid > div, .faq-list details, .about-points > div, .newbiz"
+      ".tile[data-service], .step, .locations a, .tool-grid > div, .faq-list details, .about-points > div, .newbiz"
     );
     if (!targets.length) return;
     targets.forEach(function (el) { el.classList.add("kvb-reveal"); });

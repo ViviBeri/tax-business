@@ -1,5 +1,5 @@
 (function(){
-var d=document,cur='en';
+var d=document;
 var ev=function(n,p){try{if(window.gtag)gtag('event',n,p||{})}catch(e){}};
 var q=function(s){return d.querySelectorAll(s)};
 var mb=d.getElementById('menuBtn'),nv=d.getElementById('mainNav');
@@ -11,7 +11,7 @@ if(a.classList.contains('lang')){ev('language_switch',{language:a.getAttribute('
 var h=a.href||'',l=a.dataset.loc||'page',p={link_location:l,page_path:location.pathname};
 if(h.indexOf('wa.me')>-1)ev('whatsapp_click',p);
 else if(h.indexOf('tel:')===0)ev('call_click',p);
-else if(a.classList.contains('service-card'))ev('select_service',{service:a.dataset.service,link_location:'home-card'})});
+if(a.hasAttribute('data-service'))ev('select_service',{service:a.dataset.service,link_location:'home-card'})});
 var sv=d.getElementById('service');
 if(sv)sv.addEventListener('change',function(){if(sv.value)ev('select_service',{service:sv.value,link_location:'form'})});
 var f=d.getElementById('enquiryForm');
