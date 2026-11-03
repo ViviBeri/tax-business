@@ -7,7 +7,7 @@ if ! command -v npm >/dev/null 2>&1; then
 fi
 
 echo "Installing the 21st.dev CLI and skills installer globally..."
-npm install --global @21st-dev/cli skills
+npm install --global --ignore-scripts @21st-dev/cli skills
 
 echo
 echo "Starting 21st.dev sign-in. Complete the browser flow when it opens..."
