@@ -19,7 +19,8 @@ body{color:var(--ds-color-text);background-color:var(--ds-color-canvas)}
 .service-card{background:var(--ds-color-surface)}
 .service-card:hover{box-shadow:var(--ds-shadow-raised)}
 .btn{min-height:46px;border-radius:var(--ds-radius-sm);font-weight:750}
-.btn:focus-visible,.tile:focus-visible,.locations a:focus-visible,.quick a:focus-visible,.topbar a:focus-visible,.mbar a:focus-visible{outline:3px solid var(--ds-color-gold-500);outline-offset:3px}
+.btn:focus-visible,.tile:focus-visible,.locations a:focus-visible,.topbar a:focus-visible{outline:3px solid var(--ds-color-accent-600);outline-offset:3px}
+.quick a:focus-visible,.mbar a:focus-visible{outline:3px solid var(--ds-color-gold-500);outline-offset:3px}
 .contact-box{border-radius:var(--ds-radius-lg);box-shadow:var(--ds-shadow-raised)}
 .contact-box input,.contact-box select,.contact-box textarea{min-height:46px;border-radius:var(--ds-radius-sm)}
 .contact-box textarea{min-height:112px}
