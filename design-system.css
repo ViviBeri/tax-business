@@ -1,0 +1,42 @@
+/* KVB Design System v1 — consolidated semantic tokens and accessible component defaults */
+:root {
+  --ds-color-brand-950:#07132f; --ds-color-brand-900:#0a1030; --ds-color-brand-800:#131a4a;
+  --ds-color-brand-700:#183b63; --ds-color-accent-600:#087f79; --ds-color-accent-500:#0b9a94;
+  --ds-color-accent-100:#dff7f4; --ds-color-gold-500:#d9a72e; --ds-color-text:#172033;
+  --ds-color-muted:#5d6b80; --ds-color-surface:#fff; --ds-color-canvas:#f5f8fc;
+  --ds-color-border:#dfe6ef; --ds-shadow-card:0 8px 24px rgba(10,16,48,.08);
+  --ds-shadow-raised:0 16px 36px rgba(10,16,48,.14); --ds-radius-sm:10px;
+  --ds-radius-md:16px; --ds-radius-lg:22px; --ds-content-width:1120px;
+  --ds-space-section:clamp(52px,7vw,82px);
+}
+body{color:var(--ds-color-text);background-color:var(--ds-color-canvas)}
+.wrap{width:min(var(--ds-content-width),92%)}
+.section{padding-block:var(--ds-space-section)}
+.section-head{margin-bottom:clamp(22px,3vw,34px)}
+.section-head h2{color:var(--ds-color-brand-900);text-wrap:balance}
+.section-head p,.about-grid p,.service-card p{color:var(--ds-color-muted)}
+.service-card,.panel,.tool-grid>div,.step,.faq-list details{border-color:var(--ds-color-border);border-radius:var(--ds-radius-md);box-shadow:var(--ds-shadow-card)}
+.service-card{background:var(--ds-color-surface)}
+.service-card:hover{box-shadow:var(--ds-shadow-raised)}
+.btn{min-height:46px;border-radius:var(--ds-radius-sm);font-weight:750}
+.btn:focus-visible,.tile:focus-visible,.locations a:focus-visible,.topbar a:focus-visible{outline:3px solid var(--ds-color-accent-600);outline-offset:3px}
+.quick a:focus-visible,.mbar a:focus-visible{outline:3px solid var(--ds-color-gold-500);outline-offset:3px}
+.contact-box{border-radius:var(--ds-radius-lg);box-shadow:var(--ds-shadow-raised)}
+.contact-box input,.contact-box select,.contact-box textarea{min-height:46px;border-radius:var(--ds-radius-sm)}
+.contact-box textarea{min-height:112px}
+.tile{border-radius:var(--ds-radius-md);min-height:136px}
+.locations a{min-height:52px;display:flex;align-items:center}
+.faq-list summary{padding-right:28px;line-height:1.45}
+img{height:auto}
+@media(max-width:760px){
+ .section{padding-block:54px}.hero{padding-block:52px 46px}.hero-grid{gap:30px}
+ .hero h1{font-size:clamp(36px,10vw,52px);line-height:1.08;letter-spacing:-1.2px}
+ .hero .lead{font-size:16px;line-height:1.6}.hero .actions{display:grid;grid-template-columns:1fr;gap:10px}
+ .hero .actions .btn{width:100%;min-height:50px}.tiles{gap:10px}.tile{min-height:124px}
+ .contact{padding-block:56px}.contact-box{padding:20px}
+ .mbar{padding-bottom:max(8px,env(safe-area-inset-bottom))!important}
+}
+@media(max-width:380px){.wrap{width:90%}.tile{padding-inline:8px}.tile b{font-size:13px}}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
