@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if ! command -v npm >/dev/null 2>&1; then
-  echo "Node.js and npm are required. Install Node.js 20+ and rerun this script." >&2
+  echo "Node.js and npm are required. Install them and rerun this script." >&2
   exit 1
 fi
 
