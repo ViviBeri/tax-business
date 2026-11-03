@@ -6,6 +6,12 @@ Static website for KVB ENTERPRISES, tax and business compliance assistance in Pu
   <img src="https://raw.githubusercontent.com/ViviBeri/tax-business/main/readme-hero.svg" alt="KVB ENTERPRISES animated 3D project banner" width="100%" />
 </p>
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ViviBeri/tax-business/main/readme-journey.svg" alt="Animated KVB ENTERPRISES service enquiry journey" width="100%" />
+</p>
+
+<p align="center"><sub>Illustrative enquiry journey: service selection, information, enquiry and human assistance. KVB ENTERPRISES is independent and is not a government department.</sub></p>
+
 
 
 ## Structure
