@@ -99,7 +99,7 @@
         wrapping = true;
         track.scrollLeft = position - groupWidth;
         wrapping = false;
-      } else if (position < groupWidth) {
+      } else if (position <= 2) {
         wrapping = true;
         track.scrollLeft = position + groupWidth;
         wrapping = false;
