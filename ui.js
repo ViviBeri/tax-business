@@ -67,13 +67,17 @@
     track.setAttribute("aria-label", "KVB services, repeating horizontal carousel");
     track.dataset.loopReady = "true";
 
-    originals.forEach(function (card) {
-      var clone = card.cloneNode(true);
-      clone.setAttribute("aria-hidden", "true");
-      clone.setAttribute("tabindex", "-1");
-      clone.querySelectorAll("a,button,[tabindex]").forEach(function (el) { el.setAttribute("tabindex", "-1"); });
-      track.appendChild(clone);
-    });
+    function appendCloneSet() {
+      originals.forEach(function (card) {
+        var clone = card.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        clone.setAttribute("tabindex", "-1");
+        clone.querySelectorAll("a,button,[tabindex]").forEach(function (el) { el.setAttribute("tabindex", "-1"); });
+        track.appendChild(clone);
+      });
+    }
+    appendCloneSet();
+    appendCloneSet();
 
     var groupWidth = 0;
     var wrapping = false;
@@ -83,19 +87,19 @@
       var firstClone = track.children[originals.length];
       if (!first || !firstClone) return;
       groupWidth = firstClone.offsetLeft - first.offsetLeft;
-      if (groupWidth > 0 && track.scrollLeft < groupWidth * 0.5) {
-        track.scrollLeft = groupWidth;
+      if (groupWidth > 0 && track.scrollLeft < groupWidth) {
+        track.scrollLeft += groupWidth;
       }
     }
 
     track.addEventListener("scroll", function () {
       if (wrapping || !groupWidth) return;
       var position = track.scrollLeft;
-      if (position >= groupWidth * 1.5) {
+      if (position >= groupWidth * 2) {
         wrapping = true;
         track.scrollLeft = position - groupWidth;
         wrapping = false;
-      } else if (position <= groupWidth * 0.5) {
+      } else if (position < groupWidth) {
         wrapping = true;
         track.scrollLeft = position + groupWidth;
         wrapping = false;
