@@ -22,7 +22,7 @@ if(mb&&nv){
     if(nv.contains(e.target)||mb.contains(e.target))return;
     closeMenu();
   });
-  window.addEventListener('resize',function(){if(window.innerWidth>760)closeMenu();},{passive:true});
+  window.addEventListener('resize',function(){if(window.innerWidth>1100)closeMenu();},{passive:true});
 }
 q('.yr').forEach(function(e){e.textContent=new Date().getFullYear()});
 d.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;
