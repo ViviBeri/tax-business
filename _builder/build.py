@@ -100,7 +100,7 @@ def head(r, title, desc, path, ld="", alts=None):
             f'<link rel="canonical" href="{u}"><meta property="og:type" content="website"><meta property="og:site_name" content="KVB ENTERPRISES">'
             f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{u}">'
             f'<meta property="og:image" content="{S}/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{locale}"><meta name="twitter:card" content="summary_large_image">{alt}<link rel="icon" type="image/png" href="{r}assets/logo.png">'
-            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css"><link rel="stylesheet" href="{r}design-system.css"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
+            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=menu-fix-4"><link rel="stylesheet" href="{r}design-system.css"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
             f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
 
 def header(r, alt=None):
@@ -113,7 +113,7 @@ def header(r, alt=None):
     return (f'<header class="topbar"><div class="wrap nav"><a class="brand" href="{home}" aria-label="KVB ENTERPRISES home">'
             f'<img src="{r}assets/logo.png" alt="KVB ENTERPRISES logo" width="56" height="47"><span><b>KVB</b> ENTERPRISES<small>{L("Tax &amp; Business Compliance")}</small></span></a>'
             f'<div class="nav-right"><nav id="mainNav" aria-label="Main navigation">{n}</nav>{lg}'
-            f'<button class="menu" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false">☰</button></div></div></header>')
+            f'<button class="menu" id="menuBtn" type="button" aria-label="Open menu" aria-controls="mainNav" aria-expanded="false">☰</button></div></div></header>')
 
 def foot(r):
     bar = (f'<div class="mbar"><a href="{wa("Hello Vivian, I would like to know about your services.")}" target="_blank" rel="noopener" data-loc="mobile-bar">{ICON}WhatsApp</a>'
@@ -123,7 +123,7 @@ def foot(r):
             f'<div><b>KVB ENTERPRISES</b><p>{L("Tax &amp; Business Compliance Services")}</p></div></div>'
             f'<div>GST • ITR • FSSAI • PAN • MSME • Trademark • DSC<br>{L("Puducherry &amp; nearby areas")}</div>'
             f'<div><a href="{r}privacy.html">Privacy</a> • <a href="{r}terms.html">Terms</a><br>© <span class="yr">{TD.year}</span> KVB ENTERPRISES</div></div></footer>'
-            f'<script src="{r}script.js" defer></script><script src="{r}ui.js" defer></script></body></html>')
+            f'<script src="{r}script.js?v=menu-fix-4" defer></script><script src="{r}ui.js" defer></script></body></html>')
 
 def btn(href, en, ta, cls="primary", loc="", ico=False, ext=True):
     t = ' target="_blank" rel="noopener"' if ext else ""
