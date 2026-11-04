@@ -1909,3 +1909,86 @@ img,svg,video{max-width:100%;height:auto}
 @media(prefers-reduced-motion:reduce){
  .tiles-carousel.is-horizontal-loop .tiles{scroll-behavior:auto}
 }
+
+
+/* Compact header for narrow desktop/tablet widths: prevent Tamil nav
+   labels colliding with the English language switch. */
+@media (min-width:761px) and (max-width:1100px) {
+  .topbar .wrap.nav {
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:8px !important;
+    grid-template-columns:none !important;
+  }
+  .topbar .brand { flex:0 0 auto !important; min-width:0 !important; }
+  .topbar .nav-right {
+    display:flex !important;
+    flex:0 0 auto !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+    gap:8px !important;
+    padding:0 8px !important;
+    position:static !important;
+  }
+  .topbar .nav-right nav:not(.is-open) {
+    display:none !important;
+  }
+  .topbar .nav-right nav.is-open {
+    display:flex !important;
+    position:absolute !important;
+    top:calc(100% + 8px) !important;
+    left:50% !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+    width:min(100vw, 520px) !important;
+    max-height:70vh !important;
+    overflow-y:auto !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    gap:0 !important;
+    padding:10px 16px !important;
+    background:#fff !important;
+    border:1px solid rgba(10,16,48,.12) !important;
+    border-radius:0 0 16px 16px !important;
+    box-shadow:0 18px 36px rgba(10,16,48,.24) !important;
+    z-index:10000 !important;
+    box-sizing:border-box !important;
+  }
+  .topbar .nav-right nav.is-open a {
+    display:flex !important;
+    align-items:center !important;
+    width:100% !important;
+    min-height:48px !important;
+    padding:12px 10px !important;
+    color:#0a1030 !important;
+    background:transparent !important;
+    border:0 !important;
+    border-bottom:1px solid rgba(10,16,48,.10) !important;
+    border-radius:0 !important;
+    white-space:normal !important;
+    text-align:left !important;
+    box-sizing:border-box !important;
+  }
+  .topbar .nav-right nav.is-open a:last-child { border-bottom:0 !important; }
+  .topbar .nav-right .lang {
+    display:inline-flex !important;
+    flex:0 0 auto !important;
+    white-space:nowrap !important;
+    margin:0 !important;
+  }
+  .topbar .menu,
+  .topbar #menuBtn {
+    display:inline-flex !important;
+    visibility:visible !important;
+    flex:0 0 42px !important;
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+    min-height:42px !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:0 !important;
+    pointer-events:auto !important;
+  }
+}
