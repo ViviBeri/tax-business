@@ -452,3 +452,21 @@
     font-size: clamp(15px, 4.2vw, 22px) !important;
   }
 }
+
+
+/* Mobile text-color isolation: the site's gold headline gradient must not
+   make the individual split-flap glyphs transparent. */
+.hero h1 .split-flap-text,
+.hero h1 .split-flap-text * {
+  -webkit-text-fill-color: initial;
+}
+.hero h1 .split-flap-text__char {
+  color: var(--split-flap-text-color, #f8fafc) !important;
+  -webkit-text-fill-color: var(--split-flap-text-color, #f8fafc) !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  filter: none !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35) !important;
+}
