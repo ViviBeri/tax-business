@@ -55,24 +55,41 @@
     var btn = document.getElementById("menuBtn");
     var nav = document.getElementById("mainNav");
     if (!btn || !nav) return;
-    var mo = new MutationObserver(function () {
-      nav.classList.toggle("is-open", btn.getAttribute("aria-expanded") === "true");
-    });
-    mo.observe(btn, { attributes: true, attributeFilter: ["aria-expanded"] });
-  }
 
-  function dismissMenu() {
-    var btn = document.getElementById("menuBtn");
-    var nav = document.getElementById("mainNav");
-    if (!btn || !nav) return;
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && btn.getAttribute("aria-expanded") === "true") btn.click();
+    function setMenuOpen(open) {
+      var isOpen = Boolean(open);
+      btn.setAttribute("aria-expanded", String(isOpen));
+      btn.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+      nav.classList.toggle("is-open", isOpen);
+    }
+
+    btn.setAttribute("aria-controls", "mainNav");
+    setMenuOpen(false);
+
+    btn.addEventListener("click", function () {
+      setMenuOpen(btn.getAttribute("aria-expanded") !== "true");
     });
-    document.addEventListener("click", function (e) {
+
+    nav.addEventListener("click", function (event) {
+      if (event.target.closest("a")) setMenuOpen(false);
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && btn.getAttribute("aria-expanded") === "true") {
+        setMenuOpen(false);
+        btn.focus();
+      }
+    });
+
+    document.addEventListener("click", function (event) {
       if (btn.getAttribute("aria-expanded") !== "true") return;
-      if (nav.contains(e.target) || btn.contains(e.target)) return;
-      btn.click();
+      if (nav.contains(event.target) || btn.contains(event.target)) return;
+      setMenuOpen(false);
     });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 760) setMenuOpen(false);
+    }, { passive: true });
   }
 
   function ready(fn) {
@@ -85,6 +102,5 @@
     headerShadow();
     reveals();
     enhanceMenu();
-    dismissMenu();
   });
 })();
