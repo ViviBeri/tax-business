@@ -100,7 +100,7 @@ def head(r, title, desc, path, ld="", alts=None):
             f'<link rel="canonical" href="{u}"><meta property="og:type" content="website"><meta property="og:site_name" content="KVB ENTERPRISES">'
             f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{u}">'
             f'<meta property="og:image" content="{S}/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{locale}"><meta name="twitter:card" content="summary_large_image">{alt}<link rel="icon" type="image/png" href="{r}assets/logo.png">'
-            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=menu-fix-5"><link rel="stylesheet" href="{r}design-system.css"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
+            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=glass-tiles-1"><link rel="stylesheet" href="{r}design-system.css"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
             f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
 
 def header(r, alt=None):
@@ -172,7 +172,11 @@ def tiles_html(r):
             f'<b>{label}</b>'
             f'<small>{cap}</small>'
             f'</a>')
-    return "".join(out)
+    return ('<div class="tiles-carousel" role="region" aria-label="Our services">'
+            '<button class="tiles-arrow tiles-prev" type="button" aria-label="Previous services">‹</button>'
+            '<div class="tiles" id="serviceTiles">' + "".join(out) + '</div>'
+            '<button class="tiles-arrow tiles-next" type="button" aria-label="Next services">›</button>'
+            '</div>')
 
 def index():
     ld = '<script type="application/ld+json">' + json.dumps({
