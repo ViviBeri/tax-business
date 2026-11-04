@@ -11,6 +11,8 @@ on:
       - 'ui.js'
       - 'split-flap.css'
       - 'split-flap.js'
+      - 'SplitFlapText.css'
+      - 'SplitFlapText.js'
       - 'index.html'
       - '.github/workflows/build.yml'
   workflow_dispatch:
