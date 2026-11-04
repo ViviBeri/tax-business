@@ -100,7 +100,7 @@ def head(r, title, desc, path, ld="", alts=None):
             f'<link rel="canonical" href="{u}"><meta property="og:type" content="website"><meta property="og:site_name" content="KVB ENTERPRISES">'
             f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{u}">'
             f'<meta property="og:image" content="{S}/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{locale}"><meta name="twitter:card" content="summary_large_image">{alt}<link rel="icon" type="image/png" href="{r}assets/logo.png">'
-            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=horizontal-tiles-4"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}split-flap.css?v=6"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
+            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=horizontal-tiles-4"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}SplitFlapText.css?v=1"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
             f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
 
 def header(r, alt=None):
@@ -123,7 +123,7 @@ def foot(r):
             f'<div><b>KVB ENTERPRISES</b><p>{L("Tax &amp; Business Compliance Services")}</p></div></div>'
             f'<div>GST • ITR • FSSAI • PAN • MSME • Trademark • DSC<br>{L("Puducherry &amp; nearby areas")}</div>'
             f'<div><a href="{r}privacy.html">Privacy</a> • <a href="{r}terms.html">Terms</a><br>© <span class="yr">{TD.year}</span> KVB ENTERPRISES</div></div></footer>'
-            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script src="{r}ui.js?v=horizontal-tiles-4" defer></script><script src="{r}split-flap.js?v=2" defer></script></body></html>')
+            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script src="{r}ui.js?v=horizontal-tiles-4" defer></script><script src="{r}SplitFlapText.js?v=1" defer></script></body></html>')
 
 def btn(href, en, ta, cls="primary", loc="", ico=False, ext=True):
     t = ' target="_blank" rel="noopener"' if ext else ""
@@ -194,7 +194,7 @@ def index():
       + f'<img class="hero-illustration" src="{r}assets/hero-illustration.png" alt="" aria-hidden="true" loading="eager" decoding="async">'
       + '<div class="wrap hero-grid"><div class="hero-copy">'
           + T("div", "Local tax &amp; business compliance", "உள்ளூர் வரி மற்றும் வணிக இணக்க சேவைகள்", "eyebrow")
-          + T("h1", '<span class="splitflap-line" data-splitflap="YOUR BUSINESS.">YOUR BUSINESS.</span><br><span class="splitflap-line splitflap-accent" data-splitflap="OUR RESPONSIBILITY.">OUR RESPONSIBILITY.</span>', '<span class="splitflap-line" data-splitflap="உங்கள் தொழில்.">உங்கள் தொழில்.</span><br><span class="splitflap-line splitflap-accent" data-splitflap="எங்கள் பொறுப்பு.">எங்கள் பொறுப்பு.</span>')
+          + T("h1", '<span class="splitflap-line" data-split-flap-words="YOUR BUSINESS.">YOUR BUSINESS.</span><br><span class="splitflap-line splitflap-accent" data-split-flap-words="OUR RESPONSIBILITY.">OUR RESPONSIBILITY.</span>', '<span class="splitflap-line" data-split-flap-words="உங்கள் தொழில்.">உங்கள் தொழில்.</span><br><span class="splitflap-line splitflap-accent" data-split-flap-words="எங்கள் பொறுப்பு.">எங்கள் பொறுப்பு.</span>')
           + T("p", "Professional assistance for GST, Income Tax / ITR, FSSAI, PAN, MSME/Udyam, Trademark, DSC and business registrations.", "GST, வருமான வரி / ITR, FSSAI, PAN, MSME/உத்யம், வர்த்தக முத்திரை, DSC மற்றும் வணிக பதிவுகளுக்கு தொழில்முறை உதவி.", "lead")
           + '<div class="actions">' + btn(wa("Hello Vivian, I need assistance with your services."), "WhatsApp Vivian", "WhatsApp-ல் பேசுங்கள்", "primary", "hero", True)
           + btn(f"tel:+{PH}", "Call now", "இப்போது அழைக்கவும்", "secondary", "hero", False, False) + "</div>"
