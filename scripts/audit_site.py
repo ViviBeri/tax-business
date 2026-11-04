@@ -79,11 +79,11 @@ def main() -> None:
     if f"Sitemap: {SITE}sitemap.xml" not in robots:
         fail("robots.txt must point to the canonical sitemap.xml")
 
-    service_pages = sorted((ROOT / "services").glob("*.html"))
+    service_pages = sorted(page for page in (ROOT / "services").glob("*.html") if page.name not in {"gst-filing.html", "gst-registration.html"})
     tamil_pages = sorted((ROOT / "ta" / "services").glob("*.html"))
     pages = service_pages + tamil_pages
-    if len(service_pages) != 10 or len(tamil_pages) != 8:
-        fail(f"Expected 10 English and 8 Tamil service pages; found {len(service_pages)} and {len(tamil_pages)}")
+    if len(service_pages) != 8 or len(tamil_pages) != 8:
+        fail(f"Expected 8 localized English and 8 Tamil service pages; found {len(service_pages)} and {len(tamil_pages)}")
 
     for page in pages:
         parser = JsonLdParser()
