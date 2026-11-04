@@ -55,97 +55,67 @@
   function serviceCarousel() {
     var wrap = document.querySelector(".tiles-carousel");
     var track = document.getElementById("serviceTiles");
-    if (!wrap || !track) return;
-    var cards = Array.prototype.slice.call(track.querySelectorAll(".tile"));
+    if (!wrap || !track || track.dataset.loopReady === "true") return;
+    var originals = Array.prototype.slice.call(track.querySelectorAll(".tile"));
     var prev = wrap.querySelector(".tiles-prev");
     var next = wrap.querySelector(".tiles-next");
-    if (!cards.length) return;
+    if (!originals.length) return;
 
-    var rotation = 0;
-    var step = 360 / cards.length;
-    var dragging = false;
-    var startX = 0;
-    var startRotation = 0;
-    var moved = false;
+    wrap.classList.remove("is-circular");
+    wrap.classList.add("is-horizontal-loop");
+    wrap.setAttribute("aria-label", "Manually swipe or scroll through services. The list repeats continuously.");
+    track.setAttribute("aria-label", "KVB services, repeating horizontal carousel");
+    track.dataset.loopReady = "true";
 
-    wrap.classList.add("is-circular");
-    wrap.setAttribute("aria-label", "Manually swipe or drag to browse services");
-    track.setAttribute("aria-label", "Circular carousel of KVB services");
+    originals.forEach(function (card) {
+      var clone = card.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      clone.setAttribute("tabindex", "-1");
+      clone.querySelectorAll("a,button,[tabindex]").forEach(function (el) { el.setAttribute("tabindex", "-1"); });
+      track.appendChild(clone);
+    });
 
-    function layout() {
-      var available = Math.min(wrap.clientWidth, window.innerWidth || wrap.clientWidth);
-      var width = Math.min(window.innerWidth <= 640 ? 158 : 230, Math.max(window.innerWidth <= 640 ? 132 : 170, available * (window.innerWidth <= 640 ? 0.40 : 0.23)));
-      var radius = Math.round((width / 2) / Math.tan(Math.PI / cards.length));
-      cards.forEach(function (card, index) {
-        card.style.width = width + "px";
-        card.style.height = window.innerWidth <= 640 ? "205px" : "200px";
-        card.style.left = "50%";
-        card.style.top = "50%";
-        card.style.transform = "translate(-50%,-50%) rotateY(" + (index * step) + "deg) translateZ(" + radius + "px)";
-        card.style.position = "absolute";
-        card.style.backfaceVisibility = "hidden";
-      });
-      track.style.height = (window.innerWidth <= 640 ? "270px" : "280px");
-      render();
+    var groupWidth = 0;
+    var wrapping = false;
+
+    function measure() {
+      var first = track.children[0];
+      var firstClone = track.children[originals.length];
+      if (!first || !firstClone) return;
+      groupWidth = firstClone.offsetLeft - first.offsetLeft;
+      if (groupWidth > 0 && track.scrollLeft < groupWidth * 0.5) {
+        track.scrollLeft = groupWidth;
+      }
     }
 
-    function render() {
-      track.style.transform = "rotateY(" + rotation + "deg)";
-      cards.forEach(function (card, index) {
-        var angle = ((index * step + rotation) % 360 + 360) % 360;
-        var normalized = angle > 180 ? 360 - angle : angle;
-        var depth = Math.cos(normalized * Math.PI / 180);
-        card.style.opacity = String(Math.max(0.18, 0.34 + 0.66 * Math.max(0, depth)));
-        card.style.zIndex = String(Math.round((depth + 1) * 100));
-        card.style.filter = depth < -0.15 ? "brightness(.72)" : "none";
-        card.setAttribute("aria-hidden", depth < -0.35 ? "true" : "false");
-        card.tabIndex = depth < -0.35 ? -1 : 0;
-      });
-    }
+    track.addEventListener("scroll", function () {
+      if (wrapping || !groupWidth) return;
+      var position = track.scrollLeft;
+      if (position >= groupWidth * 1.5) {
+        wrapping = true;
+        track.scrollLeft = position - groupWidth;
+        wrapping = false;
+      } else if (position <= groupWidth * 0.5) {
+        wrapping = true;
+        track.scrollLeft = position + groupWidth;
+        wrapping = false;
+      }
+    }, { passive: true });
 
     function move(direction) {
-      rotation = ((rotation - direction * step) % 360 + 360) % 360;
-      render();
+      var card = track.querySelector(".tile");
+      var gap = parseFloat(window.getComputedStyle(track).columnGap || window.getComputedStyle(track).gap) || 16;
+      var distance = card ? card.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
+      track.scrollBy({ left: direction * distance, behavior: "smooth" });
     }
     if (prev) prev.addEventListener("click", function () { move(-1); });
     if (next) next.addEventListener("click", function () { move(1); });
 
-    wrap.addEventListener("pointerdown", function (event) {
-      if (event.target.closest("button")) return;
-      dragging = true;
-      moved = false;
-      startX = event.clientX;
-      startRotation = rotation;
-      wrap.classList.add("is-dragging");
-      if (wrap.setPointerCapture) wrap.setPointerCapture(event.pointerId);
+    window.addEventListener("resize", measure);
+    requestAnimationFrame(function () {
+      measure();
+      track.scrollLeft = groupWidth;
     });
-    wrap.addEventListener("pointermove", function (event) {
-      if (!dragging) return;
-      var distance = event.clientX - startX;
-      if (Math.abs(distance) > 4) moved = true;
-      rotation = ((startRotation + distance * 0.42) % 360 + 360) % 360;
-      render();
-    });
-    function endDrag() {
-      if (!dragging) return;
-      dragging = false;
-      wrap.classList.remove("is-dragging");
-    }
-    wrap.addEventListener("pointerup", endDrag);
-    wrap.addEventListener("pointercancel", endDrag);
-    wrap.addEventListener("lostpointercapture", endDrag);
-    wrap.addEventListener("click", function (event) {
-      if (!moved) return;
-      event.preventDefault();
-      event.stopPropagation();
-      moved = false;
-    }, true);
-    wrap.addEventListener("keydown", function (event) {
-      if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); }
-      if (event.key === "ArrowRight") { event.preventDefault(); move(1); }
-    });
-    window.addEventListener("resize", layout);
-    layout();
   }
 
   function ready(fn) {
