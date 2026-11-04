@@ -200,7 +200,7 @@
 
     function renderInitial(phrase) {
       tiles = phrase.split("").map(char => ({
-        current: options.intro && !prefersReduced ? " " : char,
+        current: char,
         next: char,
         flipping: false,
         tick: 0
