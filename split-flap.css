@@ -12,9 +12,9 @@
   filter:none!important;
  }
  .hero h1 .splitflap-line.splitflap-accent{
-  font-size:clamp(15px,3vw,24px)!important;
-  letter-spacing:-.075em!important;
-  gap:2px!important;
+  font-size:clamp(24px,6.4vw,30px)!important;
+  letter-spacing:-.08em!important;
+  gap:1px!important;
  }
  .hero h1 .splitflap-line.splitflap-accent .flap-char{
   min-width:.48em!important;
