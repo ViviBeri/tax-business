@@ -1,0 +1,42 @@
+name: Static site integrity audit
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - 'sitemap.txt'
+      - 'robots.txt'
+      - 'scripts/**'
+      - '.github/workflows/static-site-audit.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - 'sitemap.txt'
+      - 'robots.txt'
+      - 'scripts/**'
+      - '.github/workflows/static-site-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-site-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: SEO and structured-data integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Run dependency-free site audit
+        run: python3 scripts/audit_site.py
