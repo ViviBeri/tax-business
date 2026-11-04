@@ -95,18 +95,24 @@
     track.addEventListener("scroll", function () {
       if (wrapping || !groupWidth) return;
       var position = track.scrollLeft;
-      /* Keep the user inside the middle copy. Wrap before either edge
-         becomes visible, so touch momentum never reaches the track ends. */
-      var lowerBoundary = groupWidth * 0.5;
-      var upperBoundary = groupWidth * 1.5;
-      if (position > upperBoundary) {
+      /* Three identical sets: keep the middle set as the normal range.
+         Only reposition after the user reaches a real end of that range. */
+      if (position >= groupWidth * 2 - 2) {
         wrapping = true;
+        track.style.scrollBehavior = "auto";
         track.scrollLeft = position - groupWidth;
-        requestAnimationFrame(function () { wrapping = false; });
-      } else if (position < lowerBoundary) {
+        requestAnimationFrame(function () {
+          track.style.scrollBehavior = "";
+          wrapping = false;
+        });
+      } else if (position <= 2) {
         wrapping = true;
+        track.style.scrollBehavior = "auto";
         track.scrollLeft = position + groupWidth;
-        requestAnimationFrame(function () { wrapping = false; });
+        requestAnimationFrame(function () {
+          track.style.scrollBehavior = "";
+          wrapping = false;
+        });
       }
     }, { passive: true });
 
