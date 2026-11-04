@@ -1756,3 +1756,23 @@ img,svg,video{max-width:100%;height:auto}
     outline-offset: -3px !important;
   }
 }
+
+
+/* Mobile hamburger tap reliability: keep the actual button above header layers. */
+@media (max-width: 760px) {
+  .topbar .nav-right { position: relative !important; }
+  .topbar #menuBtn {
+    position: relative !important;
+    z-index: 1002 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+  }
+  .topbar #mainNav.is-open { z-index: 1001 !important; }
+}
