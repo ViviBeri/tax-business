@@ -4,7 +4,7 @@ var ev=function(n,p){try{if(window.gtag)gtag('event',n,p||{})}catch(e){}};
 var q=function(s){return d.querySelectorAll(s)};
 var mb=d.getElementById('menuBtn'),nv=d.getElementById('mainNav');
 if(mb&&nv){
-  function closeMenu(){mb.setAttribute('aria-expanded','false');mb.setAttribute('aria-label','Open menu');nv.classList.remove('is-open');}
+  function closeMenu(){mb.setAttribute('aria-expanded','false');mb.setAttribute('aria-label','Open menu');nv.classList.remove('is-open','open');}
   mb.setAttribute('aria-controls','mainNav');
   mb.addEventListener('click',function(e){
     e.preventDefault();
@@ -13,6 +13,7 @@ if(mb&&nv){
     mb.setAttribute('aria-expanded',String(open));
     mb.setAttribute('aria-label',open?'Close menu':'Open menu');
     nv.classList.toggle('is-open',open);
+    nv.classList.toggle('open',open);
   });
   nv.addEventListener('click',function(e){if(e.target.closest('a'))closeMenu();});
   d.addEventListener('keydown',function(e){if(e.key==='Escape'&&mb.getAttribute('aria-expanded')==='true'){closeMenu();mb.focus();}});
