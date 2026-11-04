@@ -2,9 +2,6 @@
 var d=document;
 var ev=function(n,p){try{if(window.gtag)gtag('event',n,p||{})}catch(e){}};
 var q=function(s){return d.querySelectorAll(s)};
-var mb=d.getElementById('menuBtn'),nv=d.getElementById('mainNav');
-if(mb&&nv){mb.addEventListener('click',function(){var o=nv.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
-nv.addEventListener('click',function(e){if(e.target.closest('a')){nv.classList.remove('open');mb.setAttribute('aria-expanded','false')}})}
 q('.yr').forEach(function(e){e.textContent=new Date().getFullYear()});
 d.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;
 if(a.classList.contains('lang')){ev('language_switch',{language:a.getAttribute('hreflang')});return}
