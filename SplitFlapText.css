@@ -413,3 +413,42 @@
     --split-flap-gap:clamp(1px,.3vw,2px);
   }
 }
+
+
+/* KVB clean-flap finish: remove the visible hinge/wire across every character. */
+.split-flap-text__tile::before {
+  display: none !important;
+}
+.split-flap-text__half,
+.split-flap-text__flap {
+  background: var(--split-flap-tile-color, #111827) !important;
+}
+
+/* Desktop-site mode on a phone reports a wider CSS viewport.
+   Treat compact tablet/phone widths as a stacked hero as well. */
+@media (max-width: 1100px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 26px !important;
+  }
+  .hero-copy {
+    min-width: 0;
+    width: 100%;
+  }
+  .hero-illustration {
+    display: none !important;
+  }
+  .hero h1 .split-flap-line {
+    max-width: 100%;
+  }
+  .hero h1 .split-flap-text {
+    font-size: clamp(18px, 3vw, 30px) !important;
+    gap: clamp(1px, .2vw, 3px) !important;
+    letter-spacing: .015em;
+  }
+}
+@media (max-width: 560px) {
+  .hero h1 .split-flap-text {
+    font-size: clamp(15px, 4.2vw, 22px) !important;
+  }
+}
