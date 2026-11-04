@@ -224,7 +224,7 @@ def index():
     b += ('<section id="services" class="section"><div class="wrap"><div class="section-head">'
           + T("h2", "Everything your business needs, in one place.", "உங்கள் வணிகத்திற்குத் தேவையான சேவைகள் அனைத்தும் ஒரே இடத்தில்.")
           + T("p", NOTE_EN, NOTE_TA)
-          + f'</div><div class="tiles">{tiles_html(r)}</div></div></section>')
+          + f'</div>{tiles_html(r)}</div></section>')
     b += ('<section id="how" class="section alt"><div class="wrap"><div class="section-head">' + T("h2", "How it works", "எப்படி செயல்படுகிறது") + "</div>" + steps()
           + '<div class="how-cta">' + btn(wa("Hello Vivian, I would like to get started."), "Start on WhatsApp →", "WhatsApp-ல் தொடங்குங்கள் →", "primary", "how-it-works", True) + "</div></div></section>")
     chips = "".join(f"<span>{L(c)}</span>" for c in ["Restaurants &amp; Food Businesses", "Bakeries &amp; Home Bakers", "Cafés &amp; Tea Shops", "Cloud Kitchens", "Boutiques &amp; Fashion", "Retail Shops", "Supermarkets", "Salons &amp; Spas", "Clinics &amp; Small Businesses", "Traders &amp; Wholesalers", "Manufacturers", "Online Sellers", "Freelancers &amp; Professionals", "New Businesses"])
