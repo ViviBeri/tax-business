@@ -1992,3 +1992,50 @@ img,svg,video{max-width:100%;height:auto}
     pointer-events:auto !important;
   }
 }
+
+
+/* KVB correction: remove the decorative line above the language switch. */
+.topbar .nav-right,
+.topbar .nav-right .lang {
+  border-top: 0 !important;
+  border-image: none !important;
+}
+
+/* Compact header on tablets and narrow landscape phones, including Tamil. */
+@media (max-width: 960px) {
+  .topbar .wrap.nav {
+    grid-template-columns: 1fr auto !important;
+  }
+  .topbar .nav-right {
+    position: static !important;
+    border-top: 0 !important;
+    border-image: none !important;
+    gap: 8px !important;
+  }
+  .topbar .nav-right nav:not(.is-open):not(.open) {
+    display: none !important;
+  }
+  .topbar .nav-right nav.is-open,
+  .topbar .nav-right nav.open {
+    display: flex !important;
+  }
+  .topbar .menu,
+  .topbar #menuBtn {
+    display: inline-flex !important;
+    visibility: visible !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    flex: 0 0 44px !important;
+  }
+}
+@media (min-width: 961px) {
+  .topbar .menu,
+  .topbar #menuBtn { display: none !important; }
+  .topbar .nav-right nav {
+    display: flex !important;
+    position: static !important;
+    flex-direction: row !important;
+  }
+}
