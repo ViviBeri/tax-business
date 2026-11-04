@@ -470,3 +470,47 @@
   filter: none !important;
   text-shadow: 0 1px 2px rgba(0,0,0,.35) !important;
 }
+
+
+/* Keep every hero child inside the real phone viewport. */
+@media (max-width: 900px) {
+  .hero-grid,
+  .hero-copy {
+    min-width: 0 !important;
+    width: 100%;
+  }
+  .hero-copy { overflow: hidden; }
+  .hero h1 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    letter-spacing: 0 !important;
+  }
+  .hero .lead,
+  .hero .trust {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .hero .actions {
+    width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero .actions .btn {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    justify-content: center;
+  }
+  .hero-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+@media (max-width: 560px) {
+  .hero { padding: 38px 0 34px !important; }
+  .hero h1 { margin-bottom: 16px !important; }
+  .hero .lead { font-size: 16px !important; line-height: 1.5; }
+  .hero .trust { font-size: 12px !important; }
+}
