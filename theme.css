@@ -1825,3 +1825,44 @@ img,svg,video{max-width:100%;height:auto}
  .tiles-carousel .tile{flex-basis:88%}
 }
 @media(max-width:380px){.tiles-carousel{padding:0 30px}.tiles-carousel .tiles-arrow{width:28px;height:28px;flex-basis:28px}.tiles-carousel .tile{flex-basis:92%}}
+
+
+/* Infinite 3D cylinder carousel: all service cards loop around one ring */
+.tiles-carousel.is-circular{
+  display:block;position:relative;width:100%;height:330px;padding:0 42px;
+  perspective:1100px;perspective-origin:50% 46%;overflow:hidden;
+  touch-action:pan-y;user-select:none;-webkit-user-select:none;
+}
+.tiles-carousel.is-circular .tiles{
+  display:block;position:relative;width:100%;height:280px;margin:0;padding:0;
+  overflow:visible;transform-style:preserve-3d;will-change:transform;
+  scroll-snap-type:none;touch-action:pan-y;
+}
+.tiles-carousel.is-circular .tile{
+  display:flex;position:absolute;flex-direction:column;align-items:center;justify-content:center;
+  gap:13px;min-height:0;min-width:0;margin:0;padding:20px 16px;
+  border-radius:24px;box-sizing:border-box;overflow:hidden;
+  transform-style:preserve-3d;backface-visibility:hidden;
+  transition:box-shadow .25s ease,border-color .25s ease;
+  will-change:transform,opacity;
+}
+.tiles-carousel.is-circular .tile:hover{transform:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 20px 38px rgba(10,16,48,.22)}
+.tiles-carousel.is-circular .tiles-arrow{
+  position:absolute;top:48%;z-index:1000;display:grid;place-items:center;
+  transform:translateY(-50%);pointer-events:auto
+}
+.tiles-carousel.is-circular .tiles-prev{left:2px}
+.tiles-carousel.is-circular .tiles-next{right:2px}
+.tiles-carousel.is-circular.is-dragging{cursor:grabbing}
+.tiles-carousel.is-circular.is-dragging .tile{pointer-events:none}
+@media(max-width:640px){
+ .tiles-carousel.is-circular{height:300px;padding:0 30px;perspective:900px;perspective-origin:50% 45%}
+ .tiles-carousel.is-circular .tiles{height:270px}
+ .tiles-carousel.is-circular .tile{border-radius:23px}
+ .tiles-carousel.is-circular .tiles-arrow{top:47%;width:32px;height:32px}
+ .tiles-carousel.is-circular .tiles-prev{left:0}
+ .tiles-carousel.is-circular .tiles-next{right:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .tiles-carousel.is-circular .tiles{will-change:auto}
+}
