@@ -62,24 +62,20 @@
     if (!cards.length) return;
 
     var rotation = 0;
-    var radius = 260;
     var step = 360 / cards.length;
-    var lastTime = 0;
     var dragging = false;
     var startX = 0;
     var startRotation = 0;
-    var paused = false;
-    var reduced = reduce;
-    var frame = 0;
+    var moved = false;
 
     wrap.classList.add("is-circular");
+    wrap.setAttribute("aria-label", "Manually swipe or drag to browse services");
     track.setAttribute("aria-label", "Circular carousel of KVB services");
-    track.style.transformStyle = "preserve-3d";
 
     function layout() {
       var available = Math.min(wrap.clientWidth, window.innerWidth || wrap.clientWidth);
       var width = Math.min(window.innerWidth <= 640 ? 158 : 230, Math.max(window.innerWidth <= 640 ? 132 : 170, available * (window.innerWidth <= 640 ? 0.40 : 0.23)));
-      radius = Math.round((width / 2) / Math.tan(Math.PI / cards.length));
+      var radius = Math.round((width / 2) / Math.tan(Math.PI / cards.length));
       cards.forEach(function (card, index) {
         card.style.width = width + "px";
         card.style.height = window.innerWidth <= 640 ? "205px" : "200px";
@@ -117,7 +113,7 @@
     wrap.addEventListener("pointerdown", function (event) {
       if (event.target.closest("button")) return;
       dragging = true;
-      paused = true;
+      moved = false;
       startX = event.clientX;
       startRotation = rotation;
       wrap.classList.add("is-dragging");
@@ -125,34 +121,31 @@
     });
     wrap.addEventListener("pointermove", function (event) {
       if (!dragging) return;
-      rotation = ((startRotation + (event.clientX - startX) * 0.42) % 360 + 360) % 360;
+      var distance = event.clientX - startX;
+      if (Math.abs(distance) > 4) moved = true;
+      rotation = ((startRotation + distance * 0.42) % 360 + 360) % 360;
       render();
     });
     function endDrag() {
       if (!dragging) return;
       dragging = false;
       wrap.classList.remove("is-dragging");
-      window.setTimeout(function () { paused = false; }, 900);
     }
     wrap.addEventListener("pointerup", endDrag);
     wrap.addEventListener("pointercancel", endDrag);
-    wrap.addEventListener("mouseenter", function (event) { if (event.pointerType === "mouse") paused = true; });
-    wrap.addEventListener("mouseleave", function () { if (!dragging) paused = false; });
+    wrap.addEventListener("lostpointercapture", endDrag);
+    wrap.addEventListener("click", function (event) {
+      if (!moved) return;
+      event.preventDefault();
+      event.stopPropagation();
+      moved = false;
+    }, true);
+    wrap.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); }
+      if (event.key === "ArrowRight") { event.preventDefault(); move(1); }
+    });
     window.addEventListener("resize", layout);
-
-    function animate(time) {
-      if (!lastTime) lastTime = time;
-      var delta = Math.min(40, time - lastTime);
-      lastTime = time;
-      if (!reduced && !paused && !dragging) {
-        rotation = (rotation - delta * 0.006) % 360;
-        render();
-      }
-      frame = window.requestAnimationFrame(animate);
-    }
     layout();
-    if (!reduced) frame = window.requestAnimationFrame(animate);
-    window.addEventListener("pagehide", function () { if (frame) window.cancelAnimationFrame(frame); });
   }
 
   function ready(fn) {
