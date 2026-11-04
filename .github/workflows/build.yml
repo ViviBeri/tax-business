@@ -9,6 +9,8 @@ on:
       - 'theme.css'
       - 'script.js'
       - 'ui.js'
+      - 'split-flap.css'
+      - 'split-flap.js'
       - 'index.html'
       - '.github/workflows/build.yml'
   workflow_dispatch:
