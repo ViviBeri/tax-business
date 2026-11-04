@@ -102,7 +102,7 @@ def main() -> None:
         }
         if not {"WebPage", "Service"}.issubset(types):
             fail(f"{page.relative_to(ROOT)} JSON-LD graph must include WebPage and Service")
-        expected_language = "ta-IN" if page.parts[0] == "ta" else "en-IN"
+        expected_language = "ta-IN" if page.relative_to(ROOT).parts[0] == "ta" else "en-IN"
         if not any(item.get("@type") == "WebPage" and item.get("inLanguage") == expected_language for item in graph if isinstance(item, dict)):
             fail(f"{page.relative_to(ROOT)} WebPage must declare inLanguage={expected_language}")
         canonical = SITE + page.relative_to(ROOT).as_posix()
