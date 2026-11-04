@@ -77,7 +77,8 @@
     track.style.transformStyle = "preserve-3d";
 
     function layout() {
-      var available = Math.min(wrap.clientWidth, window.innerWidth || wrap.clientWidth);\n      var width = Math.min(window.innerWidth <= 640 ? 158 : 230, Math.max(window.innerWidth <= 640 ? 132 : 170, available * (window.innerWidth <= 640 ? 0.40 : 0.23)));
+      var available = Math.min(wrap.clientWidth, window.innerWidth || wrap.clientWidth);
+      var width = Math.min(window.innerWidth <= 640 ? 158 : 230, Math.max(window.innerWidth <= 640 ? 132 : 170, available * (window.innerWidth <= 640 ? 0.40 : 0.23)));
       radius = Math.round((width / 2) / Math.tan(Math.PI / cards.length));
       cards.forEach(function (card, index) {
         card.style.width = width + "px";
@@ -107,7 +108,7 @@
     }
 
     function move(direction) {
-      rotation -= direction * step;
+      rotation = ((rotation - direction * step) % 360 + 360) % 360;
       render();
     }
     if (prev) prev.addEventListener("click", function () { move(-1); });
@@ -124,7 +125,7 @@
     });
     wrap.addEventListener("pointermove", function (event) {
       if (!dragging) return;
-      rotation = startRotation + (event.clientX - startX) * 0.42;
+      rotation = ((startRotation + (event.clientX - startX) * 0.42) % 360 + 360) % 360;
       render();
     });
     function endDrag() {
@@ -135,7 +136,7 @@
     }
     wrap.addEventListener("pointerup", endDrag);
     wrap.addEventListener("pointercancel", endDrag);
-    wrap.addEventListener("mouseenter", function () { paused = true; });
+    wrap.addEventListener("mouseenter", function (event) { if (event.pointerType === "mouse") paused = true; });
     wrap.addEventListener("mouseleave", function () { if (!dragging) paused = false; });
     window.addEventListener("resize", layout);
 
@@ -144,7 +145,7 @@
       var delta = Math.min(40, time - lastTime);
       lastTime = time;
       if (!reduced && !paused && !dragging) {
-        rotation -= delta * 0.006;
+        rotation = (rotation - delta * 0.006) % 360;
         render();
       }
       frame = window.requestAnimationFrame(animate);
