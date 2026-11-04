@@ -51,6 +51,21 @@
     targets.forEach(function (el) { io.observe(el); });
   }
 
+
+  function serviceCarousel() {
+    var track = document.getElementById("serviceTiles");
+    if (!track) return;
+    var prev = document.querySelector(".tiles-prev");
+    var next = document.querySelector(".tiles-next");
+    function move(direction) {
+      var card = track.querySelector(".tile");
+      var distance = card ? card.getBoundingClientRect().width + 18 : track.clientWidth * 0.8;
+      track.scrollBy({ left: direction * distance, behavior: reduce ? "auto" : "smooth" });
+    }
+    if (prev) prev.addEventListener("click", function () { move(-1); });
+    if (next) next.addEventListener("click", function () { move(1); });
+  }
+
   function ready(fn) {
     if (document.readyState !== "loading") fn();
     else document.addEventListener("DOMContentLoaded", fn);
@@ -60,5 +75,6 @@
     mountProgress();
     headerShadow();
     reveals();
+    serviceCarousel();
   });
 })();
