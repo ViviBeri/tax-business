@@ -2039,3 +2039,31 @@ img,svg,video{max-width:100%;height:auto}
     flex-direction: row !important;
   }
 }
+
+
+/* Final compact header alignment: logo left, language + menu together right.
+   Keep the navigation collapsed through 1100px so it never leaves an empty
+   centre region when the Tamil labels do not fit. */
+@media (max-width:1100px) {
+  .topbar .wrap.nav {display:flex !important;align-items:center !important;justify-content:space-between !important;gap:10px !important;grid-template-columns:none !important}
+  .topbar .wrap.nav::after {display:none !important}
+  .topbar .brand {flex:0 1 auto !important;min-width:0 !important}
+  .topbar .nav-right {display:flex !important;flex:0 0 auto !important;align-items:center !important;justify-content:flex-end !important;gap:8px !important;margin-left:auto !important;padding:0 10px !important;border:0 !important;position:static !important}
+  .topbar .nav-right nav:not(.is-open):not(.open) {display:none !important}
+  .topbar .nav-right nav.is-open,.topbar .nav-right nav.open {display:flex !important;position:absolute !important;top:calc(100% + 8px) !important;left:auto !important;right:0 !important;transform:none !important;width:min(92vw,360px) !important;max-height:70vh !important;overflow-y:auto !important;flex-direction:column !important;align-items:stretch !important;gap:0 !important;padding:8px 14px !important;background:#fff !important;border:1px solid rgba(10,16,48,.12) !important;border-radius:0 0 14px 14px !important;box-shadow:0 18px 36px rgba(10,16,48,.24) !important;z-index:10000 !important;box-sizing:border-box !important}
+  .topbar .nav-right nav.is-open a,.topbar .nav-right nav.open a {display:flex !important;align-items:center !important;width:100% !important;min-height:46px !important;padding:10px !important;color:#0a1030 !important;background:transparent !important;border:0 !important;border-bottom:1px solid rgba(10,16,48,.10) !important;border-radius:0 !important;white-space:normal !important;text-align:left !important;box-sizing:border-box !important}
+  .topbar .nav-right .lang {display:inline-flex !important;flex:0 0 auto !important;margin:0 !important;border:1px solid rgba(255,255,255,.6) !important}
+  .topbar .menu,.topbar #menuBtn {display:inline-flex !important;visibility:visible !important;flex:0 0 42px !important;width:42px !important;height:42px !important;min-width:42px !important;min-height:42px !important;align-items:center !important;justify-content:center !important;padding:0 !important;margin:0 !important;pointer-events:auto !important}
+}
+@media (max-width:380px) {
+  .topbar .brand {gap:7px !important;padding-left:8px !important;padding-right:8px !important}
+  .topbar .brand img {width:38px !important;height:38px !important}
+  .topbar .brand span {font-size:12px !important}
+  .topbar .nav-right {gap:5px !important;padding:0 6px !important}
+  .topbar .nav-right .lang {padding:7px 9px !important;font-size:11px !important}
+  .topbar .menu,.topbar #menuBtn {width:38px !important;height:38px !important;min-width:38px !important;min-height:38px !important;flex-basis:38px !important}
+}
+@media (min-width:1101px) {
+  .topbar .menu,.topbar #menuBtn {display:none !important}
+  .topbar .nav-right nav {display:flex !important;position:static !important;flex-direction:row !important}
+}
