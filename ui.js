@@ -77,7 +77,7 @@
     track.style.transformStyle = "preserve-3d";
 
     function layout() {
-      var width = Math.min(260, Math.max(190, wrap.clientWidth * (window.innerWidth <= 640 ? 0.62 : 0.23)));
+      var available = Math.min(wrap.clientWidth, window.innerWidth || wrap.clientWidth);\n      var width = Math.min(window.innerWidth <= 640 ? 158 : 230, Math.max(window.innerWidth <= 640 ? 132 : 170, available * (window.innerWidth <= 640 ? 0.40 : 0.23)));
       radius = Math.round((width / 2) / Math.tan(Math.PI / cards.length));
       cards.forEach(function (card, index) {
         card.style.width = width + "px";
