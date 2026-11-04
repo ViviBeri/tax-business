@@ -67,9 +67,7 @@ def main() -> None:
         if not url.startswith(SITE):
             fail(f"Sitemap URL is outside the published site: {url}")
         relative = url[len(SITE):]
-        target = ROOT / (relative if relative else "index.html")
-        if url.endswith("/"):
-            target = target / "index.html"
+        target = ROOT / relative / "index.html" if url.endswith("/") else ROOT / (relative or "index.html")
         if not target.is_file():
             fail(f"Sitemap URL has no matching file: {url} (expected {target.relative_to(ROOT)})")
 
@@ -84,8 +82,8 @@ def main() -> None:
     service_pages = sorted((ROOT / "services").glob("*.html"))
     tamil_pages = sorted((ROOT / "ta" / "services").glob("*.html"))
     pages = service_pages + tamil_pages
-    if len(service_pages) != 9 or len(tamil_pages) != 8:
-        fail(f"Expected 9 English and 8 Tamil service pages; found {len(service_pages)} and {len(tamil_pages)}")
+    if len(service_pages) != 10 or len(tamil_pages) != 8:
+        fail(f"Expected 10 English and 8 Tamil service pages; found {len(service_pages)} and {len(tamil_pages)}")
 
     for page in pages:
         parser = JsonLdParser()
