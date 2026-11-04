@@ -2067,3 +2067,52 @@ img,svg,video{max-width:100%;height:auto}
   .topbar .menu,.topbar #menuBtn {display:none !important}
   .topbar .nav-right nav {display:flex !important;position:static !important;flex-direction:row !important}
 }
+
+
+/* Header balance refinement: replace the oversized navy void with a light,
+   unified surface while keeping the brand and controls clearly grouped. */
+.topbar .wrap.nav {
+  background: linear-gradient(135deg, #ffffff 0%, #f5f7ff 58%, #edf3fb 100%) !important;
+  border: 1px solid rgba(10, 16, 48, .10) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 8px 24px rgba(10, 16, 48, .12),
+              0 2px 5px rgba(10, 16, 48, .06),
+              inset 0 1px 0 rgba(255, 255, 255, .95) !important;
+}
+.topbar .wrap.nav::after { display: none !important; }
+.topbar .brand {
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+.topbar .nav-right {
+  background: transparent !important;
+}
+.topbar .nav-right nav a {
+  color: #182344 !important;
+}
+.topbar .nav-right nav a:hover {
+  color: #087f79 !important;
+  background: rgba(8, 127, 121, .08) !important;
+}
+.topbar .nav-right nav a::after {
+  background: linear-gradient(90deg, #0b9a94, #22b8a9) !important;
+}
+.topbar .nav-right .lang,
+.topbar .nav-right a.lang,
+.topbar .menu,
+.topbar #menuBtn {
+  color: #17213f !important;
+  background: linear-gradient(180deg, #ffffff 0%, #edf2fb 100%) !important;
+  border: 1px solid rgba(10, 16, 48, .12) !important;
+  box-shadow: 0 3px 9px rgba(10, 16, 48, .10),
+              inset 0 1px 0 #ffffff !important;
+}
+.topbar .nav-right .lang:hover,
+.topbar .nav-right a.lang:hover {
+  color: #087f79 !important;
+  box-shadow: 0 5px 12px rgba(10, 16, 48, .13),
+              inset 0 1px 0 #ffffff !important;
+}
+@media (max-width: 1100px) {
+  .topbar .nav-right { background: transparent !important; }
+}
