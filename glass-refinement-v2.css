@@ -1,0 +1,110 @@
+/* KVB glass refinement v2
+   Additive layer: load after theme.css and design-system.css.
+   Scoped to verified homepage components; no HTML structure or JS changes.
+*/
+:root {
+  --kvb-glass-radius: 20px;
+  --kvb-glass-border: 1px solid rgba(255, 255, 255, 0.72);
+  --kvb-glass-shadow: 0 10px 28px rgba(41, 19, 94, 0.10), 0 2px 6px rgba(41, 19, 94, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  --kvb-glass-shadow-hover: 0 16px 34px rgba(41, 19, 94, 0.14), 0 4px 10px rgba(41, 19, 94, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Soft brand atmosphere without a negative-z-index overlay. */
+body {
+  background-image:
+    radial-gradient(520px 360px at 8% 6%, rgba(47, 191, 113, 0.09), transparent 68%),
+    radial-gradient(480px 360px at 95% 18%, rgba(59, 130, 246, 0.07), transparent 68%),
+    radial-gradient(540px 380px at 50% 100%, rgba(41, 19, 94, 0.06), transparent 68%);
+  background-attachment: fixed;
+}
+
+/* How it works: only the three verified step cards. */
+#how .steps > .step {
+  position: relative;
+  overflow: hidden;
+  border: var(--kvb-glass-border);
+  border-radius: var(--kvb-glass-radius);
+  box-shadow: var(--kvb-glass-shadow);
+  background: rgba(255, 255, 255, 0.88);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+#how .steps > .step > b {
+  background: radial-gradient(circle at 30% 25%, #7ef0b3, #1f9d5c 72%);
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(31, 157, 92, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* Tools: only direct resource cards. */
+#tools .tool-grid > div,
+#about .about-points > div,
+.faq .faq-list > details {
+  border: var(--kvb-glass-border);
+  border-radius: var(--kvb-glass-radius);
+  box-shadow: var(--kvb-glass-shadow);
+  background: rgba(255, 255, 255, 0.9);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  #how .steps > .step,
+  #tools .tool-grid > div,
+  #about .about-points > div,
+  .faq .faq-list > details {
+    -webkit-backdrop-filter: blur(10px) saturate(125%);
+    backdrop-filter: blur(10px) saturate(125%);
+  }
+}
+
+/* Keep the contact form solid and legible. */
+#contact .contact-box {
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: var(--kvb-glass-radius);
+  box-shadow: 0 14px 34px rgba(7, 19, 47, 0.2), 0 3px 8px rgba(7, 19, 47, 0.08);
+  background: #fff;
+}
+#contact .contact-box :is(input, select, textarea) { border-radius: 12px; }
+#contact .contact-box :is(input, select, textarea):focus-visible {
+  outline: 2px solid rgba(31, 122, 66, 0.72);
+  outline-offset: 1px;
+  box-shadow: 0 0 0 3px rgba(47, 191, 113, 0.18);
+}
+
+/* Desktop-only lift; no tilt and no JavaScript. */
+@media (hover: hover) and (pointer: fine) {
+  #how .steps > .step:hover,
+  #tools .tool-grid > div:hover,
+  #about .about-points > div:hover,
+  .faq .faq-list > details:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--kvb-glass-shadow-hover);
+  }
+}
+
+/* Verified hero image class from index.html. */
+@keyframes kvb-hero-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .hero > img.hero-illustration { animation: kvb-hero-float 8s ease-in-out infinite; }
+}
+
+/* Mobile performance fallback. */
+@media (max-width: 767px) {
+  body { background-image: none; background-attachment: scroll; }
+  #how .steps > .step,
+  #tools .tool-grid > div,
+  #about .about-points > div,
+  .faq .faq-list > details {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: #fff;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #how .steps > .step,
+  #tools .tool-grid > div,
+  #about .about-points > div,
+  .faq .faq-list > details { transition: none; }
+  .hero > img.hero-illustration { animation: none; }
+}
