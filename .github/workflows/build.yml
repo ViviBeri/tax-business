@@ -13,7 +13,7 @@ on:
       - 'split-flap.js'
       - 'SplitFlapText.css'
       - 'SplitFlapText.js'
-      - 'index.html'
+      - 'index.html'\n      - 'style.css'
       - '.github/workflows/build.yml'
   workflow_dispatch:
 
