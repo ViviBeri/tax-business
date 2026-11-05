@@ -36,10 +36,10 @@
   function reveals() {
     if (reduce || !("IntersectionObserver" in window)) return;
     var targets = document.querySelectorAll(
-      ".tile[data-service], .step, .locations a, .tool-grid > div, .faq-list details, .about-points > div, .newbiz"
+      ".hero-card, .clients-grid > *, .proof-grid > div, .section-head, .tile[data-service], .step, .locations a, .tool-grid > div, .faq-list details, .about-points > div, .newbiz, .contact-box"
     );
     if (!targets.length) return;
-    targets.forEach(function (el) { el.classList.add("kvb-reveal"); });
+    targets.forEach(function (el, index) { el.classList.add("kvb-reveal"); el.style.setProperty("--kvb-reveal-delay", Math.min(index % 4, 3) * 65 + "ms"); });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
