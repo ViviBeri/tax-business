@@ -51,5 +51,21 @@ a.lang{display:inline-flex;align-items:center;justify-content:center;min-height:
 .mbar a svg{margin-right:8px}
 .tool-grid a,.contact-line a{display:inline-block;padding:12px 0}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.service-card{transition:none}}
-.hero h1 span{background:linear-gradient(180deg,#fff6cf 0%,#ffd97a 35%,#f0b73a 70%,#ffd97a 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;filter:drop-shadow(0 1px 0 rgba(0,0,0,.35)) drop-shadow(0 0 20px rgba(240,183,58,.5))!important;text-shadow:none!important}
+/* Gold treatment belongs on the accent board, never on nested glyph spans. */
+.hero h1 > .splitflap-line.splitflap-accent { color: #f0b73a !important; }
+.hero h1 .split-flap-text__char { color: var(--split-flap-text-color, #f8fafc) !important; -webkit-text-fill-color: var(--split-flap-text-color, #f8fafc) !important; background: none !important; background-image: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important; filter: none !important; }
+.hero h1 .splitflap-accent .split-flap-text__tile { box-shadow: 0 0 0 1px rgba(240,183,58,.24), 0 5px 14px rgba(41,19,94,.16); }
 .hero h1{color:#fff!important}
+
+
+/* KVB premium polish: restrained glass depth and conversion-focused interaction. */
+.hero-card { background: linear-gradient(145deg, rgba(41,19,94,.94), rgba(24,15,63,.88)); border: 1px solid rgba(255,255,255,.24); box-shadow: 0 22px 55px rgba(27,17,68,.22), inset 0 1px 0 rgba(255,255,255,.18); backdrop-filter: blur(14px) saturate(125%); -webkit-backdrop-filter: blur(14px) saturate(125%); }
+.service-card { transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease; }
+.service-card:hover, .service-card:focus-visible { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(41,19,94,.12); border-color: rgba(41,149,83,.48); }
+.newbiz { position: relative; overflow: hidden; isolation: isolate; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 18px 42px rgba(41,19,94,.18), inset 0 1px 0 rgba(255,255,255,.15); }
+.newbiz:after { content: ''; position: absolute; z-index: -1; width: 260px; height: 260px; right: -90px; top: -150px; border-radius: 50%; background: rgba(255,255,255,.10); filter: blur(3px); }
+.btn { transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; }
+.btn:hover, .btn:focus-visible { transform: translateY(-2px); filter: brightness(1.04); }
+.btn:active { transform: translateY(0) scale(.985); }
+@media (max-width: 560px) { .hero h1 .split-flap-text { font-size: clamp(13px, 4vw, 18px) !important; gap: 2px !important; } .hero-card { backdrop-filter: none; -webkit-backdrop-filter: none; } }
+@media (prefers-reduced-motion: reduce) { .service-card, .btn { transition: none !important; } .service-card:hover, .service-card:focus-visible, .btn:hover, .btn:focus-visible { transform: none; } }
