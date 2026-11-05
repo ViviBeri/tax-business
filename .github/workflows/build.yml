@@ -15,6 +15,7 @@ on:
       - 'SplitFlapText.js'
       - 'index.html'
       - 'style.css'
+      - 'homepage-redesign.css'
       - '.github/workflows/build.yml'
   workflow_dispatch:
 
