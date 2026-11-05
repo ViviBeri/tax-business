@@ -37,6 +37,6 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Run dependency-free site audit
         run: python3 scripts/audit_site.py
