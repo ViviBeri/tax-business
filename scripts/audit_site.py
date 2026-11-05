@@ -6,7 +6,7 @@ import json
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -101,14 +101,15 @@ def audit_internal_references(html_files: list[Path]) -> int:
             parsed = urlparse(reference)
             if parsed.scheme or parsed.netloc:
                 continue
+            fragment = unquote(parsed.fragment)
             if not parsed.path:
-                if parsed.fragment and parsed.fragment not in parser.ids:
+                if fragment and fragment not in parser.ids:
                     errors.append(
                         f"{page.relative_to(ROOT)}: "
                         f"missing same-page fragment #{parsed.fragment}"
                     )
                 continue
-            decoded = __import__("urllib.parse", fromlist=["unquote"]).unquote(parsed.path)
+            decoded = unquote(parsed.path)
             if decoded.startswith("/tax-business/"):
                 decoded = decoded[len("/tax-business/"):]
             elif decoded.startswith("/"):
@@ -124,15 +125,15 @@ def audit_internal_references(html_files: list[Path]) -> int:
             if not target.is_file():
                 errors.append(f"{page.relative_to(ROOT)}: missing local target {reference}")
                 continue
-            if parsed.fragment and target.suffix.lower() == ".html":
+            if fragment and target.suffix.lower() == ".html":
                 target_page = target.relative_to(ROOT)
                 target_parser = page_parsers.get(target)
                 if target_parser is None:
                     target_parser = SitePageParser()
                     target_parser.feed(target.read_text(encoding="utf-8"))
                     page_parsers[target] = target_parser
-                if parsed.fragment not in target_parser.ids:
-                    errors.append(f"{page.relative_to(ROOT)}: missing fragment #{parsed.fragment} in {target_page}")
+                if fragment not in target_parser.ids:
+                    errors.append(f"{page.relative_to(ROOT)}: missing fragment #{fragment} in {target_page}")
 
     if errors:
         for error in errors[:100]:
