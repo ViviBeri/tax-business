@@ -99,7 +99,14 @@ def audit_internal_references(html_files: list[Path]) -> int:
     for page, parser in page_parsers.items():
         for reference in parser.references:
             parsed = urlparse(reference)
-            if parsed.scheme or parsed.netloc or not parsed.path:
+            if parsed.scheme or parsed.netloc:
+                continue
+            if not parsed.path:
+                if parsed.fragment and parsed.fragment not in parser.ids:
+                    errors.append(
+                        f"{page.relative_to(ROOT)}: "
+                        f"missing same-page fragment #{parsed.fragment}"
+                    )
                 continue
             decoded = __import__("urllib.parse", fromlist=["unquote"]).unquote(parsed.path)
             if decoded.startswith("/tax-business/"):
