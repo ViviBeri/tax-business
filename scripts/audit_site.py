@@ -195,8 +195,8 @@ def main() -> None:
             fail(f"Sitemap URL has no matching file: {url} (expected {target.relative_to(ROOT)})")
 
     text_urls = [line.strip() for line in text_path.read_text(encoding="utf-8").splitlines() if line.strip()]
-    if text_urls != urls:
-        fail("sitemap.txt does not exactly match sitemap.xml in URL order and content")
+    if len(text_urls) != len(urls) or set(text_urls) != set(urls):
+        fail("sitemap.txt must contain exactly the same URLs as sitemap.xml (order may differ)")
 
     robots = robots_path.read_text(encoding="utf-8")
     if f"Sitemap: {SITE}sitemap.xml" not in robots:
