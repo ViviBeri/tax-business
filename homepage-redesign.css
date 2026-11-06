@@ -415,3 +415,88 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   .location-card--featured .location-card__icon{width:42px;height:42px;flex-basis:42px}
   .location-card--featured .location-card__copy strong{font-size:15px}
 }
+
+/* Location directory refresh — clearer hierarchy, stronger featured base, calmer cards. */
+.location-section{
+  background:
+    radial-gradient(circle at 92% 18%,rgba(22,132,81,.075),transparent 24rem),
+    linear-gradient(180deg,#f7f9fd 0%,#f1f5fb 100%);
+}
+.location-section .wrap{position:relative;z-index:1}
+.location-heading{align-items:flex-end;gap:28px}
+.location-section .section-head{max-width:760px}
+.location-section .section-head h2{max-width:690px;margin-bottom:13px}
+.location-section .section-head p{max-width:620px;color:#64748b;font-size:15px}
+.location-summary{
+  align-items:center;gap:10px;margin-bottom:30px;padding:10px 15px;
+  border:1px solid rgba(22,132,81,.18);border-radius:15px;
+  background:#fff;box-shadow:0 8px 22px rgba(26,44,76,.055);
+}
+.location-summary__number{font-size:34px;color:#168451}
+.location-summary span:last-child{max-width:76px;line-height:1.25;color:#4b5870}
+.location-section .locations{gap:13px}
+.location-section .location-card{
+  min-height:94px;padding:16px 17px;border-radius:17px;
+  border:1px solid #e0e7f0;
+  background:linear-gradient(145deg,#fff 0%,#fbfcff 100%);
+  box-shadow:0 8px 22px rgba(27,43,76,.055);
+}
+.location-card__icon{
+  width:44px;height:44px;flex-basis:44px;border-radius:14px;
+  background:#edf7f1;color:#168451;
+}
+.location-card__copy strong{font-size:15px;letter-spacing:-.2px}
+.location-card__copy small{font-size:11px;color:#718096}
+.location-card__arrow{
+  width:29px;height:29px;display:grid;place-items:center;
+  border:1px solid #e7edf4;border-radius:50%;background:#fff;
+  color:#64748b;font-size:16px;
+}
+.location-section .location-card--featured{
+  position:relative;overflow:hidden;isolation:isolate;
+  border-color:#24134f;
+  background:linear-gradient(118deg,#24134f 0%,#34216b 66%,#176b55 140%);
+  box-shadow:0 14px 30px rgba(36,19,79,.18);
+}
+.location-card--featured:after{
+  content:"";position:absolute;z-index:-1;width:150px;height:150px;
+  right:-72px;top:-78px;border:1px solid rgba(255,255,255,.16);
+  border-radius:50%;box-shadow:0 0 0 18px rgba(255,255,255,.035),0 0 0 38px rgba(255,255,255,.025);
+}
+.location-card--featured .location-card__icon{
+  background:rgba(255,255,255,.14);color:#a8f0cb;
+  border:1px solid rgba(255,255,255,.18);
+}
+.location-card--featured .location-card__copy strong{color:#fff}
+.location-card--featured .location-card__copy small{color:#d9d5ee}
+.location-card--featured .location-card__arrow{
+  border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.12);color:#fff;
+}
+.location-section .location-card:hover{
+  transform:translateY(-3px);border-color:#9ccdb1;
+  box-shadow:0 15px 30px rgba(27,43,76,.10);
+}
+.location-section .location-card--featured:hover{border-color:#4d9879;box-shadow:0 18px 34px rgba(36,19,79,.22)}
+.location-card--featured:hover .location-card__arrow{background:#fff;color:#168451}
+.location-note{
+  margin-top:22px;padding:13px 16px;border:1px solid #e6eaf1;
+  border-left:3px solid #e7a32d;border-radius:12px;
+  background:rgba(255,255,255,.76);color:#68758a;
+}
+@media(max-width:760px){
+  .location-heading{align-items:flex-start;gap:8px}
+  .location-section .section-head{margin-bottom:18px}
+  .location-section .section-head h2{max-width:560px;font-size:clamp(28px,7vw,38px)}
+  .location-section .section-head p{font-size:14px}
+  .location-summary{margin:0 0 20px}
+  .location-section .locations{gap:10px}
+  .location-section .location-card{min-height:82px;padding:12px 11px}
+}
+@media(max-width:420px){
+  .location-section .locations{gap:9px}
+  .location-section .location-card{min-height:78px;padding:10px 9px;gap:8px}
+  .location-card__icon{width:34px;height:34px;flex-basis:34px}
+  .location-card__copy strong{font-size:12px}
+  .location-card__copy small{font-size:9px}
+  .location-card__arrow{width:25px;height:25px;font-size:14px}
+}
