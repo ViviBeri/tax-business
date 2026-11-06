@@ -100,7 +100,7 @@ def head(r, title, desc, path, ld="", alts=None):
             f'<link rel="canonical" href="{u}"><meta property="og:type" content="website"><meta property="og:site_name" content="KVB ENTERPRISES">'
             f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{u}">'
             f'<meta property="og:image" content="{S}/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{locale}"><meta name="twitter:card" content="summary_large_image">{alt}<link rel="icon" type="image/png" href="{r}assets/logo.png">'
-            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=horizontal-tiles-4"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}SplitFlapText.css?v=1"><link rel="stylesheet" href="{r}homepage-redesign.css?v=5"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
+            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=horizontal-tiles-4"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}SplitFlapText.css?v=1"><link rel="stylesheet" href="{r}homepage-redesign.css?v=6"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
             f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
 
 def header(r, alt=None):
@@ -239,11 +239,22 @@ def index():
           + '<div class="about-points"><div><b>' + L("Personal assistance") + '</b><span>' + L("Direct communication and guidance for your requirements.") + '</span></div>'
                     + '<div><b>' + L("Clear process") + '</b><span>' + L("Understand the documents, steps and professional charges before proceeding.") + '</span></div>'
           + '</div></div></section>')
-    locs = "".join(f'<a href="{r}locations/gst-registration-{l}.html">{l.title()}</a>' for l in LOCS)
-    b += ('<section id="locations" class="section"><div class="wrap"><div class="section-head">'
+    pin_icon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>'
+    locs = "".join(
+        f'<a class="location-card{" location-card--featured" if l == "puducherry" else ""}" href="{r}locations/gst-registration-{l}.html">'
+        f'<span class="location-card__icon">{pin_icon}</span>'
+        f'<span class="location-card__copy"><strong>{l.title()}</strong><small>{L("Explore local GST assistance")}</small></span>'
+        f'<span class="location-card__arrow" aria-hidden="true">↗</span></a>'
+        for l in LOCS)
+    b += ('<section id="locations" class="section location-section"><div class="wrap">'
+          '<div class="location-heading"><div class="section-head">'
+          + '<span class="location-kicker">' + L("SERVICE AREAS") + '</span>'
           + T("h2", "Local assistance across Puducherry and nearby areas.", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ளூர் உதவி.")
-          + T("p", "Choose a location to view the local GST service page.", "உள்ளூர் GST சேவைப் பக்கத்தைப் பார்க்க ஒரு இடத்தைத் தேர்ந்தெடுக்கவும்.")
-          + f'</div><div class="locations">{locs}</div></div></section>')
+          + T("p", "Select your area to explore GST registration and compliance assistance.", "GST பதிவு மற்றும் இணக்க உதவியைப் பார்க்க உங்கள் பகுதியைத் தேர்ந்தெடுக்கவும்.")
+          + '</div><div class="location-summary"><span class="location-summary__number">09</span><span>' + L("service areas") + '</span></div></div>'
+          + f'<div class="locations">{locs}</div>'
+          + '<p class="location-note">' + L("Service availability is confirmed when you contact us. KVB ENTERPRISES is based in Puducherry and is not a government office.") + '</p>'
+          + '</div></section>')
     tools = "".join(f'<div><h3>{L(title)}</h3><p>{L(description)}</p><a href="{r}tools/{slug}.html">{L(link_text)}</a></div>'
                     for slug, title, description, link_text in TOOLS)
     b += ('<section id="tools" class="section alt"><div class="wrap"><div class="section-head">'
