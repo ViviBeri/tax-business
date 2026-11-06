@@ -244,8 +244,8 @@ def index():
           + T("h2", "Local assistance across Puducherry and nearby areas.", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ளூர் உதவி.")
           + T("p", "Choose a location to view the local GST service page.", "உள்ளூர் GST சேவைப் பக்கத்தைப் பார்க்க ஒரு இடத்தைத் தேர்ந்தெடுக்கவும்.")
           + f'</div><div class="locations">{locs}</div></div></section>')
-    tools = "".join(f'<div><h3>{L(a)}</h3><p>{L(c)}</p><a href="{r}tools/{a}.html">{L(b)}</a></div>'
-                    for a, b, c, d in [(t[0], t[3], t[2], t[1]) for t in TOOLS])
+    tools = "".join(f'<div><h3>{L(title)}</h3><p>{L(description)}</p><a href="{r}tools/{slug}.html">{L(link_text)}</a></div>'
+                    for slug, title, description, link_text in TOOLS)
     b += ('<section id="tools" class="section alt"><div class="wrap"><div class="section-head">'
           + T("h2", "Useful resources for business owners.", "வணிக உரிமையாளர்களுக்கான பயனுள்ள வளங்கள்.")
           + f'</div><div class="tool-grid">{tools}</div></div></section>')
