@@ -292,3 +292,99 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   color:#a9f2d2!important;
   -webkit-text-fill-color:#a9f2d2!important;
 }
+
+/* Location coverage: clear, tappable service-area cards with Puducherry highlighted. */
+.location-section{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg,#f5f7fc 0%,#eef3fb 100%);
+}
+.location-section:before{
+  content:"";
+  position:absolute;
+  width:360px;height:360px;right:-180px;top:30px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(41,149,83,.10),transparent 68%);
+  pointer-events:none;
+}
+.location-heading{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;position:relative;
+}
+.location-section .section-head{margin-bottom:26px}
+.location-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-bottom:12px;color:#168451;font-size:11px;font-weight:900;
+  letter-spacing:1.8px;
+}
+.location-kicker:before{content:"";width:24px;height:2px;background:#f5a623;border-radius:9px}
+.location-summary{
+  display:flex;align-items:baseline;gap:8px;flex-shrink:0;
+  margin-bottom:32px;padding:12px 16px;border:1px solid #dce5f1;
+  border-radius:16px;background:rgba(255,255,255,.78);
+  color:#64748b;font-size:12px;font-weight:750;
+}
+.location-summary__number{color:#168451;font-size:30px;line-height:1;font-weight:900;letter-spacing:-1px}
+.location-section .locations{
+  position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+}
+.location-section .location-card{
+  min-height:88px;display:flex;align-items:center;gap:14px;
+  padding:16px 17px;border:1px solid #dfe6f0;border-radius:18px;
+  background:rgba(255,255,255,.94);color:#24134f;text-decoration:none;
+  box-shadow:0 7px 20px rgba(27,43,76,.045);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.location-card__icon{
+  width:42px;height:42px;display:grid;place-items:center;flex:0 0 42px;
+  border-radius:13px;background:#edf7f1;color:#168451;
+}
+.location-card__icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.location-card__copy{min-width:0;display:grid;gap:3px}
+.location-card__copy strong{font-size:15px;line-height:1.25;font-weight:850}
+.location-card__copy small{font-size:11px;line-height:1.35;color:#718096}
+.location-card__arrow{
+  margin-left:auto;align-self:center;color:#94a3b8;font-size:18px;
+  transition:transform .2s ease,color .2s ease;
+}
+.location-section .location-card--featured{
+  border-color:rgba(22,132,81,.35);
+  background:linear-gradient(120deg,#e9f7ef,#fff 75%);
+  box-shadow:0 10px 26px rgba(22,132,81,.09);
+}
+.location-card--featured .location-card__icon{background:#168451;color:#fff}
+.location-card--featured .location-card__copy strong{color:#116b42}
+.location-section .location-card:hover{
+  transform:translateY(-3px);border-color:#9ccdb1;
+  box-shadow:0 14px 28px rgba(27,43,76,.09);
+}
+.location-card:hover .location-card__arrow{transform:translate(2px,-2px);color:#168451}
+.location-section .location-card:focus-visible{outline:3px solid rgba(22,132,81,.32);outline-offset:3px}
+.location-note{
+  position:relative;margin:20px 0 0;padding:12px 15px;
+  border-left:3px solid #e7a32d;border-radius:0 10px 10px 0;
+  background:rgba(255,255,255,.62);color:#64748b;font-size:12px;line-height:1.55;
+}
+@media(max-width:760px){
+  .location-heading{align-items:flex-start}
+  .location-summary{margin:0 0 25px;padding:9px 11px}
+  .location-summary__number{font-size:25px}
+  .location-section .locations{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .location-section .location-card{min-height:78px;padding:12px;gap:10px;border-radius:15px}
+  .location-card__icon{width:36px;height:36px;flex-basis:36px;border-radius:11px}
+  .location-card__copy strong{font-size:13px}
+  .location-card__copy small{font-size:10px}
+}
+@media(max-width:420px){
+  .location-heading{display:block}
+  .location-summary{display:inline-flex;margin:0 0 22px}
+  .location-section .locations{gap:9px}
+  .location-section .location-card{padding:11px 9px;gap:8px}
+  .location-card__icon{width:32px;height:32px;flex-basis:32px}
+  .location-card__copy strong{font-size:12px}
+  .location-card__arrow{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){
+  .location-section .location-card,.location-card__arrow{transition:none}
+  .location-section .location-card:hover{transform:none}
+}
