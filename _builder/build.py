@@ -250,7 +250,7 @@ def index():
           '<div class="location-heading"><div class="section-head">'
           + '<span class="location-kicker">' + L("SERVICE AREAS") + '</span>'
           + T("h2", "Local assistance across Puducherry and nearby areas.", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ளூர் உதவி.")
-          + T("p", "Select your area to explore GST registration and compliance assistance.", "GST பதிவு மற்றும் இணக்க உதவியைப் பார்க்க உங்கள் பகுதியைத் தேர்ந்தெடுக்கவும்.")
+          + T("p", "Choose your area to view local GST registration and compliance assistance.", "GST பதிவு மற்றும் இணக்க உதவியைப் பார்க்க உங்கள் பகுதியைத் தேர்ந்தெடுக்கவும்.")
           + '</div><div class="location-summary"><span class="location-summary__number">09</span><span>' + L("service areas") + '</span></div></div>'
           + f'<div class="locations">{locs}</div>'
           + '<p class="location-note">' + L("Service availability is confirmed when you contact us. KVB ENTERPRISES is based in Puducherry and is not a government office.") + '</p>'
