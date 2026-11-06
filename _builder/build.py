@@ -295,13 +295,17 @@ def service(s, r, path):
 def location(l, r, path):
     city = l.title()
     title = f"GST Registration in {city} | KVB ENTERPRISES"
-    desc = f"GST registration and compliance assistance in {city}, Puducherry and nearby areas. WhatsApp and Tamil support."
+    desc = (f"GST registration and compliance assistance in {city} and nearby areas. WhatsApp and Tamil support."
+            if l == "puducherry" else
+            f"GST registration and compliance assistance in {city}, Puducherry and nearby areas. WhatsApp and Tamil support.")
     b = head(r, title, desc, path, "", [("en", f"locations/gst-registration-{l}.html")])
     b += header(r)
     b += '<main><section class="section"><div class="wrap">'
     b += '<nav class="crumbs"><a href="' + r + 'index.html">' + L("Home") + '</a> › GST ' + city + '</nav>'
     b += T("h1", f"GST Registration in {city}", f"{city}-இல் GST பதிவு")
-    b += T("p", f"We provide GST registration and compliance assistance for businesses in {city} and nearby areas of Puducherry and Tamil Nadu.", f"{city} மற்றும் அதைச் சுற்றியுள்ள பகுதிகளில் உள்ள வணிகங்களுக்கு GST பதிவு மற்றும் இணக்க உதவி வழங்குகிறோம்.", "lead")
+    area_en = (f"businesses in {city} and nearby areas." if l == "puducherry"
+               else f"businesses in {city} and nearby areas of Puducherry and Tamil Nadu.")
+    b += T("p", f"We provide GST registration and compliance assistance for {area_en}", f"{city} மற்றும் அதைச் சுற்றியுள்ள பகுதிகளில் உள்ள வணிகங்களுக்கு GST பதிவு மற்றும் இணக்க உதவி வழங்குகிறோம்.", "lead")
     b += '<div class="svc-body"><div>'
     b += T("h2", "Services available", "கிடைக்கும் சேவைகள்")
     b += '<ul class="ticks"><li>GST registration</li><li>GSTR-1 / GSTR-3B filing</li><li>Monthly compliance</li><li>Amendment and cancellation</li></ul>'
