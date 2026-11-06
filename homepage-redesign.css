@@ -276,3 +276,19 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
  .clients .proof-visual img{height:155px}
  #about .about-visual img{height:180px}
 }
+
+/* Final hero contrast override: prevent legacy gold-gradient text styles from darkening static headlines. */
+.hero h1 .hero-title-main,
+.hero h1 .hero-title-accent{
+  background:none!important;
+  background-image:none!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  filter:none!important;
+  opacity:1!important;
+  text-shadow:0 2px 12px rgba(0,0,0,.22)!important;
+}
+.hero h1 .hero-title-accent{
+  color:#a9f2d2!important;
+  -webkit-text-fill-color:#a9f2d2!important;
+}
