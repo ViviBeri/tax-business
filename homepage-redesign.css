@@ -388,3 +388,30 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   .location-section .location-card,.location-card__arrow{transition:none}
   .location-section .location-card:hover{transform:none}
 }
+
+/* Location directory refinement: make the primary service area unmistakable. */
+.location-section .location-card--featured{
+  grid-column:span 2;
+  min-height:104px;
+  padding:19px 22px;
+  border-color:rgba(255,255,255,.16);
+  background:linear-gradient(115deg,#172b52 0%,#203e63 58%,#126044 100%);
+  box-shadow:0 15px 34px rgba(16,39,72,.16),inset 0 1px 0 rgba(255,255,255,.14);
+}
+.location-card--featured .location-card__icon{
+  width:50px;height:50px;flex-basis:50px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.13);color:#b9f4d4;
+}
+.location-card--featured .location-card__copy strong{color:#fff;font-size:17px}
+.location-card--featured .location-card__copy small{color:rgba(255,255,255,.76)}
+.location-card--featured .location-card__arrow{color:#b9f4d4}
+.location-section .location-card--featured:hover{
+  border-color:rgba(185,244,212,.65);
+  box-shadow:0 19px 38px rgba(16,39,72,.22);
+}
+@media(max-width:760px){
+  .location-section .location-card--featured{grid-column:span 2;min-height:88px;padding:15px}
+  .location-card--featured .location-card__icon{width:42px;height:42px;flex-basis:42px}
+  .location-card--featured .location-card__copy strong{font-size:15px}
+}
