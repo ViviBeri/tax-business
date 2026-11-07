@@ -285,22 +285,24 @@ def service(s, r, path):
     slug, en, ta, de, dta, help_items, docs = s
     title = f"{en} | KVB ENTERPRISES"
     desc = de
-    service_schema = {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": en,
-        "description": de,
-        "serviceType": en,
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "KVB ENTERPRISES",
-            "url": S + "/"
-        },
-        "areaServed": ["Puducherry", "Cuddalore", "Villupuram"],
-        "url": f"{S}/{path}",
-        "inLanguage": LANG
+    page_url = f"{S}/{path}"
+    page_schema = {
+        "@type": "WebPage", "@id": page_url + "#webpage", "url": page_url,
+        "name": title, "description": desc,
+        "inLanguage": "ta-IN" if LANG == "ta" else "en-IN",
+        "isPartOf": {"@type": "WebSite", "name": "KVB ENTERPRISES", "url": S + "/"}
     }
-    ld = '<script type="application/ld+json">' + json.dumps(service_schema, ensure_ascii=False) + '</script>'
+    service_schema = {
+        "@type": "Service", "@id": page_url + "#service", "name": en,
+        "description": de, "serviceType": en, "url": page_url,
+        "inLanguage": "ta-IN" if LANG == "ta" else "en-IN",
+        "provider": {"@type": "Organization", "name": "KVB ENTERPRISES", "url": S + "/", "telephone": "+" + PH},
+        "areaServed": [{"@type": "AdministrativeArea", "name": area} for area in ("Puducherry", "Cuddalore", "Villupuram")],
+        "mainEntityOfPage": {"@id": page_url + "#webpage"}
+    }
+    ld = '<script type="application/ld+json">' + json.dumps({
+        "@context": "https://schema.org", "@graph": [page_schema, service_schema]
+    }, ensure_ascii=False) + '</script>'
     b = head(r, title, desc, path, ld, [("en", f"services/{slug}.html"), ("ta", f"ta/services/{slug}.html")])
     b += header(r, ("../" if not r else r) + "ta/services/" + slug + ".html")
     b += '<main><section class="section"><div class="wrap">'
