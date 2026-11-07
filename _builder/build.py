@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """KVB ENTERPRISES site generator. Usage: python3 _builder/build.py
 Edit _builder/prices.json (e.g. {"gst": "999"}) then rebuild. Empty price = "Get a quote"."""
-import os, sys, html, json, datetime, urllib.parse as U
+import os, sys, glob, html, json, datetime, urllib.parse as U
 
 B = os.path.dirname(os.path.abspath(__file__))
 O = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(B)
@@ -15,6 +15,10 @@ try:
     PR = json.load(open(os.path.join(B, "prices.json"), encoding="utf-8"))
 except Exception:
     PR = {}
+
+def has(p):
+    """True when a hand-written page/asset exists in the output tree."""
+    return os.path.exists(os.path.join(O, p))
 
 def w(p, c):
     p = os.path.join(O, p)
@@ -63,7 +67,11 @@ LOCS = ["puducherry", "villupuram", "cuddalore", "tindivanam", "panruti", "karai
 TOOLS = [("gst-calculator", "GST Calculator", "Calculate GST-inclusive or GST-exclusive amounts.", "Open tool →"),
          ("gst-checklist", "GST Registration Checklist", "Common documents and information to keep ready.", "Open checklist →"),
          ("fssai-checklist", "FSSAI Checklist", "Basic information commonly required for food-business applications.", "Open checklist →"),
-         ("itr-checklist", "ITR Document Checklist", "Prepare common documents before starting your return.", "Open checklist →")]
+         ("itr-checklist", "ITR Document Checklist", "Prepare common documents before starting your return.", "Open checklist →"),
+         ("business-compliance-checker", "What Does My Business Need?", "A first-pass checklist of common registrations and compliance areas.", "Open tool →"),
+         ("gst-eligibility-checker", "GST Registration Eligibility Guide", "An indicative guide to whether GST registration may apply to you.", "Open tool →"),
+         ("fssai-type-finder", "FSSAI Type Finder", "Find the likely FSSAI registration or licence category.", "Open tool →"),
+         ("msme-category-checker", "MSME Category Checker", "Check Micro, Small or Medium category from investment and turnover.", "Open tool →")]
 NOTE_EN = "Final quote is confirmed after reviewing your requirements and documents. Government/statutory charges, where applicable, may be separate."
 NOTE_TA = "உங்கள் தேவைகள் மற்றும் ஆவணங்களை பரிசீலித்த பின் இறுதி விலை உறுதி செய்யப்படும். பொருந்தும் இடங்களில் அரசு/சட்டபூர்வ கட்டணங்கள் தனியாக இருக்கலாம்."
 NAV = [("services", "Services", "சேவைகள்"), ("business", "Who We Help", "யாருக்கு உதவுகிறோம்"), ("locations", "Locations", "சேவை பகுதிகள்"),
@@ -100,7 +108,7 @@ def head(r, title, desc, path, ld="", alts=None):
             f'<link rel="canonical" href="{u}"><meta property="og:type" content="website"><meta property="og:site_name" content="KVB ENTERPRISES">'
             f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{u}">'
             f'<meta property="og:image" content="{S}/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{locale}"><meta name="twitter:card" content="summary_large_image">{alt}<link rel="icon" type="image/png" href="{r}assets/logo.png">'
-            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=horizontal-tiles-4"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}SplitFlapText.css?v=1"><link rel="stylesheet" href="{r}homepage-redesign.css?v=8"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
+            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=header-balance-2"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}glass-refinement-v2.css?v=2"><link rel="stylesheet" href="{r}SplitFlapText.css?v=1"><link rel="stylesheet" href="{r}homepage-redesign.css?v=8"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
             f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
 
 def header(r, alt=None):
@@ -191,7 +199,7 @@ def index():
     b = head(r, TT, DD, "ta/" if ta_ else "", ld, [("en", ""), ("ta", "ta/"), ("x-default", "")]) + header(r, r + ("" if ta_ else "ta/") + "index.html")
     quick = "".join(f'<a href="{sl(r, s[0])}">{L(SHORT[s[0]])}</a>' for s in SV)
     b += ('<main id="home"><section class="hero">'
-      + f'<img class="hero-illustration" src="{r}assets/hero-illustration.png" alt="" aria-hidden="true" loading="eager" decoding="async">'
+      + f'<img class="hero-illustration" src="{r}assets/hero-illustration.webp" width="1200" height="900" alt="" aria-hidden="true" loading="lazy" decoding="async">'
       + '<div class="wrap hero-grid"><div class="hero-copy">'
           + T("div", "Local tax &amp; business compliance", "உள்ளூர் வரி மற்றும் வணிக இணக்க சேவைகள்", "eyebrow")
           + T("h1", '<span class="hero-title-main">Professional Tax &amp; Business Support</span><br><span class="hero-title-accent">Clear Guidance. Reliable Support.</span>', '<span class="hero-title-main">தொழில்முறை வரி மற்றும் வணிக உதவி</span><br><span class="hero-title-accent">தெளிவான வழிகாட்டுதல். நம்பகமான ஆதரவு.</span>')
@@ -227,7 +235,17 @@ def index():
           + f'</div>{tiles_html(r)}</div></section>')
     b += ('<section id="how" class="section alt"><div class="wrap"><div class="section-head">' + T("h2", "How it works", "எப்படி செயல்படுகிறது") + "</div>" + steps()
           + '<div class="how-cta">' + btn(wa("Hello Vivian, I would like to get started."), "Start on WhatsApp →", "WhatsApp-ல் தொடங்குங்கள் →", "primary", "how-it-works", True) + "</div></div></section>")
-    chips = "".join(f"<span>{L(c)}</span>" for c in ["Restaurants &amp; Food Businesses", "Bakeries &amp; Home Bakers", "Cafés &amp; Tea Shops", "Cloud Kitchens", "Boutiques &amp; Fashion", "Retail Shops", "Supermarkets", "Salons &amp; Spas", "Clinics &amp; Small Businesses", "Traders &amp; Wholesalers", "Manufacturers", "Online Sellers", "Freelancers &amp; Professionals", "New Businesses"])
+    CHIPS = [("Restaurants &amp; Food Businesses", "food-businesses"), ("Bakeries &amp; Home Bakers", "food-businesses"),
+             ("Cafés &amp; Tea Shops", "food-businesses"), ("Cloud Kitchens", "food-businesses"),
+             ("Boutiques &amp; Fashion", "retail-traders"), ("Retail Shops", "retail-traders"), ("Supermarkets", "retail-traders"),
+             ("Salons &amp; Spas", "salons-clinics"), ("Clinics &amp; Small Businesses", "salons-clinics"),
+             ("Traders &amp; Wholesalers", "retail-traders"), ("Manufacturers", "manufacturers"), ("Online Sellers", "online-sellers"),
+             ("Freelancers &amp; Professionals", "professionals-freelancers"), ("Home-Based Businesses", "home-based-businesses"),
+             ("New Businesses", "new-businesses")]
+    chips = "".join(
+        f'<a href="{r}who-we-help/{pg}.html"><span>{c}</span></a>' if (not ta_ and has(f"who-we-help/{pg}.html"))
+        else (f"<span>{L(c)}</span>" if not (ta_ and pg == "home-based-businesses") else "")
+        for c, pg in CHIPS)
     b += ('<section id="business" class="section"><div class="wrap"><div class="section-head">' + T("h2", "Who we help", "யாருக்கு உதவுகிறோம்") + f'</div><div class="chips">{chips}</div>'
           '<div class="newbiz"><div>' + T("h3", "Starting a small business in Puducherry?", "புதுச்சேரியில் சிறு தொழில் தொடங்குகிறீர்களா?")
           + T("p", "Before you start, check which registrations may apply. We'll help you work out what applies to your business.", "தொடங்கும் முன், எந்த பதிவுகள் பொருந்தும் என்று பாருங்கள். உங்கள் வணிகத்திற்கு எது பொருந்தும் என்பதைக் கண்டறிய உதவுவோம்.")
@@ -281,32 +299,36 @@ def index():
     b += foot(r)
     return b
 
+def ld_graph(title, desc, path, service_name, area, crumbs):
+    """One JSON-LD script: WebPage + Service + BreadcrumbList. Facts only: no prices, ratings or street address."""
+    tag = "ta-IN" if LANG == "ta" else "en-IN"
+    url = f"{S}/{path}"
+    provider = {"@type": "ProfessionalService", "name": "KVB ENTERPRISES", "url": S + "/", "telephone": "+" + PH}
+    graph = [
+        {"@type": "WebPage", "@id": url + "#webpage", "url": url, "name": title, "description": desc, "inLanguage": tag,
+         "isPartOf": {"@type": "WebSite", "name": "KVB ENTERPRISES", "url": S + "/"}},
+        {"@type": "Service", "@id": url + "#service", "name": service_name, "description": desc, "url": url,
+         "provider": provider, "areaServed": area},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(crumbs)]},
+    ]
+    return ('<script type="application/ld+json">'
+            + json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False) + "</script>")
+
 def service(s, r, path):
     slug, en, ta, de, dta, help_items, docs = s
-    title = f"{en} | KVB ENTERPRISES"
-    desc = de
-    page_url = f"{S}/{path}"
-    page_schema = {
-        "@type": "WebPage", "@id": page_url + "#webpage", "url": page_url,
-        "name": title, "description": desc,
-        "inLanguage": "ta-IN" if LANG == "ta" else "en-IN",
-        "isPartOf": {"@type": "WebSite", "name": "KVB ENTERPRISES", "url": S + "/"}
-    }
-    service_schema = {
-        "@type": "Service", "@id": page_url + "#service", "name": en,
-        "description": de, "serviceType": en, "url": page_url,
-        "inLanguage": "ta-IN" if LANG == "ta" else "en-IN",
-        "provider": {"@type": "Organization", "name": "KVB ENTERPRISES", "url": S + "/", "telephone": "+" + PH},
-        "areaServed": [{"@type": "AdministrativeArea", "name": area} for area in ("Puducherry", "Cuddalore", "Villupuram")],
-        "mainEntityOfPage": {"@id": page_url + "#webpage"}
-    }
-    ld = '<script type="application/ld+json">' + json.dumps({
-        "@context": "https://schema.org", "@graph": [page_schema, service_schema]
-    }, ensure_ascii=False) + '</script>'
+    ta_ = LANG == "ta"
+    name = ta if ta_ else en
+    # Keep Tamil titles distinct when the Tamil name is the same word as the English one (e.g. FSSAI).
+    title = f"{name} சேவைகள் | KVB ENTERPRISES" if (ta_ and ta == en) else f"{name} | KVB ENTERPRISES"
+    desc = dta if ta_ else de
+    home = S + "/" + ("ta/" if ta_ else "")
+    ld = ld_graph(title, desc, path, name, [{"@type": "City", "name": l.title()} for l in LOCS],
+                  [(L("Home"), home), (name, f"{S}/{path}")])
     b = head(r, title, desc, path, ld, [("en", f"services/{slug}.html"), ("ta", f"ta/services/{slug}.html")])
     b += header(r, ("../" if not r else r) + "ta/services/" + slug + ".html")
     b += '<main><section class="section"><div class="wrap">'
-    b += '<nav class="crumbs"><a href="' + r + 'index.html">' + L("Home") + '</a> › ' + L(en) + '</nav>'
+    b += '<nav class="crumbs"><a href="' + r + 'index.html">' + L("Home") + '</a> › ' + name + '</nav>'
     b += T("h1", en, ta)
     b += T("p", de, dta, "lead")
     b += '<div class="svc-body"><div>' + T("h2", "What we help with", "நாங்கள் எவ்வாறு உதவுகிறோம்")
@@ -321,28 +343,43 @@ def service(s, r, path):
     b += foot(r)
     return b
 
+# Where each area sits, for the GST state code (first two digits of a GSTIN): Puducherry 34, Tamil Nadu 33.
+# (where it is, registration state, state code, one factual note)
+LOCINFO = {
+    "puducherry": ("the Union Territory of Puducherry", "Puducherry", "34",
+                   "Puducherry town is where KVB ENTERPRISES is based."),
+    "karaikal": ("the Union Territory of Puducherry", "Puducherry", "34",
+                 "Karaikal is a region of the Union Territory of Puducherry, although it lies apart from Puducherry town, so registrations here are made under Puducherry rather than Tamil Nadu."),
+    "villupuram": ("Villupuram district, Tamil Nadu", "Tamil Nadu", "33",
+                   "Villupuram is the district headquarters and is in Tamil Nadu, not in the Puducherry Union Territory."),
+    "cuddalore": ("Cuddalore district, Tamil Nadu", "Tamil Nadu", "33",
+                  "Cuddalore is the district headquarters and is in Tamil Nadu, not in the Puducherry Union Territory."),
+    "tindivanam": ("Villupuram district, Tamil Nadu", "Tamil Nadu", "33",
+                   "Tindivanam is a town in Villupuram district, so GST registration here is under Tamil Nadu."),
+    "panruti": ("Cuddalore district, Tamil Nadu", "Tamil Nadu", "33",
+                "Panruti is a town in Cuddalore district, so GST registration here is under Tamil Nadu."),
+    "tiruvannamalai": ("Tiruvannamalai district, Tamil Nadu", "Tamil Nadu", "33",
+                       "Tiruvannamalai is the district headquarters and is in Tamil Nadu."),
+    "chidambaram": ("Cuddalore district, Tamil Nadu", "Tamil Nadu", "33",
+                    "Chidambaram is a town in Cuddalore district, so GST registration here is under Tamil Nadu."),
+    "mayiladuthurai": ("Mayiladuthurai district, Tamil Nadu", "Tamil Nadu", "33",
+                       "Mayiladuthurai became a separate district in 2020, so older documents may still show Nagapattinam district."),
+}
+# Add ONE real, first-hand line per area here (for example something you have seen while helping local clients).
+# It is shown on that area's page only when it is not empty. Do not add anything you have not verified.
+LOCNOTES = {}
+
 def location(l, r, path):
     city = l.title()
-    title = f"GST Registration in {city} | KVB ENTERPRISES"
+    where, region, code, note = LOCINFO[l]
+    title = ("GST Assistance in Puducherry | KVB ENTERPRISES" if l == "puducherry"
+             else f"GST Registration in {city} | KVB ENTERPRISES")
     desc = (f"GST registration and compliance assistance in {city} and nearby areas. WhatsApp and Tamil support."
             if l == "puducherry" else
             f"GST registration and compliance assistance in {city}, Puducherry and nearby areas. WhatsApp and Tamil support.")
-    location_schema = {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": f"GST Registration in {city}",
-        "description": desc,
-        "serviceType": "GST registration and compliance assistance",
-        "provider": {
-            "@type": "ProfessionalService",
-            "name": "KVB ENTERPRISES",
-            "url": S + "/"
-        },
-        "areaServed": city,
-        "url": f"{S}/{path}",
-        "inLanguage": LANG
-    }
-    ld = '<script type="application/ld+json">' + json.dumps(location_schema, ensure_ascii=False) + '</script>'
+    url = f"{S}/{path}"
+    ld = ld_graph(title, desc, path, f"GST registration in {city}", [{"@type": "City", "name": city}],
+                  [("Home", S + "/"), (f"GST {city}", url)])
     b = head(r, title, desc, path, ld, [("en", f"locations/gst-registration-{l}.html")])
     b += header(r)
     b += '<main><section class="section"><div class="wrap">'
@@ -356,6 +393,43 @@ def location(l, r, path):
     b += '<ul class="ticks"><li>GST registration</li><li>GSTR-1 / GSTR-3B filing</li><li>Monthly compliance</li><li>Amendment and cancellation</li></ul>'
     b += T("h2", "Documents typically needed", "பொதுவாக தேவைப்படும் ஆவணங்கள்")
     b += '<ul class="ticks"><li>PAN and Aadhaar</li><li>Address proof</li><li>Bank details</li><li>Business details</li></ul>'
+
+    # Area-specific section: where the area sits and which GST state code applies.
+    extra_note = (" " + LOCNOTES[l]) if LOCNOTES.get(l) else ""
+    b += f'<h2>GST in {city}: what to know</h2>'
+    b += (f'<p>{city} is in {where}. A business whose principal place of business is here registers for GST under {region}, '
+          f'so its GSTIN begins with {code}. {note}{extra_note}</p>')
+    elig = (f' The <a href="{r}tools/gst-eligibility-checker.html">GST Registration Eligibility Guide</a> gives an indicative first check.'
+            if has("tools/gst-eligibility-checker.html") else "")
+    checker = (f' You can also try <a href="{r}tools/business-compliance-checker.html">What Does My Business Need?</a>.'
+               if has("tools/business-compliance-checker.html") else "")
+    b += '<div class="faq-list">'
+    b += (f'<details><summary>Which GST state code applies to a business in {city}?</summary>'
+          f'<p>Businesses in {city} register under {region}, and the first two digits of the GSTIN are the state or Union Territory code ({code}). '
+          f'The registration state follows your principal place of business, so we confirm it when we review your details.</p></details>')
+    b += (f'<details><summary>Do I need GST registration for a small business in {city}?</summary>'
+          f'<p>It depends on factors such as turnover, the kind of goods or services you supply, and whether you sell across states or online. '
+          f'We review your case before recommending registration.{elig}</p></details>')
+    b += (f'<details><summary>Can you also help with FSSAI or Udyam?</summary>'
+          f'<p>Yes. Many small businesses need these alongside GST. See <a href="{r}services/fssai.html">FSSAI</a> and '
+          f'<a href="{r}services/msme.html">MSME / Udyam</a>.{checker}</p></details>')
+    b += '</div>'
+
+    # Internal links: related pages and the other areas.
+    rel = []
+    if has("services/gst-registration.html"):
+        rel.append(f'<a href="{r}services/gst-registration.html">GST registration details</a>')
+    if has("services/gst-filing.html"):
+        rel.append(f'<a href="{r}services/gst-filing.html">GST return filing</a>')
+    if l == "puducherry":
+        for fn, label in (("fssai-puducherry", "FSSAI in Puducherry"), ("itr-filing-puducherry", "ITR filing in Puducherry"),
+                          ("msme-udyam-puducherry", "MSME / Udyam in Puducherry")):
+            if has(f"locations/{fn}.html"):
+                rel.append(f'<a href="{fn}.html">{label}</a>')
+    if rel:
+        b += '<h2>Related pages</h2><p>' + " • ".join(rel) + '</p>'
+    b += '<h2>Other areas we serve</h2><p>' + " • ".join(
+        f'<a href="gst-registration-{x}.html">{x.title()}</a>' for x in LOCS if x != l) + '</p>'
     b += '</div><aside class="svc-cta">'
     b += btn(wa(f"Hello Vivian, I need GST help in {city}."), "WhatsApp about this", "இதைப் பற்றி WhatsApp", "primary", "location", True)
     b += btn(f"tel:+{PH}", "Call now", "இப்போது அழைக்கவும்", "secondary", "location", False, False)
@@ -386,7 +460,7 @@ def terms_page():
     b += foot("")
     return b
 
-def sitemap():
+def sitemap_urls():
     urls = [("", "1.0"), ("ta/", "0.9"), ("privacy.html", "0.3"), ("terms.html", "0.3")]
     for s in SV:
         urls.append((f"services/{s[0]}.html", "0.8"))
@@ -395,9 +469,24 @@ def sitemap():
         urls.append((f"locations/gst-registration-{l}.html", "0.7"))
     for t in TOOLS:
         urls.append((f"tools/{t[0]}.html", "0.5"))
+    # Hand-written pages that live beside the generated ones are picked up automatically.
+    seen = {u for u, _ in urls}
+    for pattern, pri in (("services/*.html", "0.7"), ("locations/*.html", "0.6"),
+                         ("who-we-help/*.html", "0.6"), ("tools/*.html", "0.5")):
+        for path in sorted(glob.glob(os.path.join(O, pattern))):
+            u = os.path.relpath(path, O).replace(os.sep, "/")
+            # Old thin city pages (locations/<city>.html) are superseded by gst-registration-<city>.html.
+            if u.startswith("locations/") and os.path.basename(u)[:-5] in LOCS:
+                continue
+            if u not in seen:
+                urls.append((u, pri))
+                seen.add(u)
+    return urls
+
+def sitemap():
     today = TD.isoformat()
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    for u, pri in urls:
+    for u, pri in sitemap_urls():
         xml += f'  <url><loc>{S}/{u}</loc><lastmod>{today}</lastmod><priority>{pri}</priority></url>\n'
     xml += '</urlset>'
     return xml
@@ -430,13 +519,7 @@ def main():
         w(f"ta/services/{s[0]}.html", service(s, "../../", f"ta/services/{s[0]}.html"))
     # Sitemap
     w("sitemap.xml", sitemap())
-    w("sitemap.txt", "\n".join(f"{S}/{u}" for u, _ in [
-        ("", ""), ("ta/", ""), ("privacy.html", ""), ("terms.html", ""),
-        *[(f"services/{s[0]}.html", "") for s in SV],
-        *[(f"ta/services/{s[0]}.html", "") for s in SV],
-        *[(f"locations/gst-registration-{l}.html", "") for l in LOCS],
-        *[(f"tools/{t[0]}.html", "") for t in TOOLS],
-    ]) + "\n")
+    w("sitemap.txt", "\n".join(f"{S}/{u}" for u, _ in sitemap_urls()) + "\n")
 
 if __name__ == "__main__":
     main()

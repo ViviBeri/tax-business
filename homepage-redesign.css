@@ -537,3 +537,9 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
 
 /* Keep photo credits accessible in the page markup without repeating visible overlays. */
 .image-credit{display:none!important}
+
+/* Who-we-help chips that link to their own pages */
+#business .chips a{display:block;color:inherit;text-decoration:none;border-radius:999px}
+#business .chips a span{display:block}
+#business .chips a:hover span{border-color:#29135e}
+#business .chips a:focus-visible{outline:2px solid #29135e;outline-offset:3px}
