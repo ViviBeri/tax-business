@@ -100,6 +100,7 @@ TILE_CAPTION = {
 TILE_COLOR = {"gst": "gst", "itr": "itr", "fssai": "fssai", "pan": "pan", "msme": "msme", "trademark": "tm", "dsc": "dsc", "business-registration": "biz"}
 
 def head(r, title, desc, path, ld="", alts=None):
+    """Return the <head> markup: metadata, canonical/hreflang, Open Graph, stylesheets, GA4 and optional JSON-LD."""
     u = f"{S}/{path}"
     alt = "".join(f'<link rel="alternate" hreflang="{h}" href="{S}/{q}">' for h, q in (alts or []))
     locale = "ta_IN" if LANG == "ta" else "en_IN"
@@ -187,6 +188,7 @@ def tiles_html(r):
             '</div>')
 
 def index():
+    """Build the homepage for the current language (hero, services, who we help, locations, tools, FAQ, contact)."""
     ld = '<script type="application/ld+json">' + json.dumps({
         "@context": "https://schema.org", "@type": "ProfessionalService", "name": "KVB ENTERPRISES", "url": S + "/",
         "logo": S + "/assets/logo.png", "image": S + "/assets/logo.png", "telephone": "+" + PH,
@@ -274,7 +276,7 @@ def index():
           + '<p class="location-note">' + L("Service availability is confirmed when you contact us. KVB ENTERPRISES is based in Puducherry and is not a government office.") + '</p>'
           + '</div></section>')
     tools = "".join(f'<div><h3>{L(title)}</h3><p>{L(description)}</p><a href="{r}tools/{slug}.html">{L(link_text)}</a></div>'
-                    for slug, title, description, link_text in TOOLS)
+                    for slug, title, description, link_text in (TOOLS[:4] if LANG == "ta" else TOOLS))
     b += ('<section id="tools" class="section alt"><div class="wrap"><div class="section-head">'
           + T("h2", "Useful resources for business owners.", "வணிக உரிமையாளர்களுக்கான பயனுள்ள வளங்கள்.")
           + f'</div><div class="tool-grid">{tools}</div></div></section>')
@@ -316,6 +318,7 @@ def ld_graph(title, desc, path, service_name, area, crumbs):
             + json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False) + "</script>")
 
 def service(s, r, path):
+    """Build one service page (English or Tamil) with localized metadata and WebPage + Service JSON-LD."""
     slug, en, ta, de, dta, help_items, docs = s
     ta_ = LANG == "ta"
     name = ta if ta_ else en
@@ -326,7 +329,7 @@ def service(s, r, path):
     ld = ld_graph(title, desc, path, name, [{"@type": "City", "name": l.title()} for l in LOCS],
                   [(L("Home"), home), (name, f"{S}/{path}")])
     b = head(r, title, desc, path, ld, [("en", f"services/{slug}.html"), ("ta", f"ta/services/{slug}.html")])
-    b += header(r, ("../" if not r else r) + "ta/services/" + slug + ".html")
+    b += header(r, r + ("services/" if ta_ else "ta/services/") + slug + ".html")  # link to the OTHER language
     b += '<main><section class="section"><div class="wrap">'
     b += '<nav class="crumbs"><a href="' + r + 'index.html">' + L("Home") + '</a> › ' + name + '</nav>'
     b += T("h1", en, ta)
@@ -370,6 +373,7 @@ LOCINFO = {
 LOCNOTES = {}
 
 def location(l, r, path):
+    """Build one GST location page with area-specific GST state-code content, FAQ and internal links."""
     city = l.title()
     where, region, code, note = LOCINFO[l]
     title = ("GST Assistance in Puducherry | KVB ENTERPRISES" if l == "puducherry"
@@ -379,7 +383,7 @@ def location(l, r, path):
             f"GST registration and compliance assistance in {city}, Puducherry and nearby areas. WhatsApp and Tamil support.")
     url = f"{S}/{path}"
     ld = ld_graph(title, desc, path, f"GST registration in {city}", [{"@type": "City", "name": city}],
-                  [("Home", S + "/"), (f"GST {city}", url)])
+                  [(L("Home"), S + "/" + ("ta/" if LANG == "ta" else "")), (f"GST {city}", url)])
     b = head(r, title, desc, path, ld, [("en", f"locations/gst-registration-{l}.html")])
     b += header(r)
     b += '<main><section class="section"><div class="wrap">'
@@ -461,6 +465,7 @@ def terms_page():
     return b
 
 def sitemap_urls():
+    """Return (relative_url, priority) pairs for generated and hand-written pages; used by both sitemap files."""
     urls = [("", "1.0"), ("ta/", "0.9"), ("privacy.html", "0.3"), ("terms.html", "0.3")]
     for s in SV:
         urls.append((f"services/{s[0]}.html", "0.8"))
@@ -484,6 +489,7 @@ def sitemap_urls():
     return urls
 
 def sitemap():
+    """Return sitemap.xml built from sitemap_urls()."""
     today = TD.isoformat()
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for u, pri in sitemap_urls():
@@ -502,6 +508,7 @@ def L(s):
     return s
 
 def main():
+    """Generate every page and both sitemap files into the output directory."""
     global LANG
     # English
     LANG = "en"
