@@ -325,7 +325,23 @@ def location(l, r, path):
     desc = (f"GST registration and compliance assistance in {city} and nearby areas. WhatsApp and Tamil support."
             if l == "puducherry" else
             f"GST registration and compliance assistance in {city}, Puducherry and nearby areas. WhatsApp and Tamil support.")
-    b = head(r, title, desc, path, "", [("en", f"locations/gst-registration-{l}.html")])
+    location_schema = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": f"GST Registration in {city}",
+        "description": desc,
+        "serviceType": "GST registration and compliance assistance",
+        "provider": {
+            "@type": "ProfessionalService",
+            "name": "KVB ENTERPRISES",
+            "url": S + "/"
+        },
+        "areaServed": city,
+        "url": f"{S}/{path}",
+        "inLanguage": LANG
+    }
+    ld = '<script type="application/ld+json">' + json.dumps(location_schema, ensure_ascii=False) + '</script>'
+    b = head(r, title, desc, path, ld, [("en", f"locations/gst-registration-{l}.html")])
     b += header(r)
     b += '<main><section class="section"><div class="wrap">'
     b += '<nav class="crumbs"><a href="' + r + 'index.html">' + L("Home") + '</a> › GST ' + city + '</nav>'
