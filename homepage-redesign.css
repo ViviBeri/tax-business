@@ -533,3 +533,7 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   .clients-grid{gap:22px}
   .big strong{letter-spacing:-3px}
 }
+
+
+/* Keep photo credits accessible in the page markup without repeating visible overlays. */
+.image-credit{display:none!important}
