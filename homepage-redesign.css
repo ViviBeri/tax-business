@@ -500,3 +500,14 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   .location-card__copy small{font-size:9px}
   .location-card__arrow{width:25px;height:25px;font-size:14px}
 }
+
+
+/* Mobile QA: remove repeated brand and trust details from the hero card.
+   The header and hero copy already provide these; keep service shortcuts and contact. */
+@media(max-width:700px){
+  .hero-card>.logo-card,
+  .hero-card>p.trust{display:none}
+  .hero-card{padding:16px 18px}
+  .hero-card .quick{margin:4px 0 13px}
+  .hero-card .mini{padding-top:12px}
+}
