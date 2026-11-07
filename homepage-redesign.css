@@ -511,3 +511,25 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   .hero-card .quick{margin:4px 0 13px}
   .hero-card .mini{padding-top:12px}
 }
+
+
+/* Mobile layout correction: stack trust content and prevent section overflow. */
+@media(max-width:760px){
+  .clients-grid{grid-template-columns:minmax(0,1fr)!important;align-items:start}
+  .clients-grid>div,.clients-grid>div:nth-child(2){min-width:0;max-width:100%}
+  .clients .big{min-width:0;width:100%}
+  .clients .proof-visual{width:100%;max-width:100%;overflow:hidden}
+  .location-heading{min-width:0;max-width:100%;display:block}
+  .location-section .section-head,
+  .location-section .section-head h2,
+  .location-section .section-head p{min-width:0;max-width:100%;overflow-wrap:anywhere}
+  .location-section .locations{width:100%;min-width:0}
+  .location-section .location-card{min-width:0}
+  .location-card__copy{min-width:0;overflow-wrap:anywhere}
+  #about .about-grid{grid-template-columns:minmax(0,1fr)!important}
+  #about .about-grid>*{min-width:0;max-width:100%}
+}
+@media(max-width:420px){
+  .clients-grid{gap:22px}
+  .big strong{letter-spacing:-3px}
+}
