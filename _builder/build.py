@@ -285,7 +285,23 @@ def service(s, r, path):
     slug, en, ta, de, dta, help_items, docs = s
     title = f"{en} | KVB ENTERPRISES"
     desc = de
-    b = head(r, title, desc, path, "", [("en", f"services/{slug}.html"), ("ta", f"ta/services/{slug}.html")])
+    service_schema = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": en,
+        "description": de,
+        "serviceType": en,
+        "provider": {
+            "@type": "ProfessionalService",
+            "name": "KVB ENTERPRISES",
+            "url": S + "/"
+        },
+        "areaServed": ["Puducherry", "Cuddalore", "Villupuram"],
+        "url": f"{S}/{path}",
+        "inLanguage": LANG
+    }
+    ld = '<script type="application/ld+json">' + json.dumps(service_schema, ensure_ascii=False) + '</script>'
+    b = head(r, title, desc, path, ld, [("en", f"services/{slug}.html"), ("ta", f"ta/services/{slug}.html")])
     b += header(r, ("../" if not r else r) + "ta/services/" + slug + ".html")
     b += '<main><section class="section"><div class="wrap">'
     b += '<nav class="crumbs"><a href="' + r + 'index.html">' + L("Home") + '</a> › ' + L(en) + '</nav>'
