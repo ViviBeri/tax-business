@@ -109,8 +109,8 @@ def head(r, title, desc, path, ld="", alts=None):
             f'<link rel="canonical" href="{u}"><meta property="og:type" content="website"><meta property="og:site_name" content="KVB ENTERPRISES">'
             f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{u}">'
             f'<meta property="og:image" content="{S}/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{locale}"><meta name="twitter:card" content="summary_large_image">{alt}<link rel="icon" type="image/png" href="{r}assets/logo.png">'
-            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=header-balance-2"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}homepage-redesign.css?v=25"><link rel="stylesheet" href="{r}site-quality-fix.css?v=5"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
-            f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
+            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=header-balance-2"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}homepage-redesign.css?v=25"><link rel="stylesheet" href="{r}site-quality-fix.css?v=5"><link rel="stylesheet" href="{r}styles/glass.css"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
+            f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body><noscript class=\"noscript-notice\">{T('span', 'JavaScript is disabled. All service information and contact links remain available.', 'JavaScript முடக்கப்பட்டுள்ளது. அனைத்து சேவைத் தகவல்களும் தொடர்பு இணைப்புகளும் கிடைக்கும்.')}</noscript>")
 
 def header(r, alt=None, lang_fallback=None):
     home = r + ("ta/" if LANG == "ta" else "") + "index.html"
@@ -133,7 +133,7 @@ def foot(r):
             f'<div><b>KVB ENTERPRISES</b><p>{L("Tax &amp; Business Compliance Services")}</p></div></div>'
             f'<div>GST • ITR • FSSAI • PAN • MSME • Trademark • DSC<br>{L("Puducherry &amp; nearby areas")}</div>'
             f'<div><a href="{r}privacy.html">Privacy</a> • <a href="{r}terms.html">Terms</a><br>© <span class="yr">{TD.year}</span> KVB ENTERPRISES</div></div></footer>'
-            f'<script src="{r}script.js?v=menu-fix-6" defer></script></body></html>')
+            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script type="module" src="{r}scripts/scroll.js"></script><script type="module" src="{r}scripts/multiscroll.js"></script><script type="module" src="{r}scripts/carousel.js"></script><script type="module" src="{r}scripts/three-hero.js"></script></body></html>')
 
 def btn(href, en, ta, cls="primary", loc="", ico=False, ext=True):
     t = ' target="_blank" rel="noopener"' if ext else ""
@@ -188,11 +188,34 @@ def tiles_html(r):
 
 def index():
     """Build the homepage for the current language (hero, services, who we help, locations, tools, FAQ, contact)."""
-    ld = '<script type="application/ld+json">' + json.dumps({
-        "@context": "https://schema.org", "@type": "ProfessionalService", "name": "KVB ENTERPRISES", "url": S + "/",
-        "logo": S + "/assets/logo.png", "image": S + "/assets/logo.png", "telephone": "+" + PH,
-        "description": "Tax and business compliance assistance in Puducherry and nearby areas: GST, ITR, FSSAI, PAN, MSME/Udyam, Trademark, DSC and business registration.",
-        "areaServed": [{"@type": "City", "name": l.title()} for l in LOCS], "availableLanguage": ["English", "Tamil"]}, ensure_ascii=False) + "</script>"
+    ld_graph = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "LocalBusiness", "@id": S + "/#business",
+                "name": "KVB ENTERPRISES", "url": S + "/",
+                "logo": S + "/assets/logo.png", "telephone": "+" + PH,
+                "description": "Independent tax and business compliance assistance in Puducherry, India.",
+                "address": {"@type": "PostalAddress", "addressLocality": "Puducherry", "addressRegion": "Puducherry", "addressCountry": "IN"},
+                "areaServed": [{"@type": "AdministrativeArea", "name": "Puducherry", "identifier": "IN-PY"}],
+                "availableLanguage": ["English", "Tamil"],
+                "makesOffer": [{"@id": S + "/#service-" + slug} for slug in ("gst", "itr", "fssai", "udyam", "pan-trademark")]
+            },
+            *[
+                {"@type": "Service", "@id": S + "/#service-" + slug, "name": name,
+                 "provider": {"@id": S + "/#business"},
+                 "areaServed": {"@type": "AdministrativeArea", "name": "Puducherry", "identifier": "IN-PY"}}
+                for slug, name in [
+                    ("gst", "GST Registration and Filing Assistance"),
+                    ("itr", "Income Tax Return Assistance"),
+                    ("fssai", "FSSAI Registration and Renewal Assistance"),
+                    ("udyam", "MSME / Udyam Registration Assistance"),
+                    ("pan-trademark", "PAN Card and Trademark Services")
+                ]
+            ]
+        ]
+    }
+    ld = '<script type="application/ld+json">' + json.dumps(ld_graph, ensure_ascii=False) + "</script>"
     ta_ = LANG == "ta"
     r = "../" if ta_ else ""
     TT = "KVB ENTERPRISES | புதுச்சேரியில் வரி மற்றும் வணிக இணக்க சேவைகள்" if ta_ else "KVB ENTERPRISES | Tax & Business Compliance in Puducherry"
@@ -200,7 +223,7 @@ def index():
     b = head(r, TT, DD, "ta/" if ta_ else "", ld, [("en", ""), ("ta", "ta/"), ("x-default", "")]) + header(r, r + ("" if ta_ else "ta/") + "index.html")
     quick = "".join(f'<a href="{sl(r, s[0])}">{L(SHORT[s[0]])}</a>' for s in SV)
     b += ('<main id="home"><section class="hero">'
-      + f'<img class="hero-illustration" src="{r}assets/hero-illustration.webp" width="1200" height="900" alt="" aria-hidden="true" loading="lazy" decoding="async">'
+      + f'<img class="hero-illustration" src="{r}assets/hero-banner.svg" width="1180" height="610" alt="{E("KVB ENTERPRISES — Tax and Business Compliance, Puducherry")}" fetchpriority="high" decoding="async">'
       + '<div class="wrap hero-grid"><div class="hero-copy">'
           + T("div", "Local tax &amp; business compliance", "உள்ளூர் வரி மற்றும் வணிக இணக்க சேவைகள்", "eyebrow")
           + T("h1", '<span class="hero-title-main">Professional Tax &amp; Business Support</span><br><span class="hero-title-accent">Clear Guidance. Reliable Support.</span>', '<span class="hero-title-main">தொழில்முறை வரி மற்றும் வணிக உதவி</span><br><span class="hero-title-accent">தெளிவான வழிகாட்டுதல். நம்பகமான ஆதரவு.</span>')
@@ -227,16 +250,35 @@ def index():
 +   '</span>'
 + '</p>'
           + f'<div class="quick">{quick}</div><div class="mini"><span class="mini-label">Call / WhatsApp</span><a class="mini-number" href="tel:+{PH}" data-loc="hero" aria-label="Call KVB ENTERPRISES at 90036 33696">90036 33696</a></div></div></div></section>')
-    b += ('<section class="clients"><div class="wrap clients-grid"><div class="big"><strong>300+</strong>' + T("span", "Clients served", "வாடிக்கையாளர்களுக்கு சேவை") + f'<div class="proof-visual"><img src="https://images.pexels.com/photos/6964119/pexels-photo-6964119.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1100" alt="Business professionals reviewing paperwork and financial documents together" loading="lazy" decoding="async"><a class="image-credit" href="https://www.pexels.com/photo/preparing-documents-inside-the-office-6964119/" target="_blank" rel="noopener">Photo: Mikhail Nilov / Pexels</a></div></div><div>'
-          + T("h2", "Trusted local support in and around Puducherry", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் நம்பகமான உள்ளூர் உதவி")
-          + T("p", "Businesses, professionals and individuals have used KVB ENTERPRISES for practical, personal compliance support.", "வணிகங்கள், தொழில்முறையாளர்கள் மற்றும் தனிநபர்கள் நடைமுறை, தனிப்பட்ட இணக்க உதவிக்காக KVB ENTERPRISES-ஐ பயன்படுத்தியுள்ளனர்.")
-          + '<ul class="ticks">' + T("li", "Direct support from Vivian", "விவியனிடமிருந்து நேரடி உதவி") + T("li", "Clear steps and document lists", "தெளிவான படிகள் மற்றும் ஆவண பட்டியல்") + T("li", "Updates on WhatsApp", "WhatsApp மூலம் தகவல்") + '</ul></div></div></section>')
     b += ('<section id="services" class="section"><div class="wrap"><div class="section-head">'
           + T("h2", "Everything your business needs, in one place.", "உங்கள் வணிகத்திற்குத் தேவையான சேவைகள் அனைத்தும் ஒரே இடத்தில்.")
           + T("p", NOTE_EN, NOTE_TA)
           + f'</div>{tiles_html(r)}</div></section>')
-    b += ('<section id="how" class="section alt"><div class="wrap"><div class="section-head">' + T("h2", "How it works", "எப்படி செயல்படுகிறது") + "</div>" + steps()
-          + '<div class="how-cta">' + btn(wa("Hello Vivian, I would like to get started."), "Start on WhatsApp →", "WhatsApp-ல் தொடங்குங்கள் →", "primary", "how-it-works", True) + "</div></div></section>")
+    b += ('<section id="compliance-timeline" class="section alt" data-compliance-timeline><div class="wrap">'
+          + T("span", "YOUR NEXT STEPS", "உங்கள் அடுத்த படிகள்", "eyebrow")
+          + T("h2", "A clear process, from first message to follow-up.", "முதல் செய்தியிலிருந்து தொடர்ந்த தகவல் வரை தெளிவான செயல்முறை.")
+          + '<div class="timeline-steps">'
+          + '<article class="step" data-timeline-step><b>01</b>' + T("h3", "Tell us what you need", "உங்களுக்கு தேவையானதைச் சொல்லுங்கள்") + T("p", "Share the service and a short description of your requirement.", "சேவையையும் உங்கள் தேவையின் சுருக்கத்தையும் பகிருங்கள்.") + '</article>'
+          + '<article class="step" data-timeline-step><b>02</b>' + T("h3", "Review the documents", "ஆவணங்களைச் சரிபார்க்கவும்") + T("p", "We explain the documents and information relevant to your case.", "உங்கள் நிலைக்கு தேவையான ஆவணங்கள் மற்றும் தகவல்களை விளக்குகிறோம்.") + '</article>'
+          + '<article class="step" data-timeline-step><b>03</b>' + T("h3", "Confirm the scope", "சேவை விவரங்களை உறுதிப்படுத்துங்கள்") + T("p", "Understand the process, professional charges and any applicable statutory fees before proceeding.", "தொடங்குவதற்கு முன் செயல்முறை, தொழில்முறை கட்டணம் மற்றும் பொருந்தும் சட்டபூர்வ கட்டணங்களை அறிந்து கொள்ளுங்கள்.") + '</article>'
+          + '<article class="step" data-timeline-step><b>04</b>' + T("h3", "Receive updates", "தொடர்ந்த தகவல்களைப் பெறுங்கள்") + T("p", "We keep you informed as the agreed assistance progresses.", "ஒப்புக்கொண்ட உதவி முன்னேறும் போது உங்களுக்கு தகவல் தெரிவிக்கிறோம்.") + '</article>'
+          + '</div><div class="how-cta">' + btn(wa("Hello Vivian, I would like to get started."), "Start on WhatsApp →", "WhatsApp-ல் தொடங்குங்கள் →", "primary", "how-it-works", True) + '</div></div></section>')
+    b += ('<section id="why-kvb" class="section"><div class="wrap"><div class="section-head">'
+          + T("h2", "Local support built around clear communication.", "தெளிவான தகவல் பரிமாற்றத்தை மையமாகக் கொண்ட உள்ளூர் உதவி.")
+          + T("p", "Practical assistance for individuals, professionals and businesses in Puducherry and nearby areas.", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ள தனிநபர்கள், தொழில்முறையாளர்கள் மற்றும் வணிகங்களுக்கு நடைமுறை உதவி.")
+          + '</div><div class="glass-grid">'
+          + '<article class="glass-card"><strong class="stat-counter" data-target="5">5</strong>' + T("h3", "Core service groups", "முக்கிய சேவைப் பிரிவுகள்") + T("p", "GST, ITR, FSSAI, Udyam and PAN / trademark assistance.", "GST, ITR, FSSAI, உத்யம் மற்றும் PAN / வர்த்தக முத்திரை உதவி.") + '</article>'
+          + '<article class="glass-card"><strong class="stat-counter" data-target="2">2</strong>' + T("h3", "Languages", "மொழிகள்") + T("p", "Support in English and Tamil.", "ஆங்கிலம் மற்றும் தமிழில் உதவி.") + '</article>'
+          + '<article class="glass-card"><strong class="stat-counter" data-target="1">1</strong>' + T("h3", "Local point of contact", "உள்ளூர் தொடர்பு மையம்") + T("p", "One direct channel for questions, documents and updates.", "கேள்விகள், ஆவணங்கள் மற்றும் தகவல்களுக்கு நேரடி தொடர்பு வழி.") + '</article>'
+          + '</div></div></section>')
+    b += ('<section class="proof-strip section alt"><div class="wrap"><div class="section-head">'
+          + T("h2", "A practical, transparent service experience.", "நடைமுறை மற்றும் வெளிப்படையான சேவை அனுபவம்.")
+          + '</div><div class="proof-chips">'
+          + '<span class="glass-chip proof-chip">' + T("span", "Independent assistance", "சுயாதீன உதவி") + '</span>'
+          + '<span class="glass-chip proof-chip">' + T("span", "English and Tamil", "ஆங்கிலம் மற்றும் தமிழ்") + '</span>'
+          + '<span class="glass-chip proof-chip">' + T("span", "Puducherry based", "புதுச்சேரியை மையமாகக் கொண்டது") + '</span>'
+          + '<span class="glass-chip proof-chip">' + T("span", "Clear document guidance", "தெளிவான ஆவண வழிகாட்டுதல்") + '</span>'
+          + '</div></div></section>')
     CHIPS = [("Restaurants &amp; Food Businesses", "food-businesses"), ("Bakeries &amp; Home Bakers", "food-businesses"),
              ("Cafés &amp; Tea Shops", "food-businesses"), ("Cloud Kitchens", "food-businesses"),
              ("Boutiques &amp; Fashion", "retail-traders"), ("Retail Shops", "retail-traders"), ("Supermarkets", "retail-traders"),
