@@ -70,6 +70,9 @@ jobs:
           test -s ta/index.html
           test -f design-system.css
           test -f site-quality-fix.css
+          grep -Fq 'class="btn secondary hero-services-cta" href="#services"' index.html
+          grep -Fq 'class="btn secondary hero-services-cta" href="#services"' ta/index.html
+          ! grep -RqE 'venom-cta|kvb-venom|venomButton' index.html ta/index.html homepage-redesign.css site-quality-fix.css ui.js _builder/build.py
           grep -Fq 'href="design-system.css"' index.html
           grep -Fq 'href="homepage-redesign.css?v=24"' index.html
           grep -Fq 'href="site-quality-fix.css?v=3"' index.html
