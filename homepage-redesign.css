@@ -799,3 +799,21 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   }
   #services .has-bento-carousel .bento-slide:nth-child(2) .tile:first-child b{font-size:19px}
 }
+
+
+/* KVB brand alignment: keep the Venom magnetic CTA within the site's mint/green system. */
+#home .actions .venom-cta{
+  border-color:rgba(185,242,209,.58);
+  background:linear-gradient(135deg,#b9f2d1 0%,#61d49a 100%);
+  color:#102c22;
+  box-shadow:0 12px 28px rgba(40,200,126,.22),inset 0 1px 0 rgba(255,255,255,.52);
+}
+#home .actions .venom-cta:hover,
+#home .actions .venom-cta:focus-visible{
+  border-color:#d8ffe7;
+  background:linear-gradient(135deg,#d8ffe7 0%,#79e2aa 100%);
+  color:#102c22;
+  box-shadow:0 14px 32px rgba(40,200,126,.3),0 0 0 3px rgba(185,242,209,.18);
+}
+.kvb-venom-strand,.kvb-venom-anchor,.kvb-venom-tip{fill:#a9f2c8;stroke:#a9f2c8}
+.kvb-venom-cursor.is-near{filter:drop-shadow(0 0 9px rgba(169,242,200,.78))}
