@@ -40,6 +40,11 @@ jobs:
                   continue
               source = path.read_text(encoding='utf-8')
               source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*glass-refinement-v2\.css(?:\?[^"]*)?">',
+                  "",
+                  source,
+              )
+              source = re.sub(
                   r'<link rel="stylesheet" href="[^"]*SplitFlapText\.css(?:\?[^"]*)?">',
                   "",
                   source,
@@ -70,7 +75,7 @@ jobs:
                   f'<link rel="stylesheet" href="{quality_href}?v=4"></head>',
                   1,
               )
-              if "site-quality-fix.css?v=4" not in source:
+              if "site-quality-fix.css?v=5" not in source:
                   raise SystemExit(f"Recovery stylesheet missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
