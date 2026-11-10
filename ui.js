@@ -296,7 +296,6 @@
     mountProgress();
     headerShadow();
     reveals();
-    serviceBentoGrid();
     venomButton();
   });
 })();
