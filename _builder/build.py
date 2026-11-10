@@ -200,7 +200,7 @@ def index():
     b = head(r, TT, DD, "ta/" if ta_ else "", ld, [("en", ""), ("ta", "ta/"), ("x-default", "")]) + header(r, r + ("" if ta_ else "ta/") + "index.html")
     quick = "".join(f'<a href="{sl(r, s[0])}">{L(SHORT[s[0]])}</a>' for s in SV)
     b += ('<main id="home"><section class="hero">'
-      + f'<img class="hero-illustration" src="{r}assets/hero-illustration.webp" width="1200" height="900" alt="" aria-hidden="true" loading="lazy" decoding="async">'
+      + f'<img class="hero-illustration" src="{r}assets/hero-illustration.webp" width="1200" height="900" alt="" aria-hidden="true" loading="eager" fetchpriority="high" decoding="async">'
       + '<div class="wrap hero-grid"><div class="hero-copy">'
           + T("div", "Local tax &amp; business compliance", "உள்ளூர் வரி மற்றும் வணிக இணக்க சேவைகள்", "eyebrow")
           + T("h1", '<span class="hero-title-main">Professional Tax &amp; Business Support</span><br><span class="hero-title-accent">Clear Guidance. Reliable Support.</span>', '<span class="hero-title-main">தொழில்முறை வரி மற்றும் வணிக உதவி</span><br><span class="hero-title-accent">தெளிவான வழிகாட்டுதல். நம்பகமான ஆதரவு.</span>')
