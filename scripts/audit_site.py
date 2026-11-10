@@ -257,9 +257,7 @@ def audit_redesign_accessibility() -> None:
         "--glass-focus": "#102a43",
     }
     for token, expected in tokens.items():
-        import re
-        match = re.search(rf"{re.escape(token)}\s*:\s*(#[0-9a-fA-F]{6})\s*;", css)
-        if not match or match.group(1).lower() != expected:
+        if f"{token}: {expected};" not in css:
             fail(f"Redesign token {token} must remain {expected} for the audited contrast pairs.")
 
     pairs = (
