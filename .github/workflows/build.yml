@@ -8,11 +8,6 @@ on:
       - '_builder/**'
       - 'theme.css'
       - 'script.js'
-      - 'ui.js'
-      - 'split-flap.css'
-      - 'split-flap.js'
-      - 'SplitFlapText.css'
-      - 'SplitFlapText.js'
       - 'index.html'
       - 'style.css'
       - 'homepage-redesign.css'
@@ -51,7 +46,7 @@ jobs:
               )
               source = re.sub(
                   r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css)(?:\?[^"]*)?">',
-                  r'\1?v=24">',
+                  r'\1?v=25">',
                   source,
               )
               quality_href = Path(os.path.relpath("site-quality-fix.css", path.parent)).as_posix()
@@ -62,10 +57,10 @@ jobs:
               )
               source = source.replace(
                   "</head>",
-                  f'<link rel="stylesheet" href="{quality_href}?v=3"></head>',
+                  f'<link rel="stylesheet" href="{quality_href}?v=4"></head>',
                   1,
               )
-              if "site-quality-fix.css?v=3" not in source:
+              if "site-quality-fix.css?v=4" not in source:
                   raise SystemExit(f"Recovery stylesheet missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
