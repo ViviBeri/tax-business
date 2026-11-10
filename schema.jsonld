@@ -1,0 +1,66 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://viviberi.github.io/tax-business/#business",
+      "name": "KVB ENTERPRISES",
+      "url": "https://viviberi.github.io/tax-business/",
+      "description": "Independent tax and business-compliance assistance in Puducherry, India.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Puducherry",
+        "addressRegion": "Puducherry",
+        "addressCountry": "IN"
+      },
+      "areaServed": [
+        { "@type": "AdministrativeArea", "name": "Puducherry", "identifier": "IN-PY" }
+      ],
+      "telephone": "{{PHONE}}",
+      "email": "{{EMAIL}}",
+      "availableLanguage": ["English", "Tamil"],
+      "makesOffer": [
+        { "@id": "https://viviberi.github.io/tax-business/#service-gst" },
+        { "@id": "https://viviberi.github.io/tax-business/#service-itr" },
+        { "@id": "https://viviberi.github.io/tax-business/#service-fssai" },
+        { "@id": "https://viviberi.github.io/tax-business/#service-udyam" },
+        { "@id": "https://viviberi.github.io/tax-business/#service-pan-trademark" }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://viviberi.github.io/tax-business/#service-gst",
+      "name": "GST Registration and Filing Assistance",
+      "provider": { "@id": "https://viviberi.github.io/tax-business/#business" },
+      "areaServed": { "@type": "AdministrativeArea", "name": "Puducherry", "identifier": "IN-PY" }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://viviberi.github.io/tax-business/#service-itr",
+      "name": "Income Tax Return Assistance",
+      "provider": { "@id": "https://viviberi.github.io/tax-business/#business" },
+      "areaServed": { "@type": "AdministrativeArea", "name": "Puducherry", "identifier": "IN-PY" }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://viviberi.github.io/tax-business/#service-fssai",
+      "name": "FSSAI Registration and Renewal Assistance",
+      "provider": { "@id": "https://viviberi.github.io/tax-business/#business" },
+      "areaServed": { "@type": "AdministrativeArea", "name": "Puducherry", "identifier": "IN-PY" }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://viviberi.github.io/tax-business/#service-udyam",
+      "name": "MSME / Udyam Registration Assistance",
+      "provider": { "@id": "https://viviberi.github.io/tax-business/#business" },
+      "areaServed": { "@type": "AdministrativeArea", "name": "Puducherry", "identifier": "IN-PY" }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://viviberi.github.io/tax-business/#service-pan-trademark",
+      "name": "PAN Card and Trademark Services",
+      "provider": { "@id": "https://viviberi.github.io/tax-business/#business" },
+      "areaServed": { "@type": "AdministrativeArea", "name": "Puducherry", "identifier": "IN-PY" }
+    }
+  ]
+}
