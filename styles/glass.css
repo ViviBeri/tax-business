@@ -206,3 +206,92 @@
     z-index:999;
   }
 }
+
+
+/* Respect the device theme and keep the redesigned surfaces legible in dark mode. */
+@media (prefers-color-scheme:dark) {
+  :root {
+    color-scheme:dark;
+    --glass-ink:#F8FAFC;
+    --glass-muted:#CBD5E1;
+    --glass-surface:#0F172A;
+    --glass-surface-solid:#0F172A;
+    --glass-border:#334155;
+    --glass-accent:#34D399;
+    --glass-accent-hover:#6EE7B7;
+    --glass-accent-soft:#12352E;
+    --glass-focus:#F8FAFC;
+    --glass-focus-gap:#030712;
+    --glass-shadow:0 16px 42px rgba(0,0,0,.35);
+    --glass-shadow-hover:0 22px 50px rgba(0,0,0,.48);
+  }
+  html,body {
+    color-scheme:dark;
+    background:#030712;
+    color:#F8FAFC;
+  }
+  body { background-color:#030712; }
+  main,
+  .section,
+  .section.alt,
+  .contact,
+  footer {
+    background-color:#030712;
+    color:#F8FAFC;
+  }
+  h1,h2,h3,h4,h5,h6,
+  .section-head,
+  .section-head p,
+  .lead,
+  .contact-line,
+  footer a {
+    color:#F8FAFC;
+  }
+  p,small,.muted,
+  #compliance-timeline .timeline-steps p {
+    color:#CBD5E1;
+  }
+  .glass-panel,
+  .glass-card,
+  .glass-chip,
+  #compliance-timeline .timeline-steps > .step,
+  .tile,
+  .contact-box,
+  .svc-cta,
+  .tool-grid > div,
+  .faq-list details {
+    border-color:#334155;
+    background:#0F172A;
+    color:#F8FAFC;
+  }
+  .glass-card p,
+  .glass-chip,
+  #compliance-timeline .timeline-steps p,
+  .tile small {
+    color:#CBD5E1;
+  }
+  .tile-ico {
+    border-color:#16624C;
+    background:#12352E;
+    color:#34D399;
+  }
+  .tile-ico svg { stroke:currentColor; }
+  .service-icon-fallback { color:#34D399; }
+  .proof-chip,
+  .carousel-control {
+    border-color:#16624C;
+    background:#0F172A;
+    color:#F8FAFC;
+  }
+  .btn-primary,.btn.primary {
+    border-color:#059669;
+    background:#047857;
+    color:#fff;
+  }
+  input,select,textarea {
+    border-color:#475569;
+    background:#0F172A;
+    color:#F8FAFC;
+  }
+  input::placeholder,textarea::placeholder { color:#94A3B8; }
+}
