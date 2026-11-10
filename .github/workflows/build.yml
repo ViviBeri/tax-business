@@ -51,7 +51,7 @@ jobs:
               )
               source = re.sub(
                   r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css)(?:\?[^"]*)?">',
-                  r'\1?v=23">',
+                  r'\1?v=24">',
                   source,
               )
               quality_href = Path(os.path.relpath("site-quality-fix.css", path.parent)).as_posix()
@@ -62,10 +62,10 @@ jobs:
               )
               source = source.replace(
                   "</head>",
-                  f'<link rel="stylesheet" href="{quality_href}?v=2"></head>',
+                  f'<link rel="stylesheet" href="{quality_href}?v=3"></head>',
                   1,
               )
-              if "site-quality-fix.css?v=2" not in source:
+              if "site-quality-fix.css?v=3" not in source:
                   raise SystemExit(f"Recovery stylesheet missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
