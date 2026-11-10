@@ -258,9 +258,9 @@ def index():
           + T("h2", "Local support built around clear communication.", "தெளிவான தகவல் பரிமாற்றத்தை மையமாகக் கொண்ட உள்ளூர் உதவி.")
           + T("p", "Practical assistance for individuals, professionals and businesses in Puducherry and nearby areas.", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ள தனிநபர்கள், தொழில்முறையாளர்கள் மற்றும் வணிகங்களுக்கு நடைமுறை உதவி.")
           + '</div><div class="glass-grid">'
-          + '<article class="glass-card"><strong class="stat-counter" data-target="5">5</strong>' + T("h3", "Core service groups", "முக்கிய சேவைப் பிரிவுகள்") + T("p", "GST, ITR, FSSAI, Udyam and PAN / trademark assistance.", "GST, ITR, FSSAI, உத்யம் மற்றும் PAN / வர்த்தக முத்திரை உதவி.") + '</article>'
-          + '<article class="glass-card"><strong class="stat-counter" data-target="2">2</strong>' + T("h3", "Languages", "மொழிகள்") + T("p", "Support in English and Tamil.", "ஆங்கிலம் மற்றும் தமிழில் உதவி.") + '</article>'
-          + '<article class="glass-card"><strong class="stat-counter" data-target="1">1</strong>' + T("h3", "Local point of contact", "உள்ளூர் தொடர்பு மையம்") + T("p", "One direct channel for questions, documents and updates.", "கேள்விகள், ஆவணங்கள் மற்றும் தகவல்களுக்கு நேரடி தொடர்பு வழி.") + '</article>'
+          + '<article class="glass-card"><strong class="stat-counter" data-target="5" data-count="5">5</strong>' + T("h3", "Core service groups", "முக்கிய சேவைப் பிரிவுகள்") + T("p", "GST, ITR, FSSAI, Udyam and PAN / trademark assistance.", "GST, ITR, FSSAI, உத்யம் மற்றும் PAN / வர்த்தக முத்திரை உதவி.") + '</article>'
+          + '<article class="glass-card"><strong class="stat-counter" data-target="2" data-count="2">2</strong>' + T("h3", "Languages", "மொழிகள்") + T("p", "Support in English and Tamil.", "ஆங்கிலம் மற்றும் தமிழில் உதவி.") + '</article>'
+          + '<article class="glass-card"><strong class="stat-counter" data-target="1" data-count="1">1</strong>' + T("h3", "Local point of contact", "உள்ளூர் தொடர்பு மையம்") + T("p", "One direct channel for questions, documents and updates.", "கேள்விகள், ஆவணங்கள் மற்றும் தகவல்களுக்கு நேரடி தொடர்பு வழி.") + '</article>'
           + '</div></div></section>')
     b += ('<section id="compliance-timeline" class="section alt" data-compliance-timeline><div class="wrap">'
           + T("span", "YOUR NEXT STEPS", "உங்கள் அடுத்த படிகள்", "eyebrow")
