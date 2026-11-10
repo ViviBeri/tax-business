@@ -1,111 +1,79 @@
-# KVB ENTERPRISES — Business & Tax Services Website
+# KVB ENTERPRISES
 
-Responsive, multilingual website for **KVB ENTERPRISES**, an independent business and tax-compliance assistance service based in Puducherry. The site presents services, helps visitors understand the enquiry process, and connects them with human assistance.
-
-**Live website:** https://viviberi.github.io/tax-business/
-
+<!-- GitHub raw fallback: https://raw.githubusercontent.com/ViviBeri/tax-business/main/assets/hero-banner.svg -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ViviBeri/tax-business/main/readme-hero.svg" alt="KVB ENTERPRISES website project banner" width="100%" />
+  <img src="assets/hero-banner.svg" alt="KVB ENTERPRISES — Tax and Business Compliance in Puducherry" width="100%">
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ViviBeri/tax-business/main/readme-journey.svg" alt="Illustration of the service enquiry journey" width="100%" />
+  <strong>Clear guidance. Practical assistance. Human support.</strong><br>
+  Independent tax and business-compliance assistance in Puducherry, India.
 </p>
 
-<p align="center"><sub>Illustrative enquiry journey. KVB ENTERPRISES is an independent professional assistance service and is not a government department.</sub></p>
+<p align="center">
+  <a href="https://viviberi.github.io/tax-business/"><strong>Visit the live website</strong></a>
+</p>
 
-## Services presented
+<p align="center">
+  <img src="assets/stat-strip.svg" alt="Five core services, English and Tamil support, Puducherry location and responsive service" width="100%">
+</p>
 
-The website covers business and compliance assistance including:
+## Services
 
-- GST registration and filing
-- Income tax return assistance
-- FSSAI registration and renewal
-- MSME registration
-- PAN card services
-- Trademark assistance
-- Business registration and related professional services
-- Electrical and HVAC service enquiries
+| Service | Assistance |
+|---|---|
+| **GST** | GST registration and filing assistance |
+| **ITR** | Income Tax Return preparation and filing assistance |
+| **FSSAI** | FSSAI registration and renewal assistance |
+| **Udyam** | MSME / Udyam registration assistance |
+| **PAN** | PAN card and trademark service assistance |
 
-Service availability, eligibility, statutory fees, and professional charges should be confirmed directly with KVB ENTERPRISES before engagement.
+Service eligibility, required documents, statutory charges and timelines depend on the applicable process and individual requirements. Confirm the scope and quotation with KVB ENTERPRISES before proceeding.
 
-## Technology
+## Quick Start
 
-- HTML, CSS, and JavaScript
-- Static-site generation using the Python builder in `_builder/build.py`
-- English pages with Tamil-language pages under `ta/`; generated GST location pages link to the Tamil GST services guide without claiming a page-level translation
-- GitHub Pages hosting
-- Google Analytics 4 event tracking
+This is a static HTML, CSS and JavaScript website hosted on GitHub Pages. No package manager or build installation is required to browse the published site.
 
-This is a static website; it is not a WordPress site.
+- **View online:** open [viviberi.github.io/tax-business](https://viviberi.github.io/tax-business/).
+- **Preview a local copy:** download or clone the repository, then open `index.html` in a modern browser.
+- **Edit content:** update the relevant HTML, CSS, JavaScript or source files, then publish the changes through the repository's normal GitHub Pages workflow.
+- **Generated pages:** where a page is maintained by the project builder, update its source/configuration rather than editing generated output directly.
 
-## Repository structure
+## Tech Stack
+
+<p>
+  <img alt="HTML5" src="https://img.shields.io/badge/HTML5-static_site-E34F26?logo=html5&logoColor=white">
+  <img alt="CSS3" src="https://img.shields.io/badge/CSS3-responsive_design-1572B6?logo=css3&logoColor=white">
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-vanilla-F7DF1E?logo=javascript&logoColor=111827">
+  <img alt="GitHub Pages" src="https://img.shields.io/badge/Hosting-GitHub_Pages-222222?logo=githubpages&logoColor=white">
+</p>
+
+- Plain HTML, CSS and JavaScript
+- Static-site publishing with GitHub Pages
+- English and Tamil content
+- Lightweight SVG artwork with native SMIL animation
+
+## Repository Structure
 
 | Path | Purpose |
 |---|---|
-| `index.html`, `services/` | Generated home and service pages |
+| `index.html`, `services/` | Homepage and service information |
 | `ta/` | Tamil-language pages |
-| `locations/` | Location-specific pages |
-| `tools/` | Website tools |
-| `_builder/build.py` | Static-site build script |
-| `_builder/prices.json` | Editable service-price configuration |
-| `style.css`, `script.js` | Styling, interactions, forms, and analytics events |
-| `assets/` | Hand-maintained website assets |
-| `privacy.html`, `terms.html` | Privacy and terms pages |
-| `sitemap.xml`, `robots.txt` | Search-engine discovery configuration |
+| `locations/` | Local service-area pages |
+| `tools/` | Browser-based tools |
+| `_builder/` | Static-site builder and source configuration |
+| `assets/` | Images, icons and README SVG artwork |
+| `privacy.html`, `terms.html` | Privacy and terms information |
 
-Generated pages should be updated through the builder and source configuration rather than edited directly when the builder owns those files. The builder provides equivalent-language links for translated service pages and a clearly labelled Tamil GST guide fallback on English GST location pages.
+## Contact
 
-## Updating displayed prices
+For service details, document requirements and quotations, contact KVB ENTERPRISES through the [live website](https://viviberi.github.io/tax-business/).
 
-1. Edit the relevant value in `_builder/prices.json`.
-2. Run the builder from the repository root:
+<p align="center">
+  <img src="assets/footer-wave.svg" alt="Animated emerald, cyan and violet glass gradient wave" width="100%">
+</p>
 
-   ```bash
-   python3 _builder/build.py
-   ```
-
-3. Review the generated changes before committing and publishing.
-
-An empty price value is configured to display **“Get a quote”** rather than a numeric amount.
-
-## Analytics and privacy
-
-The website uses Google Analytics 4 with measurement ID `G-KFP95JFETM`. The README documents these event names:
-
-- `whatsapp_click`
-- `call_click`
-- `generate_lead`
-- `select_service`
-- `language_switch`
-
-The current implementation is documented as avoiding transmission of names and phone numbers to Google Analytics. Review the live analytics configuration and privacy notice whenever tracking behavior changes.
-
-## Local development
-
-Clone the repository and run the site builder:
-
-```bash
-git clone https://github.com/ViviBeri/tax-business.git
-cd tax-business
-python3 _builder/build.py
-```
-
-Then inspect the generated HTML and assets locally or publish the reviewed changes through the repository's GitHub Pages workflow.
-
-## Important notice
-
-KVB ENTERPRISES is an independent professional assistance service and is **not a government department**. The website does not represent a government portal. Visitors should verify applicable rules, deadlines, statutory fees, and eligibility with the relevant official authority.
-
-## Security
-
-Please report suspected vulnerabilities privately. Read the [Security Policy](SECURITY.md) for the reporting channel, scope, response expectations, and coordinated disclosure process. Do not publish exploit details in a public issue or pull request.
-
-## Contributions and maintenance
-
-When changing the site, preserve the English/Tamil navigation, generated-page workflow, privacy disclosures, accessibility, mobile layout, and working contact links. Language links must point to useful destinations; only declare `hreflang` when the destination is a genuine equivalent page. Verify generated output and test the affected pages before publishing.
-
-
-## Design system
-
-The site uses a lightweight, native-CSS design system informed by editorial typography, consistent spacing, responsive grids, and clear interaction states. The implementation keeps the existing KVB navy, green, and gold identity and does not import the Designmodo Slides framework or its jQuery dependencies. Shared visual refinements live in `homepage-redesign.css`; generated page references are maintained by `_builder/build.py`.
+<p align="center">
+  <strong>© KVB ENTERPRISES · Puducherry, India</strong><br>
+  <sub>Independent professional assistance. Not a government department or government-affiliated service.</sub>
+</p>
