@@ -132,7 +132,7 @@ def foot(r):
             f'<div><b>KVB ENTERPRISES</b><p>{L("Tax &amp; Business Compliance Services")}</p></div></div>'
             f'<div>GST • ITR • FSSAI • PAN • MSME • Trademark • DSC<br>{L("Puducherry &amp; nearby areas")}</div>'
             f'<div><a href="{r}privacy.html">Privacy</a> • <a href="{r}terms.html">Terms</a><br>© <span class="yr">{TD.year}</span> KVB ENTERPRISES</div></div></footer>'
-            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script src="{r}ui.js?v=bento-carousel-1" defer></script><script src="{r}SplitFlapText.js?v=1" defer></script></body></html>')
+            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script src="{r}ui.js?v=bento-carousel-2" defer></script><script src="{r}SplitFlapText.js?v=1" defer></script></body></html>')
 
 def btn(href, en, ta, cls="primary", loc="", ico=False, ext=True):
     t = ' target="_blank" rel="noopener"' if ext else ""
