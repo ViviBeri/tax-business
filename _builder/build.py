@@ -182,9 +182,7 @@ def tiles_html(r):
             f'<small>{cap}</small>'
             f'</a>')
     return ('<div class="tiles-carousel" role="region" aria-label="Our services">'
-            '<button class="tiles-arrow tiles-prev" type="button" aria-label="Previous services">‹</button>'
             '<div class="tiles" id="serviceTiles">' + "".join(out) + '</div>'
-            '<button class="tiles-arrow tiles-next" type="button" aria-label="Next services">›</button>'
             '</div>')
 
 def index():
