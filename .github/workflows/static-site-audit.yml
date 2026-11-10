@@ -10,6 +10,7 @@ on:
       - 'sitemap.txt'
       - 'robots.txt'
       - 'scripts/**'
+      - 'README.md'
       - '.github/workflows/static-site-audit.yml'
   push:
     branches:
@@ -20,6 +21,7 @@ on:
       - 'sitemap.txt'
       - 'robots.txt'
       - 'scripts/**'
+      - 'README.md'
       - '.github/workflows/static-site-audit.yml'
   workflow_dispatch:
 
