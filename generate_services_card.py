@@ -17,7 +17,7 @@ def main() -> None:
     svg = generate_svg_card(
         theme="luxury-glass",
         title="KVB ENTERPRISES",
-        description="Tax & Business Compliance",
+        description="Tax and Business Compliance",
         tags=["GST", "ITR", "FSSAI", "Udyam", "PAN"],
         identifier="KVB",
     )
