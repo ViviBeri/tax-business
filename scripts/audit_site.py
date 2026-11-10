@@ -258,7 +258,7 @@ def audit_redesign_accessibility() -> None:
     }
     for token, expected in tokens.items():
         import re
-        match = re.search(rf"{re.escape(token)}\\s*:\\s*(#[0-9a-fA-F]{6})\\s*;", css)
+        match = re.search(rf"{re.escape(token)}\s*:\s*(#[0-9a-fA-F]{6})\s*;", css)
         if not match or match.group(1).lower() != expected:
             fail(f"Redesign token {token} must remain {expected} for the audited contrast pairs.")
 
