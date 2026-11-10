@@ -1,0 +1,42 @@
+/* KVB glass enhancement layer. Scoped to .kvb-glass-enhanced to avoid changing legacy pages. */
+:root {
+  --glass-bg:#030712; --glass-panel:#0f172a; --glass-panel-raised:#1e293b;
+  --glass-emerald:#10b981; --glass-cyan:#22d3ee; --glass-violet:#7c3aed;
+  --glass-text:#f8fafc; --glass-muted:#cbd5e1; --glass-border:rgba(255,255,255,.12);
+  --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem;
+  --space-6:1.5rem; --space-8:2rem; --space-12:3rem; --space-16:4rem;
+  --radius-sm:.625rem; --radius-md:1rem; --radius-lg:1.5rem; --radius-xl:2rem;
+  --shadow-glass:0 18px 48px rgba(2,6,23,.24);
+  --ease-out:cubic-bezier(.2,.7,.2,1); --ease-spring:cubic-bezier(.2,.85,.25,1);
+  --text-xs:.75rem; --text-sm:.875rem; --text-base:1rem; --text-lg:1.125rem;
+  --text-xl:clamp(1.25rem,2vw,1.5rem); --text-display:clamp(2.25rem,5vw,4rem);
+}
+.kvb-glass-enhanced { color:var(--glass-text); background:var(--glass-bg); }
+.glass-panel,.glass-card { border:1px solid var(--glass-border); border-radius:var(--radius-lg); background:linear-gradient(145deg,rgba(30,41,59,.94),rgba(15,23,42,.92)); box-shadow:var(--shadow-glass); }
+.glass-panel { padding:clamp(1.25rem,3vw,2rem); }
+.glass-card { padding:var(--space-6); }
+.glass-chip { display:inline-flex; align-items:center; gap:.5rem; border:1px solid var(--glass-border); border-radius:999px; padding:.45rem .75rem; color:#e2e8f0; background:rgba(15,23,42,.92); font-size:var(--text-xs); letter-spacing:.04em; }
+.stat-counter { font-variant-numeric:tabular-nums; font-size:var(--text-display); font-weight:750; }
+.reveal { opacity:1; transform:none; }
+.js-motion-ready .reveal[data-reveal-pending] { opacity:0; transform:translateY(12px); }
+.btn-primary,.btn-ghost { display:inline-flex; align-items:center; justify-content:center; min-height:2.9rem; padding:.75rem 1.2rem; border-radius:999px; font-weight:700; text-decoration:none; }
+.btn-primary { color:#03251b; background:linear-gradient(100deg,var(--glass-emerald),var(--glass-cyan)); }
+.btn-ghost { color:var(--glass-text); border:1px solid var(--glass-border); background:rgba(15,23,42,.7); }
+.glass-focus:focus-visible,.kvb-glass-enhanced :focus-visible { outline:3px solid var(--glass-cyan); outline-offset:3px; }
+.grain { position:relative; isolation:isolate; }
+.grain:after { content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.035; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E"); }
+@supports (backdrop-filter:blur(12px)) { .glass-panel,.glass-card { backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); } }
+@supports not (backdrop-filter:blur(12px)) { .glass-panel,.glass-card { background:#111c30; } }
+@media (min-width:640px) { .glass-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--space-6); } }
+@media (min-width:960px) { .glass-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media (min-width:1280px) { .glass-panel { padding:var(--space-12); } }
+@media (prefers-color-scheme:light) {
+ .kvb-glass-enhanced { --glass-text:#102033; --glass-muted:#40536a; color:#102033; background:#f4f7f5; }
+ .kvb-glass-enhanced .glass-panel,.kvb-glass-enhanced .glass-card { color:#102033; background:rgba(255,255,255,.96); border-color:#cbd5df; box-shadow:0 12px 32px rgba(15,23,42,.1); }
+ .kvb-glass-enhanced .glass-chip { color:#17324a; background:#edf5f1; border-color:#c8ddd4; }
+ .kvb-glass-enhanced .btn-ghost { color:#102033; background:#fff; border-color:#9aabbc; }
+}
+@media (prefers-reduced-motion:reduce) {
+ .kvb-glass-enhanced *, .kvb-glass-enhanced *:before, .kvb-glass-enhanced *:after { animation:none!important; transition:none!important; scroll-behavior:auto!important; transform:none!important; }
+ .reveal,.js-motion-ready .reveal[data-reveal-pending] { opacity:1!important; transform:none!important; }
+}
