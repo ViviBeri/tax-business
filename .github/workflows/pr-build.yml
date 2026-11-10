@@ -12,6 +12,8 @@ on:
       - 'site-quality-fix.css'
       - 'homepage-redesign.css'
       - 'editorial-redesign.css'
+      - 'README.md'
+      - 'assets/**/*.svg'
       - 'script.js'
       - 'ui.js'
       - '.github/workflows/pr-build.yml'
@@ -32,38 +34,29 @@ jobs:
           python-version: '3.11'
       - name: Compile builder
         run: python3 -m py_compile _builder/build.py
-      - name: Install SVG hero generator
-        run: python3 -m pip install slabkit==0.1.1 godprofile-mcp==0.3.1
-      - name: Generate and validate hero SVG
+      - name: Validate hand-authored README SVG assets
         run: |
-          python3 generate_hero.py
-          test -s assets/hero-banner.svg
           python3 - <<'PY'
+          from pathlib import Path
           import xml.etree.ElementTree as ET
-          root = ET.parse("assets/hero-banner.svg").getroot()
-          if root.tag.split("}")[-1] != "svg":
-              raise SystemExit("Generated hero asset is not an SVG document")
-          print("Generated and parsed assets/hero-banner.svg")
+
+          forbidden = ("script", "foreignObject", "style")
+          for name in ("hero-banner.svg", "stat-strip.svg", "footer-wave.svg"):
+              path = Path("assets") / name
+              if not path.is_file() or path.stat().st_size > 150_000:
+                  raise SystemExit(f"Missing or oversized SVG: {path}")
+              root = ET.parse(path).getroot()
+              if root.tag != "{http://www.w3.org/2000/svg}svg":
+                  raise SystemExit(f"Invalid SVG root: {path}")
+              if not root.attrib.get("viewBox"):
+                  raise SystemExit(f"Missing viewBox: {path}")
+              for element in root.iter():
+                  if element.tag.split("}")[-1] in forbidden:
+                      raise SystemExit(f"Forbidden SVG element in {path}: {element.tag}")
+                  if any(key.lower().startswith("on") for key in element.attrib):
+                      raise SystemExit(f"Event handler found in {path}")
+              print(f"Validated {path} ({path.stat().st_size} bytes)")
           PY
-          python3 generate_services_card.py
-          test -s assets/services-card.svg
-          python3 - <<'PY'
-          import xml.etree.ElementTree as ET
-          root = ET.parse("assets/services-card.svg").getroot()
-          if root.tag.split("}")[-1] != "svg":
-              raise SystemExit("Generated services card is not an SVG document")
-          if "STARS_COUNT_KVB" in open("assets/services-card.svg", encoding="utf-8").read():
-              raise SystemExit("Unexpected GitHub stats placeholder in business card")
-          print("Generated and parsed assets/services-card.svg")
-          PY
-      - name: Upload generated SVG assets
-        uses: actions/upload-artifact@v4
-        with:
-          name: kvb-generated-svg-assets
-          path: |
-            assets/hero-banner.svg
-            assets/services-card.svg
-          if-no-files-found: error
       - name: Generate website
         run: python3 _builder/build.py
       - name: Normalize shared stylesheet versions on every page
