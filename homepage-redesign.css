@@ -678,3 +678,57 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   #services #serviceTiles.tiles { gap: 9px; }
   #services #serviceTiles > .tile { padding: 14px 10px; }
 }
+
+/* Designmodo-inspired refinement: consistent rhythm, typography and interaction.
+   Keep the implementation native CSS; do not import the Slides framework or jQuery. */
+:root{
+  --kvb-content-width:1160px;
+  --kvb-section-space:clamp(56px,7vw,92px);
+  --kvb-space-1:4px;
+  --kvb-space-2:8px;
+  --kvb-space-3:12px;
+  --kvb-space-4:16px;
+  --kvb-space-5:24px;
+  --kvb-space-6:32px;
+  --kvb-space-7:48px;
+  --kvb-radius-sm:12px;
+  --kvb-radius-md:18px;
+  --kvb-radius-lg:26px;
+  --kvb-shadow-soft:0 8px 24px rgba(25,19,55,.06);
+  --kvb-shadow-raised:0 18px 38px rgba(25,19,55,.11);
+  --kvb-focus-ring:0 0 0 4px rgba(22,131,75,.16);
+}
+html{scroll-padding-top:96px;scroll-behavior:smooth}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px;line-height:1.65;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+.wrap{width:min(var(--kvb-content-width),90%)}
+:is(h1,h2,h3,h4,.section-head p,.lead){text-wrap:pretty}
+:is(h1,h2,h3){line-height:1.14}
+:is(#services,#how,#business,#about,#locations,#tools,.faq,#contact){scroll-margin-top:100px}
+:is(#services,#how,#business,#about,#locations,#tools,.faq){padding-block:var(--kvb-section-space)}
+:is(.btn,.lang,.tiles-carousel .tile,.location-card,.step,.about-points>div){-webkit-tap-highlight-color:transparent}
+:is(a,button,input,select,textarea,[tabindex]):focus-visible{outline:3px solid #16834b;outline-offset:3px}
+:is(.btn,.lang,.tiles-carousel .tile,.location-card,.step,.about-points>div){transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,background-color .2s ease}
+.tiles-carousel .tile{border-radius:var(--kvb-radius-md);box-shadow:var(--kvb-shadow-soft)}
+.tiles-carousel .tile:hover,.tiles-carousel .tile:focus-visible{box-shadow:var(--kvb-shadow-raised)}
+#how .step{border-radius:var(--kvb-radius-md);box-shadow:var(--kvb-shadow-soft)}
+#about .about-points>div{border-radius:var(--kvb-radius-md);box-shadow:var(--kvb-shadow-soft)}
+#business .chips a span{transition:background-color .2s ease,border-color .2s ease,transform .2s ease}
+#business .chips a:hover span{background:#f2fbf5;border-color:rgba(22,131,75,.35);transform:translateY(-2px)}
+#contact .contact-box :is(input,select,textarea){width:100%;max-width:100%;font-size:16px}
+#contact .contact-box :is(input,select,textarea):focus-visible{outline:0;border-color:#16834b;box-shadow:var(--kvb-focus-ring)}
+#contact .contact-box .btn{width:100%;min-height:52px}
+.topbar{padding-top:env(safe-area-inset-top)}
+.mbar{padding-bottom:max(8px,env(safe-area-inset-bottom))}
+@media(max-width:700px){
+  :root{--kvb-section-space:54px}
+  body{font-size:15px}
+  .wrap{width:90%}
+  #contact .contact-box :is(input,select,textarea){min-height:50px}
+}
+@media(hover:none){
+  .tiles-carousel .tile:hover,.location-section .location-card:hover,#business .chips a:hover span{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  :is(.btn,.lang,.tiles-carousel .tile,.location-card,.step,.about-points>div){transition:none!important}
+}
