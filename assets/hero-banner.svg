@@ -24,7 +24,7 @@
 <rect x="28" y="24" width="1124" height="562" rx="34" filter="url(#grain)" opacity=".15"/>
 <rect x="66" y="57" width="8" height="8" rx="4" fill="#10B981"/>
 <text x="90" y="66" fill="#A7F3D0" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="12" font-weight="650" letter-spacing="2.4">INDEPENDENT BUSINESS COMPLIANCE SUPPORT</text>
-<text x="66" y="158" fill="#F8FAFC" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="54" font-weight="760" letter-spacing="-2.4" fill="url(#wordmark)">KVB ENTERPRISES</text>
+<text x="66" y="158" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="54" font-weight="760" letter-spacing="-2.4" fill="url(#wordmark)">KVB ENTERPRISES</text>
 <text x="68" y="199" fill="#D4E2EF" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="23">Tax &amp; Business Compliance · Puducherry</text>
 <rect x="68" y="222" width="410" height="3" rx="2" fill="url(#accent)"/>
 <text x="68" y="258" fill="#94A3B8" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="14">Clear guidance. Practical assistance. Human support.</text>
