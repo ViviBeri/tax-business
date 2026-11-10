@@ -104,3 +104,8 @@ Please report suspected vulnerabilities privately. Read the [Security Policy](SE
 ## Contributions and maintenance
 
 When changing the site, preserve the English/Tamil navigation, generated-page workflow, privacy disclosures, accessibility, mobile layout, and working contact links. Language links must point to useful destinations; only declare `hreflang` when the destination is a genuine equivalent page. Verify generated output and test the affected pages before publishing.
+
+
+## Design system
+
+The site uses a lightweight, native-CSS design system informed by editorial typography, consistent spacing, responsive grids, and clear interaction states. The implementation keeps the existing KVB navy, green, and gold identity and does not import the Designmodo Slides framework or its jQuery dependencies. Shared visual refinements live in `homepage-redesign.css`; generated page references are maintained by `_builder/build.py`.
