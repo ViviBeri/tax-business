@@ -72,7 +72,7 @@ jobs:
               )
               source = source.replace(
                   "</head>",
-                  f'<link rel="stylesheet" href="{quality_href}?v=4"></head>',
+                  f'<link rel="stylesheet" href="{quality_href}?v=5"></head>',
                   1,
               )
               if "site-quality-fix.css?v=5" not in source:
