@@ -817,3 +817,36 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
 }
 .kvb-venom-strand,.kvb-venom-anchor,.kvb-venom-tip{fill:#a9f2c8;stroke:#a9f2c8}
 .kvb-venom-cursor.is-near{filter:drop-shadow(0 0 9px rgba(169,242,200,.78))}
+
+
+/* Mobile carousel alignment: make each slide exactly the track width.
+   Keep slide padding inside the grid so transform percentages cannot expose
+   fragments of the adjacent slide. */
+#services .tiles-carousel.has-bento-carousel{
+  width:100%;min-width:0;overflow:hidden;contain:layout paint;
+}
+#services .has-bento-carousel #serviceTiles{
+  width:100%;min-width:0;box-sizing:border-box;padding:8px 0 14px;
+  gap:0;touch-action:pan-y;overscroll-behavior-x:contain;
+}
+#services .has-bento-carousel .bento-slide{
+  flex:0 0 100%;width:100%;min-width:0;max-width:100%;box-sizing:border-box;
+}
+#services .has-bento-carousel .bento-slide-grid{
+  width:100%;min-width:0;box-sizing:border-box;padding-inline:8px;
+}
+#services .has-bento-carousel .tiles-arrow{z-index:6}
+@media(max-width:560px){
+  #services .tiles-carousel.has-bento-carousel{margin-top:16px}
+  #services .has-bento-carousel .bento-slide-grid{
+    grid-template-rows:repeat(2,minmax(132px,auto));gap:10px;padding-inline:7px;
+  }
+  #services .has-bento-carousel .tile{min-height:132px;padding:15px 12px}
+  #services .has-bento-carousel .bento-slide:first-child .tile:first-child{
+    min-height:158px;padding:17px;
+  }
+  #services .has-bento-carousel .tiles-arrow{width:32px;height:32px}
+  #services .has-bento-carousel .tiles-prev{left:2px}
+  #services .has-bento-carousel .tiles-next{right:2px}
+  #services{padding-top:46px;padding-bottom:46px}
+}
