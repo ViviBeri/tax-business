@@ -885,3 +885,48 @@ body .clients h2,body .clients h2 *,body .clients-grid>div:nth-child(2) h2{color
 body .clients p,body .clients li,body .clients .ticks,body .clients .ticks li{color:rgba(255,255,255,.88)!important}
 body .clients .ticks li:before{color:#70d69e!important}
 body .clients .big strong{color:#b9f2d1!important}
+
+/* Final live contrast fix: SplitFlapText renders glyphs in nested elements,
+   so headline colors must target the generated characters as well. */
+body .hero h1 .hero-title-main,
+body .hero h1 .hero-title-main .split-flap-text,
+body .hero h1 .hero-title-main .split-flap-text__char {
+  color: #172b4d !important;
+  -webkit-text-fill-color: #172b4d !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+body .hero h1 .hero-title-accent,
+body .hero h1 .hero-title-accent .split-flap-text,
+body .hero h1 .hero-title-accent .split-flap-text__char {
+  color: #087c55 !important;
+  -webkit-text-fill-color: #087c55 !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+/* The trust row is rendered inside a white hero card. Override the legacy
+   light-on-dark child text colors that were leaking into this light surface. */
+body .hero .hero-card .trust {
+  color: #334155 !important;
+  background: #f8fbf9 !important;
+  border: 1px solid #dcebe2 !important;
+  box-shadow: none !important;
+}
+
+body .hero .hero-card .trust-item,
+body .hero .hero-card .trust-item > span {
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
