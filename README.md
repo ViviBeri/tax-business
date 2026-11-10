@@ -33,7 +33,7 @@ Service availability, eligibility, statutory fees, and professional charges shou
 
 - HTML, CSS, and JavaScript
 - Static-site generation using the Python builder in `_builder/build.py`
-- English pages with Tamil-language pages under `ta/`
+- English pages with Tamil-language pages under `ta/`; generated GST location pages link to the Tamil GST services guide without claiming a page-level translation
 - GitHub Pages hosting
 - Google Analytics 4 event tracking
 
@@ -54,7 +54,7 @@ This is a static website; it is not a WordPress site.
 | `privacy.html`, `terms.html` | Privacy and terms pages |
 | `sitemap.xml`, `robots.txt` | Search-engine discovery configuration |
 
-Generated pages should be updated through the builder and source configuration rather than edited directly when the builder owns those files.
+Generated pages should be updated through the builder and source configuration rather than edited directly when the builder owns those files. The builder provides equivalent-language links for translated service pages and a clearly labelled Tamil GST guide fallback on English GST location pages.
 
 ## Updating displayed prices
 
@@ -99,4 +99,4 @@ KVB ENTERPRISES is an independent professional assistance service and is **not a
 
 ## Contributions and maintenance
 
-When changing the site, preserve the English/Tamil navigation, generated-page workflow, privacy disclosures, accessibility, mobile layout, and working contact links. Verify generated output and test the affected pages before publishing.
+When changing the site, preserve the English/Tamil navigation, generated-page workflow, privacy disclosures, accessibility, mobile layout, and working contact links. Language links must point to useful destinations; only declare `hreflang` when the destination is a genuine equivalent page. Verify generated output and test the affected pages before publishing.
