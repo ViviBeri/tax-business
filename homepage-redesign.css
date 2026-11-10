@@ -849,3 +849,29 @@ footer a{color:#b9f2d1}
 @media(prefers-reduced-motion:reduce){
  #services #serviceTiles>.tile:after{transition:none}
 }
+
+
+/* v2.1 screenshot QA: enforce contrast and compact mobile hero hierarchy. */
+@media(max-width:700px){
+  body .hero{background:linear-gradient(135deg,#f3faf6 0%,#edf6f1 58%,#fbf6e9 100%)!important;color:#17233a!important}
+  body .hero .hero-card{background:#fff!important;color:#172b4d!important;border:1px solid #dcebe2!important;box-shadow:0 16px 38px rgba(23,43,77,.12)!important}
+  body .hero .hero-card>.logo-card,
+  body .hero .hero-card>p.trust{display:none!important}
+  body .hero .hero-card .quick{margin:4px 0 13px!important}
+  body .hero .hero-card .quick a{background:#f1f8f4!important;border-color:#dcebe2!important;color:#087c55!important}
+  body .hero .hero-card .mini{background:#172b4d!important;color:#fff!important;border:0!important;border-radius:14px!important;padding:13px!important}
+  body .hero .hero-card .mini strong{color:#b9f2d1!important}
+  body .hero .hero-copy .trust{color:#52675d!important;background:#fff!important;border:1px solid #dcebe2!important}
+}
+body .hero{background:linear-gradient(120deg,#f5fbf7 0%,#edf6f1 54%,#f8f5eb 100%)!important;color:#17233a!important}
+body .hero h1,body .hero h1 .hero-title-main{color:#172b4d!important}
+body .hero h1 .hero-title-accent{color:#087c55!important}
+body .hero .lead{color:#526275!important}
+body .hero .eyebrow{color:#087c55!important}
+body .hero .hero-card{background:#fff!important;color:#172b4d!important}
+body .hero .hero-card .trust{color:#526275!important}
+body .hero .hero-card .quick a{color:#087c55!important}
+body .clients h2,body .clients h2 *,body .clients-grid>div:nth-child(2) h2{color:#fff!important}
+body .clients p,body .clients li,body .clients .ticks,body .clients .ticks li{color:rgba(255,255,255,.88)!important}
+body .clients .ticks li:before{color:#70d69e!important}
+body .clients .big strong{color:#b9f2d1!important}
