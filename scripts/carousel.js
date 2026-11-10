@@ -6,105 +6,85 @@
   if (!wrapper || !track) return;
 
   const breakpoint = window.matchMedia("(max-width: 960px)");
-  const lang = document.documentElement.lang.toLowerCase();
-  const tamil = lang.startsWith("ta");
-  const labels = tamil
-    ? { region: "சேவை ஸ்லைடுகள்", previous: "முந்தைய சேவை", next: "அடுத்த சேவை", slide: (n, total) => `சேவை ${n} / ${total}` }
-    : { region: "Service carousel", previous: "Previous service", next: "Next service", slide: (n, total) => `Slide ${n} of ${total}` };
-
-  let active = false;
-  let controls;
-  let live;
-  let previous;
-  let next;
-  let pointerId = null;
-  let startX = 0;
-  let startScroll = 0;
-  let dragged = false;
-  let suppressClick = false;
-  let savedTabindex = null;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const tamil = document.documentElement.lang.toLowerCase().startsWith("ta");
+  const words = tamil
+    ? { region:"சேவை ஸ்லைடுகள்", previous:"முந்தைய சேவை", next:"அடுத்த சேவை", slide:(n,total)=>"சேவை "+n+" / "+total }
+    : { region:"Service carousel", previous:"Previous service", next:"Next service", slide:(n,total)=>"Slide "+n+" of "+total };
 
   const slides = () => Array.from(track.querySelectorAll(":scope > .tile"));
-  const currentIndex = () => {
+  let active = false, controls, live, previous, next;
+  let pointerId = null, startX = 0, startScroll = 0, dragged = false, suppressClick = false;
+  let original = null, scrollFrame = 0, announceTimer = 0;
+
+  function indexNow() {
     const items = slides();
     if (!items.length) return 0;
-    const x = track.scrollLeft;
-    let best = 0;
-    let distance = Infinity;
-    items.forEach((item, index) => {
-      const delta = Math.abs(item.offsetLeft - track.offsetLeft - x);
-      if (delta < distance) { distance = delta; best = index; }
+    const left = track.getBoundingClientRect().left;
+    let best = 0, distance = Infinity;
+    items.forEach((item, i) => {
+      const d = Math.abs(item.getBoundingClientRect().left - left);
+      if (d < distance) { distance = d; best = i; }
     });
     return best;
-  };
-  const announce = () => {
-    if (!live) return;
-    live.textContent = labels.slide(currentIndex() + 1, slides().length);
-  };
-  const goTo = (index) => {
+  }
+  function announce() {
+    if (live) live.textContent = words.slide(indexNow() + 1, slides().length);
+    if (previous) previous.disabled = indexNow() === 0;
+    if (next) next.disabled = indexNow() >= slides().length - 1;
+  }
+  function goTo(i) {
     const items = slides();
     if (!items.length) return;
-    const bounded = Math.max(0, Math.min(items.length - 1, index));
-    track.scrollTo({ left: items[bounded].offsetLeft - track.offsetLeft, behavior: "smooth" });
-    window.setTimeout(announce, 220);
-  };
-  const onScroll = () => {
-    if (onScroll.frame) cancelAnimationFrame(onScroll.frame);
-    onScroll.frame = requestAnimationFrame(announce);
-  };
-  const onPrevious = () => goTo(currentIndex() - 1);
-  const onNext = () => goTo(currentIndex() + 1);
-  const onKeyDown = (event) => {
+    const target = Math.max(0, Math.min(items.length - 1, i));
+    track.scrollTo({ left: items[target].offsetLeft - items[0].offsetLeft, behavior: reducedMotion.matches ? "auto" : "smooth" });
+    window.clearTimeout(announceTimer);
+    announceTimer = window.setTimeout(announce, reducedMotion.matches ? 0 : 260);
+  }
+  function onScroll() {
+    if (scrollFrame) cancelAnimationFrame(scrollFrame);
+    scrollFrame = requestAnimationFrame(announce);
+  }
+  function onKeyDown(event) {
     if (event.altKey || event.ctrlKey || event.metaKey) return;
-    if (event.key === "ArrowRight") { event.preventDefault(); goTo(currentIndex() + 1); }
-    if (event.key === "ArrowLeft") { event.preventDefault(); goTo(currentIndex() - 1); }
-  };
-  const onPointerDown = (event) => {
+    if (event.key === "ArrowRight") { event.preventDefault(); goTo(indexNow() + 1); }
+    if (event.key === "ArrowLeft") { event.preventDefault(); goTo(indexNow() - 1); }
+  }
+  function onPointerDown(event) {
     if (event.pointerType === "mouse" && event.button !== 0) return;
-    pointerId = event.pointerId;
-    startX = event.clientX;
-    startScroll = track.scrollLeft;
-    dragged = false;
-    track.setPointerCapture?.(pointerId);
-  };
-  const onPointerMove = (event) => {
+    pointerId = event.pointerId; startX = event.clientX; startScroll = track.scrollLeft; dragged = false;
+  }
+  function onPointerMove(event) {
     if (pointerId === null || event.pointerId !== pointerId) return;
     const delta = event.clientX - startX;
-    if (Math.abs(delta) > 5) dragged = true;
-    if (dragged) {
-      track.scrollLeft = startScroll - delta;
-      event.preventDefault();
-    }
-  };
-  const finishPointer = (event) => {
+    if (Math.abs(delta) > 6) dragged = true;
+    if (dragged) { track.scrollLeft = startScroll - delta; event.preventDefault(); }
+  }
+  function finishPointer(event) {
     if (pointerId === null || (event && event.pointerId !== pointerId)) return;
     if (dragged) {
       suppressClick = true;
       window.setTimeout(() => { suppressClick = false; }, 0);
     }
     pointerId = null;
-  };
-  const onClickCapture = (event) => {
+  }
+  function onClickCapture(event) {
     if (!suppressClick) return;
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
+    event.preventDefault(); event.stopPropagation();
+  }
   function activate() {
     if (active || !slides().length) return;
     active = true;
-    savedTabindex = track.getAttribute("tabindex");
-    track.setAttribute("tabindex", "0");
-    track.setAttribute("aria-label", labels.region);
-    track.style.display = "flex";
-    track.style.overflowX = "auto";
-    track.style.scrollSnapType = "x mandatory";
-    track.style.scrollBehavior = "smooth";
-    track.style.gap = "1rem";
-    slides().forEach((slide) => {
-      slide.style.flex = "0 0 min(84%, 340px)";
-      slide.style.scrollSnapAlign = "start";
-    });
+    original = {
+      tabindex:track.getAttribute("tabindex"), label:track.getAttribute("aria-label"),
+      display:track.style.display, overflow:track.style.overflowX, snap:track.style.scrollSnapType,
+      behavior:track.style.scrollBehavior, gap:track.style.gap, touch:track.style.touchAction,
+      slide:slides().map(el => ({ flex:el.style.flex, snap:el.style.scrollSnapAlign }))
+    };
+    track.setAttribute("tabindex","0");
+    track.setAttribute("aria-label",words.region);
+    Object.assign(track.style,{display:"flex",overflowX:"auto",scrollSnapType:"x mandatory",scrollBehavior:reducedMotion.matches?"auto":"smooth",gap:"1rem",touchAction:"pan-y"});
+    slides().forEach(el => Object.assign(el.style,{flex:"0 0 min(84%, 340px)",scrollSnapAlign:"start"}));
 
     controls = document.createElement("div");
     controls.className = "tiles-carousel-controls";
@@ -113,70 +93,51 @@
     previous.type = next.type = "button";
     previous.className = "carousel-control carousel-control--previous";
     next.className = "carousel-control carousel-control--next";
-    previous.setAttribute("aria-label", labels.previous);
-    next.setAttribute("aria-label", labels.next);
     previous.textContent = tamil ? "முந்தைய" : "Previous";
     next.textContent = tamil ? "அடுத்து" : "Next";
-    controls.append(previous, next);
+    previous.setAttribute("aria-label",words.previous);
+    next.setAttribute("aria-label",words.next);
+    controls.append(previous,next);
     wrapper.append(controls);
 
     live = document.createElement("span");
     live.className = "carousel-live";
-    live.setAttribute("aria-live", "polite");
-    live.setAttribute("aria-atomic", "true");
-    live.style.cssText = "position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0";
+    live.setAttribute("aria-live","polite");
+    live.setAttribute("aria-atomic","true");
     wrapper.append(live);
 
-    previous.addEventListener("click", onPrevious);
-    next.addEventListener("click", onNext);
-    track.addEventListener("keydown", onKeyDown);
-    track.addEventListener("scroll", onScroll, { passive: true });
-    track.addEventListener("pointerdown", onPointerDown);
-    track.addEventListener("pointermove", onPointerMove, { passive: false });
-    track.addEventListener("pointerup", finishPointer);
-    track.addEventListener("pointercancel", finishPointer);
-    track.addEventListener("lostpointercapture", finishPointer);
-    track.addEventListener("click", onClickCapture, true);
+    previous.addEventListener("click",() => goTo(indexNow()-1));
+    next.addEventListener("click",() => goTo(indexNow()+1));
+    track.addEventListener("keydown",onKeyDown);
+    track.addEventListener("scroll",onScroll,{passive:true});
+    track.addEventListener("pointerdown",onPointerDown);
+    track.addEventListener("pointermove",onPointerMove,{passive:false});
+    track.addEventListener("pointerup",finishPointer);
+    track.addEventListener("pointercancel",finishPointer);
+    track.addEventListener("click",onClickCapture,true);
     announce();
   }
-
   function deactivate() {
     if (!active) return;
     active = false;
-    previous.removeEventListener("click", onPrevious);
-    next.removeEventListener("click", onNext);
-    track.removeEventListener("keydown", onKeyDown);
-    track.removeEventListener("scroll", onScroll);
-    track.removeEventListener("pointerdown", onPointerDown);
-    track.removeEventListener("pointermove", onPointerMove);
-    track.removeEventListener("pointerup", finishPointer);
-    track.removeEventListener("pointercancel", finishPointer);
-    track.removeEventListener("lostpointercapture", finishPointer);
-    track.removeEventListener("click", onClickCapture, true);
-    if (onScroll.frame) cancelAnimationFrame(onScroll.frame);
-    if (controls) controls.remove();
-    if (live) live.remove();
-    track.style.display = "";
-    track.style.overflowX = "";
-    track.style.scrollSnapType = "";
-    track.style.scrollBehavior = "";
-    track.style.gap = "";
-    slides().forEach((slide) => {
-      slide.style.flex = "";
-      slide.style.scrollSnapAlign = "";
-    });
-    if (savedTabindex === null) track.removeAttribute("tabindex");
-    else track.setAttribute("tabindex", savedTabindex);
-    track.removeAttribute("aria-label");
-    track.scrollLeft = 0;
-    pointerId = null;
+    track.removeEventListener("keydown",onKeyDown);
+    track.removeEventListener("scroll",onScroll);
+    track.removeEventListener("pointerdown",onPointerDown);
+    track.removeEventListener("pointermove",onPointerMove);
+    track.removeEventListener("pointerup",finishPointer);
+    track.removeEventListener("pointercancel",finishPointer);
+    track.removeEventListener("click",onClickCapture,true);
+    if (scrollFrame) cancelAnimationFrame(scrollFrame);
+    window.clearTimeout(announceTimer);
+    controls?.remove(); live?.remove();
+    Object.assign(track.style,{display:original.display,overflowX:original.overflow,snap:original.snap,scrollBehavior:original.behavior,gap:original.gap,touchAction:original.touch});
+    slides().forEach((el,i) => Object.assign(el.style,{flex:original.slide[i]?.flex ?? "",scrollSnapAlign:original.slide[i]?.snap ?? ""}));
+    if (original.tabindex === null) track.removeAttribute("tabindex"); else track.setAttribute("tabindex",original.tabindex);
+    if (original.label === null) track.removeAttribute("aria-label"); else track.setAttribute("aria-label",original.label);
+    track.scrollLeft = 0; pointerId = null; original = null;
   }
-
-  const onBreakpoint = () => breakpoint.matches ? activate() : deactivate();
+  function onBreakpoint() { if (breakpoint.matches) activate(); else deactivate(); }
   onBreakpoint();
-  breakpoint.addEventListener?.("change", onBreakpoint);
-  window.addEventListener("pagehide", () => {
-    breakpoint.removeEventListener?.("change", onBreakpoint);
-    deactivate();
-  }, { once: true });
+  breakpoint.addEventListener("change",onBreakpoint);
+  window.addEventListener("pagehide",() => { breakpoint.removeEventListener("change",onBreakpoint); deactivate(); },{once:true});
 })();
