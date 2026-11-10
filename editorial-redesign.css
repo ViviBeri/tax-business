@@ -1,0 +1,237 @@
+/* KVB ENTERPRISES — premium editorial design layer
+   Applied after the recovery layer so homepage styling has one clear final authority.
+   Keep this file framework-free and preserve the shared English/Tamil markup.
+*/
+:root {
+  --kvb-paper: #f7f5ef;
+  --kvb-surface: #fffefa;
+  --kvb-ink: #17283d;
+  --kvb-muted: #536477;
+  --kvb-navy: #142b43;
+  --kvb-green: #176b4b;
+  --kvb-green-deep: #10563b;
+  --kvb-brass: #b88b43;
+  --kvb-border: #e5e1d6;
+  --kvb-shadow: 0 18px 48px rgba(20, 43, 67, .08);
+}
+html { scroll-behavior: smooth; }
+body { color: var(--kvb-ink); background: var(--kvb-paper); }
+::selection { color: #fff; background: var(--kvb-green); }
+.wrap { width: min(1160px, 91%); }
+.topbar {
+  background: rgba(255, 254, 250, .96);
+  border-bottom: 1px solid var(--kvb-border);
+  box-shadow: 0 5px 22px rgba(20, 43, 67, .045);
+}
+.nav { min-height: 76px; }
+.brand { color: var(--kvb-navy); letter-spacing: -.035em; }
+.brand small { color: var(--kvb-muted); letter-spacing: .08em; }
+nav a { color: #34485b; font-weight: 650; }
+nav a:hover, nav a:focus-visible { color: var(--kvb-green); }
+a.lang { border-color: var(--kvb-border); color: var(--kvb-green-deep); background: #f4f4ed; }
+
+/* Hero: calm editorial hierarchy, clear actions and no decorative motion dependency. */
+body .hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 600px;
+  padding: clamp(64px, 8vw, 104px) 0 clamp(58px, 7vw, 88px);
+  color: var(--kvb-ink);
+  background:
+    radial-gradient(ellipse at 83% 14%, rgba(184,139,67,.12), transparent 34%),
+    linear-gradient(120deg, #f8f6ef 0%, #f1f4ee 58%, #e8f0e9 100%);
+}
+body .hero:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: min(48vw, 620px);
+  aspect-ratio: 1;
+  right: -15%;
+  top: -42%;
+  border: 1px solid rgba(23,107,75,.13);
+  border-radius: 50%;
+  box-shadow: 0 0 0 42px rgba(23,107,75,.035), 0 0 0 92px rgba(23,107,75,.025);
+  pointer-events: none;
+}
+.hero .wrap.hero-grid {
+  width: min(1160px, 91%);
+  grid-template-columns: minmax(0, 1.12fr) minmax(290px, .78fr);
+  gap: clamp(32px, 6vw, 82px);
+}
+.hero-illustration { opacity: .10; mix-blend-mode: multiply; }
+body .hero .eyebrow {
+  color: var(--kvb-green-deep);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+body .hero .eyebrow:before { background: var(--kvb-brass); }
+body .hero h1 {
+  max-width: 720px;
+  margin-bottom: 22px;
+  color: var(--kvb-navy);
+  font-size: clamp(38px, 5.2vw, 66px);
+  line-height: 1.06;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+body .hero h1 .hero-title-main { color: var(--kvb-navy); }
+body .hero h1 .hero-title-accent { color: var(--kvb-green); }
+body .hero .lead {
+  max-width: 610px;
+  color: #4a5b6c;
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.75;
+}
+body .hero .actions { gap: 11px; margin-top: 28px; }
+body .hero .actions .btn {
+  min-height: 52px;
+  padding-inline: 21px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+}
+body .hero .actions .btn.primary {
+  color: #fff;
+  background: var(--kvb-green);
+  border-color: var(--kvb-green);
+  box-shadow: 0 9px 22px rgba(23,107,75,.18);
+}
+body .hero .actions .btn.primary:hover { background: var(--kvb-green-deep); }
+body .hero .actions .btn.secondary {
+  color: var(--kvb-navy);
+  background: rgba(255,254,250,.76);
+  border: 1px solid #cbd4ca;
+}
+body .hero .trust { color: #637164; font-size: 12px; }
+body .hero .hero-card {
+  padding: clamp(24px, 3vw, 34px);
+  border: 1px solid rgba(255,255,255,.9);
+  border-radius: 28px;
+  background: rgba(255,254,250,.88);
+  box-shadow: 0 24px 65px rgba(20,43,67,.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+body .hero .hero-card .trust,
+body .hero .hero-card .trust span { color: #536477; }
+body .hero .hero-card .quick a {
+  color: var(--kvb-green-deep);
+  background: #f1f5ee;
+  border: 1px solid #dce6d9;
+  border-radius: 11px;
+  font-weight: 750;
+}
+body .hero .hero-card .mini {
+  color: #e9eee8;
+  background: var(--kvb-navy);
+  border-radius: 16px;
+}
+body .hero .hero-card .mini strong { color: #e6c58d; }
+
+/* Section rhythm and consistent editorial typography. */
+.clients {
+  padding-block: 34px;
+  color: #fff;
+  background: var(--kvb-navy);
+  border-block: 1px solid rgba(255,255,255,.08);
+}
+.clients .big strong { color: #d8bd87; }
+.clients .big span, .clients p, .clients-grid { color: rgba(255,255,255,.82); }
+.section { background: var(--kvb-surface); }
+.section.alt { background: #f0f2eb; }
+.section-head { max-width: 760px; }
+.section-head h2, .about-grid h2,
+#services .section-head h2, #how .section-head h2,
+#business .section-head h2, #about h2,
+#locations .section-head h2, #tools .section-head h2,
+.faq .section-head h2 {
+  color: var(--kvb-navy);
+  font-size: clamp(30px, 3.8vw, 46px);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+.section-head p, .about-grid p { color: var(--kvb-muted); line-height: 1.8; }
+#services { background: var(--kvb-paper); }
+#services #serviceTiles > .tile {
+  min-height: 212px;
+  padding: 24px;
+  border: 1px solid var(--kvb-border);
+  border-radius: 18px;
+  background: var(--kvb-surface);
+  box-shadow: 0 8px 24px rgba(20,43,67,.055);
+  color: var(--kvb-ink);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+#services #serviceTiles > .tile:hover {
+  transform: translateY(-4px);
+  border-color: #c7d7c8;
+  box-shadow: var(--kvb-shadow);
+}
+#services #serviceTiles > .tile b { color: var(--kvb-navy); }
+#services #serviceTiles > .tile small { color: var(--kvb-muted); line-height: 1.55; }
+#how { background: #f0f2eb; }
+.step, .panel, .service-card, .location-card, .faq-list details {
+  border-color: var(--kvb-border);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(20,43,67,.045);
+}
+#business .chips a span { color: #34485b; background: #fffefa; }
+#locations .location-card { background: #fffefa; }
+#locations .location-card :where(strong,small) { color: var(--kvb-navy); }
+#tools { background: #f0f2eb; }
+.faq-list details { background: #fffefa; }
+.faq-list summary { color: var(--kvb-navy); }
+
+/* Contact remains the strongest conversion surface. */
+body .contact {
+  color: #fff;
+  background: linear-gradient(125deg, #142b43 0%, #193d48 100%);
+}
+#contact .contact-grid > div > h2 { color: #fff; }
+#contact .contact-grid > div > p { color: rgba(255,255,255,.78); }
+#contact .contact-line {
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.075);
+}
+#contact .contact-line a { color: #e6c58d; }
+#contact .contact-box {
+  border: 1px solid rgba(255,255,255,.75);
+  border-radius: 22px;
+  box-shadow: 0 22px 55px rgba(0,0,0,.2);
+}
+body footer { background: #102236; }
+body footer a { color: #e6c58d; }
+.mbar a:first-child, .floating-wa { background: var(--kvb-green); }
+
+/* Consistent keyboard focus and motion preferences. */
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--kvb-brass);
+  outline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .hero .wrap.hero-grid { grid-template-columns: minmax(0,1fr); }
+  .hero .hero-card { max-width: 620px; }
+}
+@media (max-width: 700px) {
+  body .hero { min-height: 0; padding: 48px 0 46px; }
+  body .hero h1 { font-size: clamp(34px, 9vw, 48px); line-height: 1.08; }
+  body .hero .actions { display: grid; grid-template-columns: 1fr 1fr; }
+  body .hero .actions .btn { width: 100%; min-width: 0; padding-inline: 10px; }
+  body .hero .actions .hero-services-cta { grid-column: 1 / -1; }
+  body .hero .hero-card { padding: 20px; border-radius: 20px; }
+  #services #serviceTiles > .tile { min-height: 168px; padding: 17px 14px; }
+  #contact .contact-grid { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 380px) {
+  body .hero .actions { grid-template-columns: 1fr; }
+  body .hero .actions .hero-services-cta { grid-column: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
