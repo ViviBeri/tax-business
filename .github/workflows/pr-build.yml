@@ -11,6 +11,7 @@ on:
       - 'design-system.css'
       - 'site-quality-fix.css'
       - 'homepage-redesign.css'
+      - 'editorial-redesign.css'
       - 'script.js'
       - 'ui.js'
       - '.github/workflows/pr-build.yml'
@@ -88,6 +89,7 @@ jobs:
           grep -Fq 'loading="eager" fetchpriority="high"' ta/index.html
           test -f design-system.css
           test -f site-quality-fix.css
+          test -f editorial-redesign.css
           ! grep -Rq 'glass-refinement-v2.css' index.html ta/index.html
           grep -Fq 'name="theme-color" content="#f5f8f6"' index.html
           grep -Fq 'name="theme-color" content="#f5f8f6"' ta/index.html
@@ -100,8 +102,10 @@ jobs:
           grep -Fq 'href="design-system.css"' index.html
           grep -Fq 'href="homepage-redesign.css?v=25"' index.html
           grep -Fq 'href="site-quality-fix.css?v=5"' index.html
+          grep -Fq 'href="editorial-redesign.css?v=1"' index.html
           grep -Fq 'href="../design-system.css"' ta/index.html
           grep -Fq 'href="../homepage-redesign.css?v=25"' ta/index.html
           grep -Fq 'href="../site-quality-fix.css?v=5"' ta/index.html
+          grep -Fq 'href="../editorial-redesign.css?v=1"' ta/index.html
           grep -Fq 'id="mainNav"' index.html
           grep -Fq 'id="mainNav"' ta/index.html
