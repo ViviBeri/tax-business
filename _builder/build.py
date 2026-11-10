@@ -105,11 +105,11 @@ def head(r, title, desc, path, ld="", alts=None):
     alt = "".join(f'<link rel="alternate" hreflang="{h}" href="{S}/{q}">' for h, q in (alts or []))
     locale = "ta_IN" if LANG == "ta" else "en_IN"
     return (f'<!doctype html><html lang="{LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<title>{E(title)}</title><meta name="description" content="{E(desc)}"><meta name="theme-color" content="#29135e">'
+            f'<title>{E(title)}</title><meta name="description" content="{E(desc)}"><meta name="theme-color" content="#f5f8f6">'
             f'<link rel="canonical" href="{u}"><meta property="og:type" content="website"><meta property="og:site_name" content="KVB ENTERPRISES">'
             f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{u}">'
             f'<meta property="og:image" content="{S}/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{locale}"><meta name="twitter:card" content="summary_large_image">{alt}<link rel="icon" type="image/png" href="{r}assets/logo.png">'
-            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=header-balance-2"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}glass-refinement-v2.css?v=2"><link rel="stylesheet" href="{r}homepage-redesign.css?v=25"><link rel="stylesheet" href="{r}site-quality-fix.css?v=4"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
+            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=header-balance-2"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}homepage-redesign.css?v=25"><link rel="stylesheet" href="{r}site-quality-fix.css?v=5"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
             f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
 
 def header(r, alt=None, lang_fallback=None):

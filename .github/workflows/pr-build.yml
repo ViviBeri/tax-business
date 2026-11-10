@@ -45,6 +45,11 @@ jobs:
                   continue
               source = path.read_text(encoding='utf-8')
               source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*glass-refinement-v2\.css(?:\?[^"]*)?">',
+                  "",
+                  source,
+              )
+              source = re.sub(
                   r'<link rel="stylesheet" href="[^"]*SplitFlapText\.css(?:\?[^"]*)?">',
                   "",
                   source,
@@ -67,10 +72,10 @@ jobs:
               )
               source = source.replace(
                   "</head>",
-                  f'<link rel="stylesheet" href="{quality_href}?v=4"></head>',
+                  f'<link rel="stylesheet" href="{quality_href}?v=5"></head>',
                   1,
               )
-              if "site-quality-fix.css?v=4" not in source:
+              if "site-quality-fix.css?v=5" not in source:
                   raise SystemExit(f"Recovery stylesheet missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
@@ -80,6 +85,9 @@ jobs:
           test -s ta/index.html
           test -f design-system.css
           test -f site-quality-fix.css
+          ! grep -Rq 'glass-refinement-v2.css' index.html ta/index.html
+          grep -Fq 'name="theme-color" content="#f5f8f6"' index.html
+          grep -Fq 'name="theme-color" content="#f5f8f6"' ta/index.html
           grep -Fq 'class="btn secondary hero-services-cta" href="#services"' index.html
           grep -Fq 'class="btn secondary hero-services-cta" href="#services"' ta/index.html
           ! grep -RqE 'venom-cta|kvb-venom|venomButton' index.html ta/index.html homepage-redesign.css site-quality-fix.css ui.js _builder/build.py
@@ -88,9 +96,9 @@ jobs:
           grep -Fq 'class="mini-number" href="tel:+919003633696"' ta/index.html
           grep -Fq 'href="design-system.css"' index.html
           grep -Fq 'href="homepage-redesign.css?v=25"' index.html
-          grep -Fq 'href="site-quality-fix.css?v=4"' index.html
+          grep -Fq 'href="site-quality-fix.css?v=5"' index.html
           grep -Fq 'href="../design-system.css"' ta/index.html
           grep -Fq 'href="../homepage-redesign.css?v=25"' ta/index.html
-          grep -Fq 'href="../site-quality-fix.css?v=4"' ta/index.html
+          grep -Fq 'href="../site-quality-fix.css?v=5"' ta/index.html
           grep -Fq 'id="mainNav"' index.html
           grep -Fq 'id="mainNav"' ta/index.html
