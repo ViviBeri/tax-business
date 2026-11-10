@@ -277,23 +277,33 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
  #about .about-visual img{height:180px}
 }
 
-/* Final hero contrast override: prevent legacy gold-gradient text styles from darkening static headlines. */
-.hero h1 .hero-title-main,
-.hero h1 .hero-title-accent{
-  background:none!important;
-  background-image:none!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  filter:none!important;
-  opacity:1!important;
-  text-shadow:0 2px 12px rgba(0,0,0,.22)!important;
+/* WCAG AA: maintain readable text on the light hero background */
+.hero h1 .hero-title-main {
+  color: #172b4d !important;
+  -webkit-text-fill-color: #172b4d !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
-.hero h1 .hero-title-accent{
-  color:#a9f2d2!important;
-  -webkit-text-fill-color:#a9f2d2!important;
+
+.hero h1 .hero-title-accent {
+  color: #087c55 !important;
+  -webkit-text-fill-color: #087c55 !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 /* Location coverage: clear, tappable service-area cards with Puducherry highlighted. */
+
 .location-section{
   position:relative;
   overflow:hidden;
