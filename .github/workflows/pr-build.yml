@@ -32,6 +32,37 @@ jobs:
         run: python3 -m py_compile _builder/build.py
       - name: Generate website
         run: python3 _builder/build.py
+      - name: Normalize shared stylesheet versions on every page
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os
+          import re
+
+          for path in Path('.').rglob('*.html'):
+              if '.git' in path.parts:
+                  continue
+              source = path.read_text(encoding='utf-8')
+              source = re.sub(
+                  r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css)(?:\?[^"]*)?">',
+                  r'\1?v=23">',
+                  source,
+              )
+              quality_href = Path(os.path.relpath("site-quality-fix.css", path.parent)).as_posix()
+              source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*site-quality-fix\.css(?:\?[^"]*)?">',
+                  "",
+                  source,
+              )
+              source = source.replace(
+                  "</head>",
+                  f'<link rel="stylesheet" href="{quality_href}?v=2"></head>',
+                  1,
+              )
+              if "site-quality-fix.css?v=2" not in source:
+                  raise SystemExit(f"Recovery stylesheet missing from {path}")
+              path.write_text(source, encoding="utf-8")
+          PY
       - name: Validate generated English and Tamil pages
         run: |
           test -s index.html
@@ -39,8 +70,10 @@ jobs:
           test -f design-system.css
           test -f site-quality-fix.css
           grep -Fq 'href="design-system.css"' index.html
-          grep -Fq 'href="site-quality-fix.css?v=1"' index.html
+          grep -Fq 'href="homepage-redesign.css?v=23"' index.html
+          grep -Fq 'href="site-quality-fix.css?v=2"' index.html
           grep -Fq 'href="../design-system.css"' ta/index.html
-          grep -Fq 'href="../site-quality-fix.css?v=1"' ta/index.html
+          grep -Fq 'href="../homepage-redesign.css?v=23"' ta/index.html
+          grep -Fq 'href="../site-quality-fix.css?v=2"' ta/index.html
           grep -Fq 'id="mainNav"' index.html
           grep -Fq 'id="mainNav"' ta/index.html

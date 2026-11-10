@@ -33,10 +33,11 @@ jobs:
           python-version: '3.11'
       - name: Generate site
         run: python3 _builder/build.py
-      - name: Apply shared header stylesheet to generated pages
+      - name: Normalize shared stylesheet versions on every page
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import os
           import re
 
           for path in Path('.').rglob('*.html'):
@@ -48,30 +49,25 @@ jobs:
                   r'\1?v=header-balance-2">',
                   source,
               )
-              if 'glass-refinement-v2.css' not in source:
-                  source = re.sub(
-                      r'(<link rel="stylesheet" href="([^"]*?)design-system\.css">)',
-                      lambda match: match.group(1)
-                          + f'<link rel="stylesheet" href="{match.group(2)}glass-refinement-v2.css?v=2">',
-                      source,
-                  )
-              quality_href = Path(__import__("os").path.relpath("site-quality-fix.css", path.parent)).as_posix()
-              if "site-quality-fix.css" not in source:
-                  source = re.sub(
-                      r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css(?:\?[^"]*)?">)',
-                      lambda match: match.group(1)
-                          + f'<link rel="stylesheet" href="{quality_href}?v=1">',
-                      source,
-                  )
-              if "site-quality-fix.css" not in source:
-                  source = source.replace(
-                      "</head>",
-                      f'<link rel="stylesheet" href="{quality_href}?v=1"></head>',
-                      1,
-                  )
-              if "site-quality-fix.css" not in source:
+              source = re.sub(
+                  r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css)(?:\?[^"]*)?">',
+                  r'\1?v=23">',
+                  source,
+              )
+              quality_href = Path(os.path.relpath("site-quality-fix.css", path.parent)).as_posix()
+              source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*site-quality-fix\.css(?:\?[^"]*)?">',
+                  "",
+                  source,
+              )
+              source = source.replace(
+                  "</head>",
+                  f'<link rel="stylesheet" href="{quality_href}?v=2"></head>',
+                  1,
+              )
+              if "site-quality-fix.css?v=2" not in source:
                   raise SystemExit(f"Recovery stylesheet missing from {path}")
-              path.write_text(source, encoding='utf-8')
+              path.write_text(source, encoding="utf-8")
           PY
       - name: Commit generated site
         run: |

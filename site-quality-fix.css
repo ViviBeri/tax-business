@@ -187,3 +187,100 @@ body .hero .actions .venom-cta { color: #102c22; background: #b9f2d1; }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* Final contrast overrides. This file is loaded after every legacy stylesheet. */
+body .hero h1 > .hero-title-main,
+body .hero h1 > .hero-title-main .split-flap-text,
+body .hero h1 > .hero-title-main .split-flap-text__char {
+  --split-flap-text-color: #172b4d !important;
+  color: #172b4d !important;
+  -webkit-text-fill-color: #172b4d !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+body .hero h1 > .hero-title-accent,
+body .hero h1 > .hero-title-accent .split-flap-text,
+body .hero h1 > .hero-title-accent .split-flap-text__char {
+  --split-flap-text-color: #086b46 !important;
+  color: #086b46 !important;
+  -webkit-text-fill-color: #086b46 !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* The trust strip under the hero buttons is a light surface, not a dark hero panel. */
+body .hero .hero-copy > .trust {
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  background: #ffffff !important;
+  border: 1px solid #d7e3dc !important;
+  box-shadow: 0 6px 16px rgba(23,43,77,.10) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* The trust strip inside the white hero card also needs dark text. */
+body .hero .hero-card .trust {
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  background: #f8fbf9 !important;
+  border: 1px solid #d7e3dc !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+body .hero .hero-card .trust-item,
+body .hero .hero-card .trust-item > span {
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+body .hero .hero-card .trust-item--lang svg,
+body .hero .hero-card .trust-item--wa svg {
+  color: #086b46 !important;
+  stroke: #086b46 !important;
+  opacity: 1 !important;
+}
+
+body .hero .hero-card .trust-item--person svg {
+  color: #805400 !important;
+  stroke: #805400 !important;
+  opacity: 1 !important;
+}
+
+/* Keep the featured service-area card legible on its dark gradient. */
+body #locations .location-card--featured .location-card__copy strong {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+body #locations .location-card--featured .location-card__copy small {
+  color: #e2e8f0 !important;
+  -webkit-text-fill-color: #e2e8f0 !important;
+}
+
+body #locations .location-card--featured .location-card__arrow,
+body #locations .location-card--featured .location-card__icon {
+  color: #b9f2d1 !important;
+}
+
+body #locations .location-card:not(.location-card--featured) .location-card__copy strong {
+  color: #172b4d !important;
+}
+
+body #locations .location-card:not(.location-card--featured) .location-card__copy small {
+  color: #526275 !important;
+}
