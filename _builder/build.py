@@ -254,6 +254,14 @@ def index():
           + T("h2", "Everything your business needs, in one place.", "உங்கள் வணிகத்திற்குத் தேவையான சேவைகள் அனைத்தும் ஒரே இடத்தில்.")
           + T("p", NOTE_EN, NOTE_TA)
           + f'</div>{tiles_html(r)}</div></section>')
+    b += ('<section id="why-kvb" class="section"><div class="wrap"><div class="section-head">'
+          + T("h2", "Local support built around clear communication.", "தெளிவான தகவல் பரிமாற்றத்தை மையமாகக் கொண்ட உள்ளூர் உதவி.")
+          + T("p", "Practical assistance for individuals, professionals and businesses in Puducherry and nearby areas.", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ள தனிநபர்கள், தொழில்முறையாளர்கள் மற்றும் வணிகங்களுக்கு நடைமுறை உதவி.")
+          + '</div><div class="glass-grid">'
+          + '<article class="glass-card"><strong class="stat-counter" data-target="5">5</strong>' + T("h3", "Core service groups", "முக்கிய சேவைப் பிரிவுகள்") + T("p", "GST, ITR, FSSAI, Udyam and PAN / trademark assistance.", "GST, ITR, FSSAI, உத்யம் மற்றும் PAN / வர்த்தக முத்திரை உதவி.") + '</article>'
+          + '<article class="glass-card"><strong class="stat-counter" data-target="2">2</strong>' + T("h3", "Languages", "மொழிகள்") + T("p", "Support in English and Tamil.", "ஆங்கிலம் மற்றும் தமிழில் உதவி.") + '</article>'
+          + '<article class="glass-card"><strong class="stat-counter" data-target="1">1</strong>' + T("h3", "Local point of contact", "உள்ளூர் தொடர்பு மையம்") + T("p", "One direct channel for questions, documents and updates.", "கேள்விகள், ஆவணங்கள் மற்றும் தகவல்களுக்கு நேரடி தொடர்பு வழி.") + '</article>'
+          + '</div></div></section>')
     b += ('<section id="compliance-timeline" class="section alt" data-compliance-timeline><div class="wrap">'
           + T("span", "YOUR NEXT STEPS", "உங்கள் அடுத்த படிகள்", "eyebrow")
           + T("h2", "A clear process, from first message to follow-up.", "முதல் செய்தியிலிருந்து தொடர்ந்த தகவல் வரை தெளிவான செயல்முறை.")
@@ -263,14 +271,6 @@ def index():
           + '<article class="step" data-timeline-step><b>03</b>' + T("h3", "Confirm the scope", "சேவை விவரங்களை உறுதிப்படுத்துங்கள்") + T("p", "Understand the process, professional charges and any applicable statutory fees before proceeding.", "தொடங்குவதற்கு முன் செயல்முறை, தொழில்முறை கட்டணம் மற்றும் பொருந்தும் சட்டபூர்வ கட்டணங்களை அறிந்து கொள்ளுங்கள்.") + '</article>'
           + '<article class="step" data-timeline-step><b>04</b>' + T("h3", "Receive updates", "தொடர்ந்த தகவல்களைப் பெறுங்கள்") + T("p", "We keep you informed as the agreed assistance progresses.", "ஒப்புக்கொண்ட உதவி முன்னேறும் போது உங்களுக்கு தகவல் தெரிவிக்கிறோம்.") + '</article>'
           + '</div><div class="how-cta">' + btn(wa("Hello Vivian, I would like to get started."), "Start on WhatsApp →", "WhatsApp-ல் தொடங்குங்கள் →", "primary", "how-it-works", True) + '</div></div></section>')
-    b += ('<section id="why-kvb" class="section"><div class="wrap"><div class="section-head">'
-          + T("h2", "Local support built around clear communication.", "தெளிவான தகவல் பரிமாற்றத்தை மையமாகக் கொண்ட உள்ளூர் உதவி.")
-          + T("p", "Practical assistance for individuals, professionals and businesses in Puducherry and nearby areas.", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் உள்ள தனிநபர்கள், தொழில்முறையாளர்கள் மற்றும் வணிகங்களுக்கு நடைமுறை உதவி.")
-          + '</div><div class="glass-grid">'
-          + '<article class="glass-card"><strong class="stat-counter" data-target="5">5</strong>' + T("h3", "Core service groups", "முக்கிய சேவைப் பிரிவுகள்") + T("p", "GST, ITR, FSSAI, Udyam and PAN / trademark assistance.", "GST, ITR, FSSAI, உத்யம் மற்றும் PAN / வர்த்தக முத்திரை உதவி.") + '</article>'
-          + '<article class="glass-card"><strong class="stat-counter" data-target="2">2</strong>' + T("h3", "Languages", "மொழிகள்") + T("p", "Support in English and Tamil.", "ஆங்கிலம் மற்றும் தமிழில் உதவி.") + '</article>'
-          + '<article class="glass-card"><strong class="stat-counter" data-target="1">1</strong>' + T("h3", "Local point of contact", "உள்ளூர் தொடர்பு மையம்") + T("p", "One direct channel for questions, documents and updates.", "கேள்விகள், ஆவணங்கள் மற்றும் தகவல்களுக்கு நேரடி தொடர்பு வழி.") + '</article>'
-          + '</div></div></section>')
     b += ('<section class="proof-strip section alt"><div class="wrap"><div class="section-head">'
           + T("h2", "A practical, transparent service experience.", "நடைமுறை மற்றும் வெளிப்படையான சேவை அனுபவம்.")
           + '</div><div class="proof-chips">'
