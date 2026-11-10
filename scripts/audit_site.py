@@ -232,6 +232,85 @@ def audit_accessibility_colors() -> None:
         fail(f"Found {len(failures)} WCAG AA contrast failure(s).")
     print("PASS: all configured normal-text color pairs meet WCAG AA (4.5:1).")
 
+def audit_redesign_accessibility() -> None:
+    """Check the redesign's core text, control, focus and motion contracts."""
+    css_path = ROOT / "styles" / "glass.css"
+    css = css_path.read_text(encoding="utf-8")
+    required_css = (
+        ":focus-visible",
+        "outline:3px solid var(--glass-focus)",
+        "outline-offset:3px",
+        "@media (max-width:960px)",
+        "@media (prefers-reduced-motion:reduce)",
+        "@supports not",
+        ".carousel-control",
+    )
+    missing = [rule for rule in required_css if rule not in css]
+    if missing:
+        fail("Redesign CSS is missing accessibility rules: " + ", ".join(missing))
+
+    tokens = {
+        "--glass-ink": "#142b25",
+        "--glass-muted": "#40584f",
+        "--glass-accent": "#075f46",
+        "--glass-accent-hover": "#064b39",
+        "--glass-focus": "#102a43",
+    }
+    for token, expected in tokens.items():
+        import re
+        match = re.search(rf"{re.escape(token)}\\s*:\\s*(#[0-9a-fA-F]{6})\\s*;", css)
+        if not match or match.group(1).lower() != expected:
+            fail(f"Redesign token {token} must remain {expected} for the audited contrast pairs.")
+
+    pairs = (
+        ("Glass card primary text", tokens["--glass-ink"], "#ffffff"),
+        ("Glass card supporting text", tokens["--glass-muted"], "#ffffff"),
+        ("Stat number", tokens["--glass-accent"], "#ffffff"),
+        ("Primary button text", "#ffffff", tokens["--glass-accent"]),
+        ("Primary button hover text", "#ffffff", tokens["--glass-accent-hover"]),
+        ("Carousel control text", tokens["--glass-accent-hover"], "#ffffff"),
+        ("Timeline step number", tokens["--glass-accent-hover"], "#e8f4ed"),
+    )
+    for label, foreground, background in pairs:
+        ratio = _contrast_ratio(foreground, background)
+        print(f"Redesign contrast: {label}: {ratio:.2f}:1")
+        if ratio < 4.5:
+            fail(f"Redesign contrast failure: {label} is {ratio:.2f}:1; WCAG AA requires 4.5:1.")
+
+    home = ROOT / "index.html"
+    source = home.read_text(encoding="utf-8")
+    required_markup = (
+        'href="styles/glass.css"',
+        'src="scripts/scroll.js"',
+        'src="scripts/multiscroll.js"',
+        'src="scripts/carousel.js"',
+        'src="scripts/three-hero.js"',
+        'id="why-kvb"',
+        'data-timeline-step',
+    )
+    missing_markup = [item for item in required_markup if item not in source]
+    if missing_markup:
+        fail("Generated English homepage is missing redesign markup/assets: " + ", ".join(missing_markup))
+
+    tamil = ROOT / "ta" / "index.html"
+    tamil_source = tamil.read_text(encoding="utf-8")
+    if 'href="../styles/glass.css"' not in tamil_source or 'src="../scripts/carousel.js"' not in tamil_source:
+        fail("Generated Tamil homepage is missing its relative glass stylesheet or carousel module.")
+
+    carousel = (ROOT / "scripts" / "carousel.js").read_text(encoding="utf-8")
+    for feature in ("aria-live", "document.documentElement.lang", "ArrowRight", "ArrowLeft", "setPointerCapture"):
+        if feature not in carousel:
+            fail(f"Carousel accessibility/interaction contract is missing: {feature}")
+
+    scroll = (ROOT / "scripts" / "scroll.js").read_text(encoding="utf-8")
+    multiscroll = (ROOT / "scripts" / "multiscroll.js").read_text(encoding="utf-8")
+    three = (ROOT / "scripts" / "three-hero.js").read_text(encoding="utf-8")
+    if "prefers-reduced-motion: reduce" not in scroll or "prefers-reduced-motion: reduce" not in multiscroll:
+        fail("GSAP animation modules must explicitly guard reduced-motion preferences.")
+    if "prefers-reduced-motion: reduce" not in three or "geometry?.dispose()" not in three:
+        fail("Three.js hero must guard reduced motion and dispose its geometry.")
+    print("PASS: redesign focus, responsive, reduced-motion, carousel and contrast checks.")
+
 def main() -> None:
     xml_path = ROOT / "sitemap.xml"
     text_path = ROOT / "sitemap.txt"
@@ -308,6 +387,7 @@ def main() -> None:
     audit_internal_references(html_files)
     audit_page_metadata(html_files)
     audit_accessibility_colors()
+    audit_redesign_accessibility()
 
 
 if __name__ == "__main__":
