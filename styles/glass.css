@@ -119,3 +119,90 @@
   *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
   .glass-card:hover,.btn-primary:hover,.btn.primary:hover { transform:none; }
 }
+
+
+/* Mobile layout fixes: keep timeline content readable and service icons visible. */
+@media (max-width:960px) {
+  #compliance-timeline .timeline-steps {
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:1rem;
+  }
+  #compliance-timeline .timeline-steps::before { display:none; }
+  #compliance-timeline .timeline-steps > .step {
+    display:flex;
+    width:100%;
+    min-width:0;
+    box-sizing:border-box;
+    flex-direction:column;
+    align-items:flex-start;
+    padding:1.25rem;
+    overflow:visible;
+  }
+  #compliance-timeline .timeline-steps > .step > b {
+    flex:0 0 2.75rem;
+    width:2.75rem;
+    height:2.75rem;
+    margin:0 0 .9rem;
+  }
+  #compliance-timeline .timeline-steps h3,
+  #compliance-timeline .timeline-steps p {
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:normal;
+  }
+}
+
+/* Service SVGs are inline, so they render without external image requests. */
+.tile-ico {
+  display:inline-flex;
+  width:3.25rem;
+  height:3.25rem;
+  min-width:3.25rem;
+  flex:0 0 3.25rem;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  border:1px solid #b8cec3;
+  border-radius:1rem;
+  background:#e8f4ed;
+  color:#075f46;
+  line-height:1;
+}
+.tile-ico svg {
+  display:block;
+  width:1.8rem;
+  height:1.8rem;
+  max-width:100%;
+  max-height:100%;
+  overflow:visible;
+  stroke:currentColor;
+}
+.service-icon-fallback {
+  display:inline-flex;
+  width:1.8rem;
+  height:1.8rem;
+  align-items:center;
+  justify-content:center;
+  font-size:1.55rem;
+  line-height:1;
+}
+
+@media (max-width:600px) {
+  body {
+    padding-bottom:calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  }
+  .mbar {
+    bottom:0;
+    padding-bottom:env(safe-area-inset-bottom, 0px);
+    z-index:1000;
+  }
+  .floating-wa {
+    bottom:calc(5.5rem + env(safe-area-inset-bottom, 0px));
+    z-index:999;
+  }
+}
