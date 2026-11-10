@@ -8,11 +8,6 @@ on:
       - '_builder/**'
       - 'theme.css'
       - 'script.js'
-      - 'ui.js'
-      - 'split-flap.css'
-      - 'split-flap.js'
-      - 'SplitFlapText.css'
-      - 'SplitFlapText.js'
       - 'index.html'
       - 'style.css'
       - 'homepage-redesign.css'
@@ -45,13 +40,23 @@ jobs:
                   continue
               source = path.read_text(encoding='utf-8')
               source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*SplitFlapText\.css(?:\?[^"]*)?">',
+                  "",
+                  source,
+              )
+              source = re.sub(
+                  r'<script src="[^"]*(?:ui|SplitFlapText)\.js(?:\?[^"]*)?" defer></script>',
+                  "",
+                  source,
+              )
+              source = re.sub(
                   r'(<link rel="stylesheet" href="[^"]*theme\.css)(?:\?[^"]*)?">',
                   r'\1?v=header-balance-2">',
                   source,
               )
               source = re.sub(
                   r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css)(?:\?[^"]*)?">',
-                  r'\1?v=23">',
+                  r'\1?v=25">',
                   source,
               )
               quality_href = Path(os.path.relpath("site-quality-fix.css", path.parent)).as_posix()
@@ -62,10 +67,10 @@ jobs:
               )
               source = source.replace(
                   "</head>",
-                  f'<link rel="stylesheet" href="{quality_href}?v=2"></head>',
+                  f'<link rel="stylesheet" href="{quality_href}?v=4"></head>',
                   1,
               )
-              if "site-quality-fix.css?v=2" not in source:
+              if "site-quality-fix.css?v=4" not in source:
                   raise SystemExit(f"Recovery stylesheet missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY

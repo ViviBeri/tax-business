@@ -109,7 +109,7 @@ def head(r, title, desc, path, ld="", alts=None):
             f'<link rel="canonical" href="{u}"><meta property="og:type" content="website"><meta property="og:site_name" content="KVB ENTERPRISES">'
             f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{u}">'
             f'<meta property="og:image" content="{S}/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{locale}"><meta name="twitter:card" content="summary_large_image">{alt}<link rel="icon" type="image/png" href="{r}assets/logo.png">'
-            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=header-balance-2"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}glass-refinement-v2.css?v=2"><link rel="stylesheet" href="{r}SplitFlapText.css?v=1"><link rel="stylesheet" href="{r}homepage-redesign.css?v=23"><link rel="stylesheet" href="{r}site-quality-fix.css?v=2"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
+            f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=header-balance-2"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}glass-refinement-v2.css?v=2"><link rel="stylesheet" href="{r}homepage-redesign.css?v=25"><link rel="stylesheet" href="{r}site-quality-fix.css?v=4"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
             f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
 
 def header(r, alt=None, lang_fallback=None):
@@ -133,7 +133,7 @@ def foot(r):
             f'<div><b>KVB ENTERPRISES</b><p>{L("Tax &amp; Business Compliance Services")}</p></div></div>'
             f'<div>GST • ITR • FSSAI • PAN • MSME • Trademark • DSC<br>{L("Puducherry &amp; nearby areas")}</div>'
             f'<div><a href="{r}privacy.html">Privacy</a> • <a href="{r}terms.html">Terms</a><br>© <span class="yr">{TD.year}</span> KVB ENTERPRISES</div></div></footer>'
-            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script src="{r}ui.js?v=service-grid-1" defer></script><script src="{r}SplitFlapText.js?v=1" defer></script></body></html>')
+            f'<script src="{r}script.js?v=menu-fix-6" defer></script></body></html>')
 
 def btn(href, en, ta, cls="primary", loc="", ico=False, ext=True):
     t = ' target="_blank" rel="noopener"' if ext else ""
@@ -207,7 +207,7 @@ def index():
           + T("p", "Professional assistance for GST, Income Tax / ITR, FSSAI, PAN, MSME/Udyam, Trademark, DSC and business registrations.", "GST, வருமான வரி / ITR, FSSAI, PAN, MSME/உத்யம், வர்த்தக முத்திரை, DSC மற்றும் வணிக பதிவுகளுக்கு தொழில்முறை உதவி.", "lead")
           + '<div class="actions">' + btn(wa("Hello Vivian, I need assistance with your services."), "WhatsApp Vivian", "WhatsApp-ல் பேசுங்கள்", "primary", "hero", True)
           + btn(f"tel:+{PH}", "Call now", "இப்போது அழைக்கவும்", "secondary", "hero", False, False)
-          + T("a", "Explore Services", "சேவைகளைப் பார்க்க", x='class="btn venom-cta" href="#services" data-loc="hero"') + "</div>"
+          + T("a", "Explore Services", "சேவைகளைப் பார்க்க", x='class="btn secondary hero-services-cta" href="#services" data-loc="hero"') + "</div>"
           + T("p", "Tamil &amp; English • WhatsApp enquiries welcome anytime • Personal assistance", "தமிழ் &amp; ஆங்கிலம் • WhatsApp-ல் எப்போதும் வரவேற்கிறோம் • தனிப்பட்ட உதவி", "trust")
           + f'</div><div class="hero-card"><div class="logo-card"><img src="{r}assets/logo.png" alt="KVB ENTERPRISES" width="100" height="83"></div>'
           + '<p class="trust">'
@@ -226,7 +226,7 @@ def index():
 +     '<span>' + L("Personal assistance") + '</span>'
 +   '</span>'
 + '</p>'
-          + f'<div class="quick">{quick}</div><div class="mini">Call / WhatsApp<br><strong>90036 33696</strong></div></div></div></section>')
+          + f'<div class="quick">{quick}</div><div class="mini"><span class="mini-label">Call / WhatsApp</span><a class="mini-number" href="tel:+{PH}" data-loc="hero" aria-label="Call KVB ENTERPRISES at 90036 33696">90036 33696</a></div></div></div></section>')
     b += ('<section class="clients"><div class="wrap clients-grid"><div class="big"><strong>300+</strong>' + T("span", "Clients served", "வாடிக்கையாளர்களுக்கு சேவை") + f'<div class="proof-visual"><img src="https://images.pexels.com/photos/6964119/pexels-photo-6964119.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1100" alt="Business professionals reviewing paperwork and financial documents together" loading="lazy" decoding="async"><a class="image-credit" href="https://www.pexels.com/photo/preparing-documents-inside-the-office-6964119/" target="_blank" rel="noopener">Photo: Mikhail Nilov / Pexels</a></div></div><div>'
           + T("h2", "Trusted local support in and around Puducherry", "புதுச்சேரி மற்றும் சுற்றுப்புறங்களில் நம்பகமான உள்ளூர் உதவி")
           + T("p", "Businesses, professionals and individuals have used KVB ENTERPRISES for practical, personal compliance support.", "வணிகங்கள், தொழில்முறையாளர்கள் மற்றும் தனிநபர்கள் நடைமுறை, தனிப்பட்ட இணக்க உதவிக்காக KVB ENTERPRISES-ஐ பயன்படுத்தியுள்ளனர்.")

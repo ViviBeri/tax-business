@@ -10,6 +10,7 @@ on:
       - 'theme.css'
       - 'design-system.css'
       - 'site-quality-fix.css'
+      - 'homepage-redesign.css'
       - 'script.js'
       - 'ui.js'
       - '.github/workflows/pr-build.yml'
@@ -44,8 +45,18 @@ jobs:
                   continue
               source = path.read_text(encoding='utf-8')
               source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*SplitFlapText\.css(?:\?[^"]*)?">',
+                  "",
+                  source,
+              )
+              source = re.sub(
+                  r'<script src="[^"]*(?:ui|SplitFlapText)\.js(?:\?[^"]*)?" defer></script>',
+                  "",
+                  source,
+              )
+              source = re.sub(
                   r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css)(?:\?[^"]*)?">',
-                  r'\1?v=23">',
+                  r'\1?v=25">',
                   source,
               )
               quality_href = Path(os.path.relpath("site-quality-fix.css", path.parent)).as_posix()
@@ -56,10 +67,10 @@ jobs:
               )
               source = source.replace(
                   "</head>",
-                  f'<link rel="stylesheet" href="{quality_href}?v=2"></head>',
+                  f'<link rel="stylesheet" href="{quality_href}?v=4"></head>',
                   1,
               )
-              if "site-quality-fix.css?v=2" not in source:
+              if "site-quality-fix.css?v=4" not in source:
                   raise SystemExit(f"Recovery stylesheet missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
@@ -69,11 +80,17 @@ jobs:
           test -s ta/index.html
           test -f design-system.css
           test -f site-quality-fix.css
+          grep -Fq 'class="btn secondary hero-services-cta" href="#services"' index.html
+          grep -Fq 'class="btn secondary hero-services-cta" href="#services"' ta/index.html
+          ! grep -RqE 'venom-cta|kvb-venom|venomButton' index.html ta/index.html homepage-redesign.css site-quality-fix.css ui.js _builder/build.py
+          ! grep -RqE 'SplitFlapText|ui\\.js' index.html ta/index.html
+          grep -Fq 'class="mini-number" href="tel:+919003633696"' index.html
+          grep -Fq 'class="mini-number" href="tel:+919003633696"' ta/index.html
           grep -Fq 'href="design-system.css"' index.html
-          grep -Fq 'href="homepage-redesign.css?v=23"' index.html
-          grep -Fq 'href="site-quality-fix.css?v=2"' index.html
+          grep -Fq 'href="homepage-redesign.css?v=25"' index.html
+          grep -Fq 'href="site-quality-fix.css?v=4"' index.html
           grep -Fq 'href="../design-system.css"' ta/index.html
-          grep -Fq 'href="../homepage-redesign.css?v=23"' ta/index.html
-          grep -Fq 'href="../site-quality-fix.css?v=2"' ta/index.html
+          grep -Fq 'href="../homepage-redesign.css?v=25"' ta/index.html
+          grep -Fq 'href="../site-quality-fix.css?v=4"' ta/index.html
           grep -Fq 'id="mainNav"' index.html
           grep -Fq 'id="mainNav"' ta/index.html

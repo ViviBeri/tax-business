@@ -555,63 +555,6 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
 #business .chips a:focus-visible{outline:2px solid #29135e;outline-offset:3px}
 
 
-/* Venom CTA — magnetic attraction and a live SVG fluid filament. */
-#home .actions .venom-cta{
-  position:relative;isolation:isolate;overflow:visible;
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:54px;padding:0 23px;border-radius:999px;
-  border:1px solid rgba(185,242,209,.48);
-  background:rgba(255,255,255,.09);color:#d8ffe7;
-  box-shadow:0 8px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.12);
-  transform:translate3d(var(--venom-x,0px),var(--venom-y,0px),0);
-  transition:background .25s ease,border-color .25s ease,box-shadow .25s ease;
-  will-change:transform;cursor:pointer;
-}
-#home .actions .venom-cta:hover,
-#home .actions .venom-cta:focus-visible{
-  background:rgba(185,242,209,.16);border-color:#b9f2d1;
-  box-shadow:0 12px 30px rgba(0,0,0,.18),0 0 24px rgba(185,242,209,.12);
-  color:#fff;outline:2px solid rgba(185,242,209,.35);outline-offset:3px;
-}
-.kvb-venom-layer{position:fixed;inset:0;width:100%;height:100%;z-index:20;pointer-events:none;overflow:visible}
-.kvb-venom-strand{fill:#a9f2c8;stroke:#a9f2c8;stroke-width:1;opacity:0}
-.kvb-venom-anchor,.kvb-venom-tip{fill:#a9f2c8;opacity:0}
-.kvb-venom-cursor{
-  position:fixed;left:0;top:0;z-index:21;width:18px;height:18px;
-  display:grid;place-items:center;pointer-events:none;opacity:0;
-  filter:drop-shadow(0 2px 5px rgba(0,0,0,.25));
-  transition:opacity .16s ease,filter .16s ease;will-change:transform;
-}
-.kvb-venom-cursor.is-visible{opacity:1}
-.kvb-venom-cursor.is-near{filter:drop-shadow(0 0 8px rgba(169,242,200,.65))}
-.kvb-venom-cursor.is-pressed{scale:.82}
-@media(max-width:700px){
-  #home .actions .venom-cta{min-height:48px;padding:0 17px;font-size:13px}
-}
-@media(prefers-reduced-motion:reduce){
-  #home .actions .venom-cta{transition:none;transform:none!important}
-  .kvb-venom-layer,.kvb-venom-cursor{display:none}
-}
-
-
-/* KVB brand alignment: keep the Venom magnetic CTA within the site's mint/green system. */
-#home .actions .venom-cta{
-  border-color:rgba(185,242,209,.58);
-  background:linear-gradient(135deg,#b9f2d1 0%,#61d49a 100%);
-  color:#102c22;
-  box-shadow:0 12px 28px rgba(40,200,126,.22),inset 0 1px 0 rgba(255,255,255,.52);
-}
-#home .actions .venom-cta:hover,
-#home .actions .venom-cta:focus-visible{
-  border-color:#d8ffe7;
-  background:linear-gradient(135deg,#d8ffe7 0%,#79e2aa 100%);
-  color:#102c22;
-  box-shadow:0 14px 32px rgba(40,200,126,.3),0 0 0 3px rgba(185,242,209,.18);
-}
-.kvb-venom-strand,.kvb-venom-anchor,.kvb-venom-tip{fill:#a9f2c8;stroke:#a9f2c8}
-.kvb-venom-cursor.is-near{filter:drop-shadow(0 0 9px rgba(169,242,200,.78))}
-
-
 /* Professional services layout: expose every service in a stable responsive grid.
    A static grid is easier to scan and avoids hiding services behind carousel controls. */
 #services .tiles-carousel {
@@ -796,8 +739,6 @@ a.lang{border:1px solid #dce9e1;background:#f4faf6;color:#087c55;font-weight:750
 .hero .actions .btn.primary{background:#087c55;border-color:#087c55;color:#fff}
 .hero .actions .btn.primary:hover{background:#066746}
 .hero .actions .btn.secondary{background:#fff;border:1px solid #d7e4dc;color:#172b4d}
-#home .actions .venom-cta{border-radius:12px;background:#172b4d;color:#fff;border-color:#172b4d;box-shadow:0 8px 20px rgba(23,43,77,.14)}
-#home .actions .venom-cta:hover{background:#24446a;color:#fff}
 .hero-illustration{opacity:.07;mix-blend-mode:multiply}
 .clients{background:#172b4d;color:#fff;padding:38px 0}
 .clients .big strong{color:#b9f2d1}
@@ -850,7 +791,7 @@ footer a{color:#b9f2d1}
  .hero .hero-card{padding:22px;border-radius:22px}
  .hero .actions{display:grid;grid-template-columns:1fr 1fr}
  .hero .actions .btn{width:100%;min-width:0;padding-inline:12px;font-size:13px}
- .hero .actions .venom-cta{grid-column:1/-1}
+ .hero .actions .hero-services-cta{grid-column:1/-1}
  #services #serviceTiles>.tile{min-height:178px;padding:17px 14px;border-radius:16px}
  #services #serviceTiles>.tile .tile-ico{width:43px;height:43px;border-radius:13px}
  #services #serviceTiles>.tile b{font-size:15px}
