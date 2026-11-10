@@ -56,6 +56,14 @@ jobs:
               raise SystemExit("Unexpected GitHub stats placeholder in business card")
           print("Generated and parsed assets/services-card.svg")
           PY
+      - name: Upload generated SVG assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: kvb-generated-svg-assets
+          path: |
+            assets/hero-banner.svg
+            assets/services-card.svg
+          if-no-files-found: error
       - name: Generate website
         run: python3 _builder/build.py
       - name: Normalize shared stylesheet versions on every page
