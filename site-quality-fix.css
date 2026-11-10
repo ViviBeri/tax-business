@@ -144,7 +144,6 @@ body .hero .hero-card .mini strong { color: #b9f2d1; }
 body .hero .hero-card .quick a { color: #075f3d; background: #f0f7f2; border-color: #cfe0d5; }
 body .hero .actions .btn.primary { color: #fff; background: #086b46; }
 body .hero .actions .btn.secondary { color: #172b4d; background: #fff; border-color: #b9c9bf; }
-body .hero .actions .venom-cta { color: #102c22; background: #b9f2d1; }
 #services #serviceTiles > .tile { color: #172b4d; background: #fff; }
 #services #serviceTiles > .tile b { color: #172b4d; }
 #services #serviceTiles > .tile small { color: #526275; }
@@ -164,7 +163,7 @@ body .hero .actions .venom-cta { color: #102c22; background: #b9f2d1; }
   .hero .hero-card { padding: 20px; border-radius: 20px; transform: none; }
   .hero .actions { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 10px; }
   .hero .actions .btn { min-width: 0; width: 100%; padding-inline: 10px; white-space: normal; }
-  .hero .actions .venom-cta { grid-column: 1 / -1; }
+  .hero .actions .hero-services-cta { grid-column: 1 / -1; }
   .clients-grid,.about-grid,.contact-grid,.service-grid { grid-template-columns: minmax(0,1fr); }
   .steps { grid-template-columns: minmax(0,1fr); }
   .tiles,.locations,.tool-grid,.cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
@@ -182,7 +181,7 @@ body .hero .actions .venom-cta { color: #102c22; background: #b9f2d1; }
   .tiles,.locations,.tool-grid,.cards { grid-template-columns: minmax(0,1fr); }
   .proof-grid { grid-template-columns: minmax(0,1fr); }
   .hero .actions { grid-template-columns: minmax(0,1fr); }
-  .hero .actions .venom-cta { grid-column: auto; }
+  .hero .actions .hero-services-cta { grid-column: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
