@@ -789,3 +789,13 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   #services .has-bento-carousel #serviceTiles{transition:none}
   #services .has-bento-carousel .bento-dot{transition:none}
 }
+
+@media(min-width:1101px){
+  #services .has-bento-carousel .bento-slide:nth-child(2) .tile:first-child{
+    grid-column:span 1;grid-row:span 1;min-height:178px;padding:24px 22px
+  }
+  #services .has-bento-carousel .bento-slide:nth-child(2) .tile:first-child .tile-ico{
+    width:58px;height:58px;border-radius:18px
+  }
+  #services .has-bento-carousel .bento-slide:nth-child(2) .tile:first-child b{font-size:19px}
+}
