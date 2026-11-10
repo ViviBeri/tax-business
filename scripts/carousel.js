@@ -77,7 +77,7 @@
     active = true;
     original = {
       tabindex:track.getAttribute("tabindex"), label:track.getAttribute("aria-label"),
-      display:track.style.display, overflow:track.style.overflowX, snap:track.style.scrollSnapType,
+      display:track.style.display, overflow:track.style.overflowX, scrollSnapType:track.style.scrollSnapType,
       behavior:track.style.scrollBehavior, gap:track.style.gap, touch:track.style.touchAction,
       slide:slides().map(el => ({ flex:el.style.flex, snap:el.style.scrollSnapAlign }))
     };
@@ -130,7 +130,7 @@
     if (scrollFrame) cancelAnimationFrame(scrollFrame);
     window.clearTimeout(announceTimer);
     controls?.remove(); live?.remove();
-    Object.assign(track.style,{display:original.display,overflowX:original.overflow,snap:original.snap,scrollBehavior:original.behavior,gap:original.gap,touchAction:original.touch});
+    Object.assign(track.style,{display:original.display,overflowX:original.overflow,scrollSnapType:original.scrollSnapType,scrollBehavior:original.behavior,gap:original.gap,touchAction:original.touch});
     slides().forEach((el,i) => Object.assign(el.style,{flex:original.slide[i]?.flex ?? "",scrollSnapAlign:original.slide[i]?.snap ?? ""}));
     if (original.tabindex === null) track.removeAttribute("tabindex"); else track.setAttribute("tabindex",original.tabindex);
     if (original.label === null) track.removeAttribute("aria-label"); else track.setAttribute("aria-label",original.label);
