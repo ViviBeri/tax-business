@@ -24,6 +24,7 @@ on:
       - 'sitemap.txt'
       - 'robots.txt'
       - 'scripts/**'
+      - 'styles/**'
       - 'README.md'
       - '.github/workflows/static-site-audit.yml'
   workflow_dispatch:
