@@ -58,7 +58,7 @@ jobs:
               quality_href = Path(__import__("os").path.relpath("site-quality-fix.css", path.parent)).as_posix()
               if "site-quality-fix.css" not in source:
                   source = re.sub(
-                      r'(<link rel="stylesheet" href="[^"]*homepage-redesign\\.css(?:\\?[^"]*)?">)',
+                      r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css(?:\?[^"]*)?">)',
                       lambda match: match.group(1)
                           + f'<link rel="stylesheet" href="{quality_href}?v=1">',
                       source,
