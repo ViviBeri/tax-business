@@ -63,6 +63,14 @@ jobs:
                           + f'<link rel="stylesheet" href="{quality_href}?v=1">',
                       source,
                   )
+              if "site-quality-fix.css" not in source:
+                  source = source.replace(
+                      "</head>",
+                      f'<link rel="stylesheet" href="{quality_href}?v=1"></head>',
+                      1,
+                  )
+              if "site-quality-fix.css" not in source:
+                  raise SystemExit(f"Recovery stylesheet missing from {path}")
               path.write_text(source, encoding='utf-8')
           PY
       - name: Commit generated site
