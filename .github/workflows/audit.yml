@@ -1,0 +1,62 @@
+name: Redesign audit
+
+on:
+  push:
+    branches:
+      - perf/eager-load-homepage-hero
+  pull_request:
+    branches:
+      - perf/eager-load-homepage-hero
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: audit
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout redesign branch
+        uses: actions/checkout@v4
+      - name: Check published response headers and SEO endpoints
+        shell: bash
+        run: |
+          set +e
+          BASE="https://viviberi.github.io/tax-business"
+          HEADERS="$(curl -sSI --max-time 20 "$BASE/")"
+          STATUS=$?
+          if [ "$STATUS" -ne 0 ]; then
+            echo "::warning::Unable to fetch published site for header audit."
+          else
+            printf '%s\n' "$HEADERS"
+            for HEADER in "strict-transport-security" "content-type" "x-content-type-options" "referrer-policy"; do
+              if ! printf '%s\n' "$HEADERS" | grep -qi "^$HEADER:"; then
+                echo "::warning::Missing response header: $HEADER"
+              fi
+            done
+          fi
+          if grep -RniE 'http://[^" ]+' --include='*.html' . | grep -v 'http://www.w3.org' ; then
+            echo "::warning::Potential mixed-content URL found in source HTML."
+          fi
+          test -s schema.jsonld || echo "::warning::schema.jsonld is missing or empty."
+          python3 -m json.tool schema.jsonld >/dev/null || echo "::warning::schema.jsonld is not valid JSON."
+      - name: Record non-blocking audit result
+        run: echo "Audit checks completed; review warnings before release."
+
+  visual-regression:
+    name: visual-regression
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reference snapshot comparison
+        shell: bash
+        run: |
+          # TODO: connect the approved foundation/yeti-style comparator when the
+          # snapshot format and runner are selected. Keep this step non-blocking.
+          if [ -d "snapshots" ]; then
+            echo "Snapshot directory found; comparator is not configured yet."
+          else
+            echo "No reference snapshot directory exists yet; skipping comparison."
+          fi
