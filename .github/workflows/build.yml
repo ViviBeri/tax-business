@@ -16,6 +16,7 @@ on:
       - 'index.html'
       - 'style.css'
       - 'homepage-redesign.css'
+      - 'site-quality-fix.css'
       - '.github/workflows/build.yml'
   workflow_dispatch:
 
