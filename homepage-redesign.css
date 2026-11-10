@@ -890,3 +890,16 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   #services .has-bento-carousel .tiles-prev{left:2px}
   #services .has-bento-carousel .tiles-next{right:2px}
 }
+
+
+/* Remove legacy 34px carousel gutters on the bento variant.
+   Those gutters were reducing the track width while the slide transform
+   still advanced by 100%, exposing the next slide at the right edge. */
+#services .tiles-carousel.has-bento-carousel{
+  padding:0!important;
+}
+#services .has-bento-carousel #serviceTiles{
+  width:100%!important;
+  max-width:none!important;
+  margin-inline:0!important;
+}
