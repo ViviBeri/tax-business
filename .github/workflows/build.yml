@@ -16,6 +16,7 @@ on:
       - 'index.html'
       - 'style.css'
       - 'homepage-redesign.css'
+      - 'site-quality-fix.css'
       - '.github/workflows/build.yml'
   workflow_dispatch:
 
@@ -52,6 +53,14 @@ jobs:
                       r'(<link rel="stylesheet" href="([^"]*?)design-system\.css">)',
                       lambda match: match.group(1)
                           + f'<link rel="stylesheet" href="{match.group(2)}glass-refinement-v2.css?v=2">',
+                      source,
+                  )
+              quality_href = Path(__import__("os").path.relpath("site-quality-fix.css", path.parent)).as_posix()
+              if "site-quality-fix.css" not in source:
+                  source = re.sub(
+                      r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css(?:\?[^"]*)?">)',
+                      lambda match: match.group(1)
+                          + f'<link rel="stylesheet" href="{quality_href}?v=1">',
                       source,
                   )
               path.write_text(source, encoding='utf-8')
