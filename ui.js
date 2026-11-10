@@ -62,6 +62,25 @@
     track.dataset.bentoReady = "true";
     wrap.classList.remove("is-liquid-coverflow");
     wrap.classList.add("is-3d-bento", "has-bento-carousel");
+
+    // Override legacy flex-carousel gutters before measuring slide widths.
+    wrap.style.display = "block";
+    wrap.style.position = "relative";
+    wrap.style.width = "100%";
+    wrap.style.boxSizing = "border-box";
+    wrap.style.padding = "0";
+    wrap.style.overflow = "hidden";
+    track.style.display = "flex";
+    track.style.flex = "none";
+    track.style.width = "100%";
+    track.style.maxWidth = "100%";
+    track.style.minWidth = "0";
+    track.style.boxSizing = "border-box";
+    track.style.margin = "0";
+    track.style.padding = "8px 0 14px";
+    track.style.gap = "0";
+    track.style.overflow = "visible";
+
     track.setAttribute("aria-label", "KVB services carousel");
     track.setAttribute("aria-roledescription", "carousel");
 
