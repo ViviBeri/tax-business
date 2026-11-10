@@ -97,6 +97,10 @@ Then inspect the generated HTML and assets locally or publish the reviewed chang
 
 KVB ENTERPRISES is an independent professional assistance service and is **not a government department**. The website does not represent a government portal. Visitors should verify applicable rules, deadlines, statutory fees, and eligibility with the relevant official authority.
 
+## Security
+
+Please report suspected vulnerabilities privately. Read the [Security Policy](SECURITY.md) for the reporting channel, scope, response expectations, and coordinated disclosure process. Do not publish exploit details in a public issue or pull request.
+
 ## Contributions and maintenance
 
 When changing the site, preserve the English/Tamil navigation, generated-page workflow, privacy disclosures, accessibility, mobile layout, and working contact links. Language links must point to useful destinations; only declare `hreflang` when the destination is a genuine equivalent page. Verify generated output and test the affected pages before publishing.
