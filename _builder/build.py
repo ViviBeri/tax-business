@@ -112,13 +112,14 @@ def head(r, title, desc, path, ld="", alts=None):
             f'<link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=header-balance-2"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}glass-refinement-v2.css?v=2"><link rel="stylesheet" href="{r}SplitFlapText.css?v=1"><link rel="stylesheet" href="{r}homepage-redesign.css?v=19"><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
             f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
 
-def header(r, alt=None):
+def header(r, alt=None, lang_fallback=None):
     home = r + ("ta/" if LANG == "ta" else "") + "index.html"
     n = "".join(T("a", en, ta, x=f'href="{home}#{i}"') for i, en, ta in NAV)
     hreflang = "en" if LANG == "ta" else "ta"
     lang_attr = "en" if LANG == "ta" else "ta"
     lang_label = "English" if LANG == "ta" else "தமிழ்"
-    lg = (f'<a class="lang" href="{alt}" hreflang="{hreflang}" lang="{lang_attr}">{lang_label}</a>' if alt else "")
+    lg = (f'<a class="lang" href="{alt}" hreflang="{hreflang}" lang="{lang_attr}">{lang_label}</a>' if alt else
+          f'<a class="lang" href="{lang_fallback}" lang="ta">தமிழ்</a>' if lang_fallback else "")
     return (f'<header class="topbar"><div class="wrap nav"><a class="brand" href="{home}" aria-label="KVB ENTERPRISES home">'
             f'<img src="{r}assets/logo.png" alt="KVB ENTERPRISES logo" width="56" height="47"><span><b>KVB</b> ENTERPRISES<small>{L("Tax &amp; Business Compliance")}</small></span></a>'
             f'<div class="nav-right"><nav id="mainNav" aria-label="Main navigation">{n}</nav>{lg}'
@@ -384,7 +385,7 @@ def location(l, r, path):
     ld = ld_graph(title, desc, path, f"GST registration in {city}", [{"@type": "City", "name": city}],
                   [(L("Home"), S + "/" + ("ta/" if LANG == "ta" else "")), (f"GST {city}", url)])
     b = head(r, title, desc, path, ld, [("en", f"locations/gst-registration-{l}.html")])
-    b += header(r)
+    b += header(r, lang_fallback=r + "ta/services/gst.html")
     b += '<main><section class="section"><div class="wrap">'
     b += '<nav class="crumbs"><a href="' + r + 'index.html">' + L("Home") + '</a> › GST ' + city + '</nav>'
     b += T("h1", f"GST Registration in {city}", f"{city}-இல் GST பதிவு")
