@@ -19,7 +19,7 @@ def main() -> None:
         banner(
             theme,
             "KVB ENTERPRISES",
-            "Tax & Business Compliance, Simplified",
+            "Tax and Business Compliance, Simplified",
             meta="GST · ITR · FSSAI · Udyam · PAN",
             note="Puducherry, India",
         ),
