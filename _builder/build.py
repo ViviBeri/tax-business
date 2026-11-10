@@ -110,7 +110,7 @@ def head(r, title, desc, path, ld="", alts=None):
             f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{u}">'
             f'<meta property="og:image" content="{S}/assets/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="{locale}"><meta name="twitter:card" content="summary_large_image">{alt}<link rel="icon" type="image/png" href="{r}assets/logo.png">'
             f'<meta name="geo.region" content="IN-PY"><meta name="geo.placename" content="Puducherry"><link rel="alternate" type="application/ld+json" href="{r}schema.jsonld"><link rel="stylesheet" href="{r}style.css"><link rel="stylesheet" href="{r}theme.css?v=header-balance-2"><link rel="stylesheet" href="{r}design-system.css"><link rel="stylesheet" href="{r}homepage-redesign.css?v=25"><link rel="stylesheet" href="{r}site-quality-fix.css?v=5"><link rel="stylesheet" href="{r}editorial-redesign.css?v=1"><link rel="stylesheet" href="{r}styles/glass.css"><script type="module" src="{r}scripts/scroll.js"></script><script type="module" src="{r}scripts/multiscroll.js"></script><script type="module" src="{r}scripts/carousel.js"></script><script type="module" src="{r}scripts/three-hero.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script>'
-            f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body>")
+            f"<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag('js',new Date());gtag('config','{GA}');</script>{ld}</head><body class=\"kvb-glass-enhanced\">")
 
 def header(r, alt=None, lang_fallback=None):
     home = r + ("ta/" if LANG == "ta" else "") + "index.html"
@@ -298,6 +298,7 @@ def index():
           + '<label>' + L("Your message") + '<textarea name="message" rows="3"></textarea></label>'
           + '<button class="btn primary wide" type="submit">' + ICON + '<span>' + L("Send enquiry on WhatsApp") + '</span></button>'
           + '</form></div></section></main>')
+    b = b.replace("<main id=\"home\">", "<main id=\"home\"><noscript><p class=\"noscript-notice\">JavaScript is disabled. All service information and contact links remain available; optional motion effects are not active.</p></noscript>")
     b += foot(r)
     return b
 
