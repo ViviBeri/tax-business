@@ -1807,3 +1807,41 @@ body :where(a, button, input, select, textarea, summary):focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* Keep the highlighted service area consistent with the light location cards. */
+body #locations .location-card--featured {
+  border-color: #b8d9c4;
+  background: #edf7f0;
+}
+
+body #locations .location-card--featured .location-card__copy strong {
+  color: var(--ui-ink) !important;
+  -webkit-text-fill-color: var(--ui-ink) !important;
+}
+
+body #locations .location-card--featured .location-card__copy small {
+  color: var(--ui-muted) !important;
+  -webkit-text-fill-color: var(--ui-muted) !important;
+}
+
+body #locations .location-card--featured .location-card__icon,
+body #locations .location-card--featured .location-card__arrow {
+  color: var(--ui-green) !important;
+}
+
+@media (max-width: 420px) {
+  body #services #serviceTiles.tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  body #services #serviceTiles > .tile {
+    min-height: 154px;
+    padding: 13px;
+  }
+
+  body #services #serviceTiles > .tile b {
+    font-size: 14px;
+  }
+}
