@@ -15,7 +15,7 @@
   const slides = () => Array.from(track.querySelectorAll(":scope > .tile"));
   let active = false, controls, live, previous, next;
   let pointerId = null, startX = 0, startScroll = 0, dragged = false, suppressClick = false;
-  let original = null, scrollFrame = 0, announceTimer = 0;
+  let original = null, announceTimer = 0;
 
   function indexNow() {
     const items = slides();
@@ -42,8 +42,8 @@
     announceTimer = window.setTimeout(announce, reducedMotion.matches ? 0 : 260);
   }
   function onScroll() {
-    if (scrollFrame) cancelAnimationFrame(scrollFrame);
-    scrollFrame = requestAnimationFrame(announce);
+    window.clearTimeout(announceTimer);
+    announceTimer = window.setTimeout(announce, 140);
   }
   function onKeyDown(event) {
     if (event.altKey || event.ctrlKey || event.metaKey) return;
@@ -53,6 +53,7 @@
   function onPointerDown(event) {
     if (event.pointerType === "mouse" && event.button !== 0) return;
     pointerId = event.pointerId; startX = event.clientX; startScroll = track.scrollLeft; dragged = false;
+    try { track.setPointerCapture(pointerId); } catch { /* Pointer capture is optional in older browsers. */ }
   }
   function onPointerMove(event) {
     if (pointerId === null || event.pointerId !== pointerId) return;
@@ -127,7 +128,6 @@
     track.removeEventListener("pointerup",finishPointer);
     track.removeEventListener("pointercancel",finishPointer);
     track.removeEventListener("click",onClickCapture,true);
-    if (scrollFrame) cancelAnimationFrame(scrollFrame);
     window.clearTimeout(announceTimer);
     controls?.remove(); live?.remove();
     Object.assign(track.style,{display:original.display,overflowX:original.overflow,scrollSnapType:original.scrollSnapType,scrollBehavior:original.behavior,gap:original.gap,touchAction:original.touch});
