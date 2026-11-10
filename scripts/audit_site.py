@@ -171,6 +171,67 @@ def audit_page_metadata(html_files: list[Path]) -> None:
     print(f"PASS: essential SEO metadata is complete on all {len(html_files)} HTML pages.")
 
 
+
+def _relative_luminance(hex_color: str) -> float:
+    value = hex_color.removeprefix("#")
+    if len(value) == 3:
+        value = "".join(char * 2 for char in value)
+    if len(value) != 6:
+        raise ValueError(f"Expected a six-digit hex color: {hex_color}")
+    channels = [int(value[index:index + 2], 16) / 255 for index in (0, 2, 4)]
+    linear = [
+        channel / 12.92 if channel <= 0.04045
+        else ((channel + 0.055) / 1.055) ** 2.4
+        for channel in channels
+    ]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def _contrast_ratio(foreground: str, background: str) -> float:
+    lighter, darker = sorted(
+        (_relative_luminance(foreground), _relative_luminance(background)),
+        reverse=True,
+    )
+    return (lighter + 0.05) / (darker + 0.05)
+
+
+def audit_accessibility_colors() -> None:
+    css = (ROOT / "site-quality-fix.css").read_text(encoding="utf-8")
+    required_rules = (
+        ".hero-title-main .split-flap-text__char",
+        ".hero-title-accent .split-flap-text__char",
+        ".hero-copy > .trust",
+        ".hero-card .trust-item > span",
+        ".location-card--featured .location-card__copy strong",
+    )
+    missing = [selector for selector in required_rules if selector not in css]
+    if missing:
+        fail("Missing final contrast override(s): " + ", ".join(missing))
+
+    # Check the foreground/background pairs enforced by the final CSS layer.
+    pairs = (
+        ("Hero main heading", "#172b4d", "#f5fbf7"),
+        ("Hero accent heading", "#086b46", "#f5fbf7"),
+        ("Hero trust text", "#334155", "#ffffff"),
+        ("Hero-card trust text", "#334155", "#f8fbf9"),
+        ("Primary button text", "#ffffff", "#086b46"),
+        ("Service-card supporting text", "#526275", "#ffffff"),
+        ("Featured location heading", "#ffffff", "#203e63"),
+        ("Featured location supporting text", "#e2e8f0", "#203e63"),
+        ("Dark-section text", "#f4f7fb", "#101f38"),
+    )
+    failures: list[str] = []
+    for label, foreground, background in pairs:
+        ratio = _contrast_ratio(foreground, background)
+        print(f"Contrast: {label}: {ratio:.2f}:1")
+        if ratio < 4.5:
+            failures.append(f"{label}: {ratio:.2f}:1 (requires 4.5:1)")
+    if failures:
+        for failure in failures:
+            print(f"::error::{failure}")
+        fail(f"Found {len(failures)} WCAG AA contrast failure(s).")
+    print("PASS: all configured normal-text color pairs meet WCAG AA (4.5:1).")
+
 def main() -> None:
     xml_path = ROOT / "sitemap.xml"
     text_path = ROOT / "sitemap.txt"
@@ -246,6 +307,7 @@ def main() -> None:
     html_files = sorted(path for path in ROOT.rglob("*.html") if "_builder" not in path.parts)
     audit_internal_references(html_files)
     audit_page_metadata(html_files)
+    audit_accessibility_colors()
 
 
 if __name__ == "__main__":
