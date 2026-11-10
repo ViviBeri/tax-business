@@ -33,7 +33,7 @@ jobs:
       - name: Compile builder
         run: python3 -m py_compile _builder/build.py
       - name: Install SVG hero generator
-        run: python3 -m pip install slabkit==0.1.1
+        run: python3 -m pip install slabkit==0.1.1 godprofile-mcp==0.3.1
       - name: Generate and validate hero SVG
         run: |
           python3 generate_hero.py
@@ -44,6 +44,17 @@ jobs:
           if root.tag.split("}")[-1] != "svg":
               raise SystemExit("Generated hero asset is not an SVG document")
           print("Generated and parsed assets/hero-banner.svg")
+          PY
+          python3 generate_services_card.py
+          test -s assets/services-card.svg
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          root = ET.parse("assets/services-card.svg").getroot()
+          if root.tag.split("}")[-1] != "svg":
+              raise SystemExit("Generated services card is not an SVG document")
+          if "STARS_COUNT_KVB" in open("assets/services-card.svg", encoding="utf-8").read():
+              raise SystemExit("Unexpected GitHub stats placeholder in business card")
+          print("Generated and parsed assets/services-card.svg")
           PY
       - name: Generate website
         run: python3 _builder/build.py
