@@ -32,6 +32,19 @@ jobs:
           python-version: '3.11'
       - name: Compile builder
         run: python3 -m py_compile _builder/build.py
+      - name: Install SVG hero generator
+        run: python3 -m pip install slabkit==0.1.1
+      - name: Generate and validate hero SVG
+        run: |
+          python3 generate_hero.py
+          test -s assets/hero-banner.svg
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          root = ET.parse("assets/hero-banner.svg").getroot()
+          if root.tag.split("}")[-1] != "svg":
+              raise SystemExit("Generated hero asset is not an SVG document")
+          print("Generated and parsed assets/hero-banner.svg")
+          PY
       - name: Generate website
         run: python3 _builder/build.py
       - name: Normalize shared stylesheet versions on every page
