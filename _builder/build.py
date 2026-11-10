@@ -87,6 +87,25 @@ TILE_ICONS = {
   "dsc": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18v-8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8M4 18h16M12 12v6"/><circle cx="12" cy="9" r="1.5"/></svg>',
   "business-registration": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5"/></svg>',
 }
+TILE_ICON_FALLBACKS = {
+  "gst": "📄",
+  "itr": "📑",
+  "fssai": "🛡️",
+  "pan": "🪪",
+  "msme": "🏢",
+  "trademark": "™",
+  "dsc": "✍️",
+  "business-registration": "🏬",
+}
+
+def service_icon(slug):
+    """Return a self-contained service SVG, with an accessible Unicode fallback."""
+    icon = TILE_ICONS.get(slug, "")
+    if icon.startswith("<svg") and icon.endswith("</svg>"):
+        return icon
+    fallback = TILE_ICON_FALLBACKS.get(slug, "📄")
+    return f'<span class="service-icon-fallback" aria-hidden="true">{fallback}</span>'
+
 TILE_CAPTION = {
   "gst": ("Registration &amp; Filing", "பதிவு &amp; தாக்கல்"),
   "itr": ("ITR Services", "ITR சேவைகள்"),
@@ -174,7 +193,7 @@ def tiles_html(r):
         label = s[2] if LANG == "ta" else s[1]
         cap_en, cap_ta = TILE_CAPTION[slug]
         cap = cap_ta if LANG == "ta" else cap_en
-        ico = TILE_ICONS[slug]
+        ico = service_icon(slug)
         col = TILE_COLOR[slug]
         out.append(
             f'<a class="tile tile--{col}" href="{sl(r, slug)}" data-service="{E(s[1])}">'
