@@ -15,12 +15,14 @@ concurrency:
 jobs:
   review:
     runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - name: Checkout pull request
         uses: actions/checkout@v4
 
       - name: Run PR Reviewer Agent
-        if: ${{ secrets.OPENAI_API_KEY != '' }}
+        if: ${{ env.OPENAI_API_KEY != '' }}
         uses: smartdev09/pr-reviewer@v1.0.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -35,5 +37,5 @@ jobs:
           aggregated-severity-threshold: medium
 
       - name: Explain skipped review
-        if: ${{ secrets.OPENAI_API_KEY == '' }}
-        run: echo "PR review skipped because the OPENAI_API_KEY Actions secret is not configured.";
+        if: ${{ env.OPENAI_API_KEY == '' }}
+        run: echo "PR review skipped because the OPENAI_API_KEY Actions secret is not configured."
