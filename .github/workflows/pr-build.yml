@@ -10,6 +10,7 @@ on:
       - 'theme.css'
       - 'design-system.css'
       - 'site-quality-fix.css'
+      - 'homepage-redesign.css'
       - 'script.js'
       - 'ui.js'
       - '.github/workflows/pr-build.yml'
@@ -45,7 +46,7 @@ jobs:
               source = path.read_text(encoding='utf-8')
               source = re.sub(
                   r'(<link rel="stylesheet" href="[^"]*homepage-redesign\.css)(?:\?[^"]*)?">',
-                  r'\1?v=23">',
+                  r'\1?v=24">',
                   source,
               )
               quality_href = Path(os.path.relpath("site-quality-fix.css", path.parent)).as_posix()
@@ -56,10 +57,10 @@ jobs:
               )
               source = source.replace(
                   "</head>",
-                  f'<link rel="stylesheet" href="{quality_href}?v=2"></head>',
+                  f'<link rel="stylesheet" href="{quality_href}?v=3"></head>',
                   1,
               )
-              if "site-quality-fix.css?v=2" not in source:
+              if "site-quality-fix.css?v=3" not in source:
                   raise SystemExit(f"Recovery stylesheet missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
@@ -70,10 +71,10 @@ jobs:
           test -f design-system.css
           test -f site-quality-fix.css
           grep -Fq 'href="design-system.css"' index.html
-          grep -Fq 'href="homepage-redesign.css?v=23"' index.html
-          grep -Fq 'href="site-quality-fix.css?v=2"' index.html
+          grep -Fq 'href="homepage-redesign.css?v=24"' index.html
+          grep -Fq 'href="site-quality-fix.css?v=3"' index.html
           grep -Fq 'href="../design-system.css"' ta/index.html
-          grep -Fq 'href="../homepage-redesign.css?v=23"' ta/index.html
-          grep -Fq 'href="../site-quality-fix.css?v=2"' ta/index.html
+          grep -Fq 'href="../homepage-redesign.css?v=24"' ta/index.html
+          grep -Fq 'href="../site-quality-fix.css?v=3"' ta/index.html
           grep -Fq 'id="mainNav"' index.html
           grep -Fq 'id="mainNav"' ta/index.html
