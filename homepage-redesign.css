@@ -850,3 +850,43 @@ a.lang{border-color:var(--kvb-line);background:#f8f7fc}
   #services .has-bento-carousel .tiles-next{right:2px}
   #services{padding-top:46px;padding-bottom:46px}
 }
+
+
+/* Final mobile alignment correction: the legacy carousel wrapper is a flex row,
+   which was shrinking the slide track to make room for both arrow controls.
+   Make the wrapper a positioning context and let the track use its full width. */
+#services .tiles-carousel.has-bento-carousel{
+  display:block!important;
+  position:relative;
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+}
+#services .has-bento-carousel #serviceTiles{
+  display:flex;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  margin:0;
+  box-sizing:border-box;
+}
+#services .has-bento-carousel .bento-slide{
+  flex:0 0 100%;
+  width:100%;
+  max-width:100%;
+  min-width:100%;
+  box-sizing:border-box;
+}
+#services .has-bento-carousel .bento-slide-grid{
+  width:100%;
+  box-sizing:border-box;
+}
+@media(max-width:560px){
+  #services .has-bento-carousel .tiles-arrow{
+    top:50%;
+    transform:translateY(-50%);
+    z-index:7;
+  }
+  #services .has-bento-carousel .tiles-prev{left:2px}
+  #services .has-bento-carousel .tiles-next{right:2px}
+}
