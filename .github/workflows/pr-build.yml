@@ -66,18 +66,24 @@ jobs:
                   source,
               )
               quality_href = Path(os.path.relpath("site-quality-fix.css", path.parent)).as_posix()
+              editorial_href = Path(os.path.relpath("editorial-redesign.css", path.parent)).as_posix()
               source = re.sub(
-                  r'<link rel="stylesheet" href="[^"]*site-quality-fix\.css(?:\?[^"]*)?">',
+                  r'<link rel="stylesheet" href="[^"]*site-quality-fix\\.css(?:\\?[^"]*)?">',
+                  "",
+                  source,
+              )
+              source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*editorial-redesign\\.css(?:\\?[^"]*)?">',
                   "",
                   source,
               )
               source = source.replace(
                   "</head>",
-                  f'<link rel="stylesheet" href="{quality_href}?v=5"></head>',
+                  f'<link rel="stylesheet" href="{quality_href}?v=5"><link rel="stylesheet" href="{editorial_href}?v=1"></head>',
                   1,
               )
-              if "site-quality-fix.css?v=5" not in source:
-                  raise SystemExit(f"Recovery stylesheet missing from {path}")
+              if "site-quality-fix.css?v=5" not in source or "editorial-redesign.css?v=1" not in source:
+                  raise SystemExit(f"Required design stylesheets missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
       - name: Validate generated English and Tamil pages
