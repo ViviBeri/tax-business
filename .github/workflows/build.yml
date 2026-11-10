@@ -40,6 +40,16 @@ jobs:
                   continue
               source = path.read_text(encoding='utf-8')
               source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*SplitFlapText\.css(?:\?[^"]*)?">',
+                  "",
+                  source,
+              )
+              source = re.sub(
+                  r'<script src="[^"]*(?:ui|SplitFlapText)\.js(?:\?[^"]*)?" defer></script>',
+                  "",
+                  source,
+              )
+              source = re.sub(
                   r'(<link rel="stylesheet" href="[^"]*theme\.css)(?:\?[^"]*)?">',
                   r'\1?v=header-balance-2">',
                   source,
