@@ -83,6 +83,9 @@ jobs:
         run: |
           test -s index.html
           test -s ta/index.html
+          grep -Fq 'class="hero-illustration"' index.html
+          grep -Fq 'loading="eager" fetchpriority="high"' index.html
+          grep -Fq 'loading="eager" fetchpriority="high"' ta/index.html
           test -f design-system.css
           test -f site-quality-fix.css
           ! grep -Rq 'glass-refinement-v2.css' index.html ta/index.html
