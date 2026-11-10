@@ -9,6 +9,7 @@ on:
       - 'style.css'
       - 'theme.css'
       - 'design-system.css'
+      - 'site-quality-fix.css'
       - 'script.js'
       - 'ui.js'
       - '.github/workflows/pr-build.yml'
@@ -36,7 +37,10 @@ jobs:
           test -s index.html
           test -s ta/index.html
           test -f design-system.css
+          test -f site-quality-fix.css
           grep -Fq 'href="design-system.css"' index.html
+          grep -Fq 'href="site-quality-fix.css?v=1"' index.html
           grep -Fq 'href="../design-system.css"' ta/index.html
+          grep -Fq 'href="../site-quality-fix.css?v=1"' ta/index.html
           grep -Fq 'id="mainNav"' index.html
           grep -Fq 'id="mainNav"' ta/index.html
