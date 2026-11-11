@@ -243,13 +243,21 @@ def audit_redesign_accessibility() -> None:
         "@media (max-width:960px)",
         "@media (prefers-reduced-motion:reduce)",
         "@supports not",
-        ".services-grid",
-        "#services .tiles",
-        "grid-template-columns: repeat(4,minmax(0,1fr))",
     )
     missing = [rule for rule in required_css if rule not in css]
     if missing:
         fail("Redesign CSS is missing accessibility rules: " + ", ".join(missing))
+
+    premium_css = (ROOT / "styles" / "kvb-premium-pass.css").read_text(encoding="utf-8")
+    required_layout = (
+        ".services-grid",
+        "#services .tiles",
+        "grid-template-columns: repeat(4,minmax(0,1fr))",
+        "@media (max-width: 980px)",
+    )
+    missing_layout = [rule for rule in required_layout if rule not in premium_css]
+    if missing_layout:
+        fail("Premium layout is missing responsive service-grid rules: " + ", ".join(missing_layout))
 
     tokens = {
         "--glass-ink": "#172b3d",
