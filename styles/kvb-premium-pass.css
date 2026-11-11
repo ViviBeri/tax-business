@@ -954,3 +954,45 @@ body #services #serviceTiles > .tile small {
     box-sizing: border-box !important;
   }
 }
+
+/* Keep the proof cards readable in browsers that flatten glass/backdrop effects. */
+body #why-kvb {
+  min-height: 0 !important;
+  padding-block: clamp(58px, 7vw, 88px) !important;
+  color: #f7faf5 !important;
+  background:
+    radial-gradient(ellipse at 88% 18%, rgba(49,157,165,.2), transparent 34%),
+    linear-gradient(118deg, #0a1b2e 0%, #10283f 62%, #145c62 100%) !important;
+}
+body #why-kvb .section-head h2,
+body #why-kvb .section-head p {
+  color: #f7faf5 !important;
+  opacity: 1 !important;
+}
+body #why-kvb .glass-card {
+  min-height: 0 !important;
+  border: 1px solid rgba(225,240,240,.22) !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.15), rgba(255,255,255,.07)) !important;
+  color: #f7faf5 !important;
+  box-shadow: 0 18px 42px rgba(0,0,0,.18) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  backdrop-filter: blur(14px) saturate(125%);
+}
+body #why-kvb .glass-card .stat-counter {
+  color: #efd5a0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+body #why-kvb .glass-card h3,
+body #why-kvb .glass-card p {
+  color: #f7faf5 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+body #why-kvb .glass-card p { color: rgba(245,250,246,.82) !important; }
+@media (max-width: 600px) {
+  body #why-kvb { padding-block: 52px !important; }
+  body #why-kvb .wrap { gap: 24px !important; }
+  body #why-kvb .glass-grid { grid-template-columns: minmax(0,1fr) !important; gap: 12px !important; }
+  body #why-kvb .glass-card { padding: 20px !important; }
+}
