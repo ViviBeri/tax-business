@@ -280,7 +280,7 @@ def index():
           + '<article class="glass-card"><strong class="stat-counter" data-target="5" data-count="5">5</strong>' + T("h3", "Core service groups", "முக்கிய சேவைப் பிரிவுகள்") + T("p", "GST, ITR, FSSAI, Udyam and PAN / trademark assistance.", "GST, ITR, FSSAI, உத்யம் மற்றும் PAN / வர்த்தக முத்திரை உதவி.") + '</article>'
           + '<article class="glass-card"><strong class="stat-counter" data-target="2" data-count="2">2</strong>' + T("h3", "Languages", "மொழிகள்") + T("p", "Support in English and Tamil.", "ஆங்கிலம் மற்றும் தமிழில் உதவி.") + '</article>'
           + '<article class="glass-card"><strong class="stat-counter" data-target="1" data-count="1">1</strong>' + T("h3", "Local point of contact", "உள்ளூர் தொடர்பு மையம்") + T("p", "One direct channel for questions, documents and updates.", "கேள்விகள், ஆவணங்கள் மற்றும் தகவல்களுக்கு நேரடி தொடர்பு வழி.") + '</article>'
-          + '</div><img class="why-stat-strip" src="' + r + 'assets/stat-strip.svg" width="1180" height="180" alt="" aria-hidden="true" loading="lazy" decoding="async"></div></section>')
+          + '</div></div></section>')
     b += ('<section id="compliance-timeline" class="section alt" data-compliance-timeline><div class="wrap">'
           + T("span", "YOUR NEXT STEPS", "உங்கள் அடுத்த படிகள்", "eyebrow")
           + T("h2", "A clear process, from first message to follow-up.", "முதல் செய்தியிலிருந்து தொடர்ந்த தகவல் வரை தெளிவான செயல்முறை.")
