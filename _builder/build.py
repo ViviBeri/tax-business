@@ -152,7 +152,7 @@ def foot(r):
             f'<div><b>KVB ENTERPRISES</b><p>{L("Tax &amp; Business Compliance Services")}</p></div></div>'
             f'<div>GST • ITR • FSSAI • PAN • MSME • Trademark • DSC<br>{L("Puducherry &amp; nearby areas")}</div>'
             f'<div><a href="{r}privacy.html">Privacy</a> • <a href="{r}terms.html">Terms</a><br>© <span class="yr">{TD.year}</span> KVB ENTERPRISES</div></div></footer>'
-            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script src="{r}scripts/scroll-craft.js?v=1" defer></script><script type="module" src="{r}scripts/scroll.js"></script><script type="module" src="{r}scripts/multiscroll.js"></script><script type="module" src="{r}scripts/carousel.js"></script><script type="module" src="{r}scripts/three-hero.js?v=2"></script></body></html>')
+            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script src="{r}scripts/scroll-craft.js?v=2" defer></script><script type="module" src="{r}scripts/scroll.js"></script><script type="module" src="{r}scripts/multiscroll.js"></script><script type="module" src="{r}scripts/three-hero.js?v=2"></script></body></html>')
 
 def btn(href, en, ta, cls="primary", loc="", ico=False, ext=True):
     t = ' target="_blank" rel="noopener"' if ext else ""
@@ -271,7 +271,7 @@ def index():
           + f'<div class="quick">{quick}</div><div class="mini"><span class="mini-label">Call / WhatsApp</span><a class="mini-number" href="tel:+{PH}" data-loc="hero" aria-label="Call KVB ENTERPRISES at 90036 33696">90036 33696</a></div></div></div></section>')
     b += ('<section id="services" class="section"><div class="wrap"><div class="section-head">'
           + T("h2", "Everything your business needs, in one place.", "உங்கள் வணிகத்திற்குத் தேவையான சேவைகள் அனைத்தும் ஒரே இடத்தில்.")
-          + T("p", NOTE_EN, NOTE_TA)
+          + T("p", "Explore practical support for GST, income tax, food licensing and business registration. Get clear steps, document guidance and direct follow-up.", "GST, வருமானவரி, உணவு பாதுகாப்பு உரிமம் மற்றும் வணிகப் பதிவுகளுக்கான நடைமுறை உதவியைப் பெறுங்கள். தெளிவான வழிமுறைகள், ஆவண வழிகாட்டுதல் மற்றும் தொடர்ந்து தகவல் பெறலாம்.")
           + f'</div>{tiles_html(r)}</div></section>')
     b += ('<section id="why-kvb" class="section"><div class="wrap"><div class="section-head">'
           + T("h2", "Local support built around clear communication.", "தெளிவான தகவல் பரிமாற்றத்தை மையமாகக் கொண்ட உள்ளூர் உதவி.")
