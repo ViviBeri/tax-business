@@ -996,3 +996,43 @@ body #why-kvb .glass-card p { color: rgba(245,250,246,.82) !important; }
   body #why-kvb .glass-grid { grid-template-columns: minmax(0,1fr) !important; gap: 12px !important; }
   body #why-kvb .glass-card { padding: 20px !important; }
 }
+
+/* Keep the split proof section inside the same centered page container as other sections. */
+body #why-kvb > .wrap {
+  width: min(1180px, calc(100% - 48px)) !important;
+  max-width: 1180px !important;
+  margin-inline: auto !important;
+  padding-inline: 0 !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.4fr) !important;
+  gap: clamp(24px, 4vw, 56px) !important;
+  align-items: center !important;
+}
+body #why-kvb .section-head {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+body #why-kvb .glass-grid {
+  width: 100% !important;
+  min-width: 0 !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+@media (max-width: 960px) {
+  body #why-kvb > .wrap {
+    width: min(760px, calc(100% - 40px)) !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 24px !important;
+  }
+}
+@media (max-width: 600px) {
+  body #why-kvb > .wrap {
+    width: calc(100% - 36px) !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  body #why-kvb .glass-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
