@@ -86,6 +86,11 @@ jobs:
                   "",
                   source,
               )
+              source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*kvb-premium-pass\.css(?:\?[^"]*)?">',
+                  "",
+                  source,
+              )
               source = source.replace(
                   "</head>",
                   f'<link rel="stylesheet" href="{quality_href}?v=5">'
