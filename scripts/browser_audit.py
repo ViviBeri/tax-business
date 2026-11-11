@@ -71,28 +71,35 @@ with sync_playwright() as playwright:
             if EXPECT_PREMIUM_STYLESHEET and not metrics["premiumStylesheet"]:
                 failures.append(f"{label}: premium stylesheet was not loaded")
 
-            # Trigger viewport-based reveals throughout the page before the
-            # full-page screenshot. A full_page screenshot alone does not
-            # reliably fire IntersectionObserver callbacks for off-screen
-            # sections.
-            # Disable smooth scrolling for deterministic viewport traversal.
-            page.evaluate("() => { document.documentElement.style.scrollBehavior = 'auto'; }")
-            reveal_items = page.locator(".kvb-reveal")
-            for index in range(reveal_items.count()):
-                reveal_items.nth(index).scroll_into_view_if_needed(timeout=10000)
-                page.wait_for_timeout(100)
-            page.evaluate("() => window.scrollTo({ top: 0, behavior: 'instant' })")
-            page.wait_for_timeout(350)
+            # Trigger reveals only for elements that participate in layout.
+            # Some responsive carousel implementations retain off-canvas or
+            # hidden slides in the DOM; Playwright actionability checks cannot
+            # scroll those elements, and they cannot intersect the viewport.
+            page.evaluate("""() => {
+                document.documentElement.style.scrollBehavior = "auto";
+                const items = [...document.querySelectorAll(".kvb-reveal")];
+                items.forEach(item => {
+                    if (item.getClientRects().length) {
+                        item.scrollIntoView({ block: "center", behavior: "instant" });
+                    }
+                });
+            }""")
+            page.wait_for_timeout(700)
 
-            reveal_state = page.evaluate("""() => ({
-                revealCount: document.querySelectorAll('.kvb-reveal').length,
-                hiddenRevealCount: document.querySelectorAll('.kvb-reveal:not(.is-visible)').length,
-                serviceTileCount: document.querySelectorAll('#services .tile').length
-            })""")
+            reveal_state = page.evaluate("""() => {
+                const items = [...document.querySelectorAll(".kvb-reveal")];
+                const inLayout = items.filter(item => item.getClientRects().length > 0);
+                return {
+                    revealCount: items.length,
+                    visibleRevealCount: inLayout.length,
+                    hiddenVisibleRevealCount: inLayout.filter(item => !item.classList.contains("is-visible")).length,
+                    serviceTileCount: document.querySelectorAll("#services .tile").length
+                };
+            }""")
             print(f"{label}: scrolled reveal state {reveal_state}")
-            if reveal_state["hiddenRevealCount"]:
+            if reveal_state["hiddenVisibleRevealCount"]:
                 failures.append(
-                    f"{label}: {reveal_state['hiddenRevealCount']} reveal elements remain hidden after scrolling"
+                    f"{label}: {reveal_state['hiddenVisibleRevealCount']} visible reveal elements remain hidden after scrolling"
                 )
             if reveal_state["serviceTileCount"] < 8:
                 failures.append(
