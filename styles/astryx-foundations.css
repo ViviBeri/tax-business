@@ -159,3 +159,42 @@ body {
 @media (prefers-reduced-motion: reduce) {
   :where(*, *::before, *::after) { scroll-behavior: auto; }
 }
+
+
+/* Timeline content must remain in normal flow on narrow screens. */
+@media (max-width: 960px) {
+  #compliance-timeline .timeline-steps > .step {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0;
+    min-height: 0;
+    height: auto;
+  }
+  #compliance-timeline .timeline-steps > .step > b {
+    position: static !important;
+    inset: auto !important;
+    float: none !important;
+    transform: none !important;
+    display: inline-flex;
+    flex: 0 0 3.25rem;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin: 0 0 1rem;
+  }
+  #compliance-timeline .timeline-steps > .step > h3 {
+    position: static;
+    display: block;
+    width: 100%;
+    margin: 0 0 .5rem;
+    transform: none;
+  }
+  #compliance-timeline .timeline-steps > .step > p {
+    position: static;
+    display: block;
+    width: 100%;
+    margin: 0;
+    transform: none;
+  }
+}
