@@ -74,18 +74,25 @@ jobs:
                   source,
               )
               quality_href = Path(os.path.relpath("site-quality-fix.css", path.parent)).as_posix()
+              taste_href = Path(os.path.relpath("styles/taste-direction.css", path.parent)).as_posix()
               source = re.sub(
                   r'<link rel="stylesheet" href="[^"]*site-quality-fix\.css(?:\?[^"]*)?">',
                   "",
                   source,
               )
+              source = re.sub(
+                  r'<link rel="stylesheet" href="[^"]*taste-direction\.css(?:\?[^"]*)?">',
+                  "",
+                  source,
+              )
               source = source.replace(
                   "</head>",
-                  f'<link rel="stylesheet" href="{quality_href}?v=5"></head>',
+                  f'<link rel="stylesheet" href="{quality_href}?v=5">'
+                  f'<link rel="stylesheet" href="{taste_href}?v=2"></head>',
                   1,
               )
-              if "site-quality-fix.css?v=5" not in source:
-                  raise SystemExit(f"Recovery stylesheet missing from {path}")
+              if "site-quality-fix.css?v=5" not in source or "taste-direction.css?v=2" not in source:
+                  raise SystemExit(f"Required visual stylesheets missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
       - name: Commit generated site
