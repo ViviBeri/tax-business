@@ -95,7 +95,7 @@ jobs:
                   "</head>",
                   f'<link rel="stylesheet" href="{quality_href}?v=5">'
                   f'<link rel="stylesheet" href="{taste_href}?v=2">'
-                  f'<link rel="stylesheet" href="{premium_href}?v=1"></head>',
+                  f'<link rel="stylesheet" href="{premium_href}?v=2"></head>',
                   1,
               )
               if ("site-quality-fix.css?v=5" not in source
