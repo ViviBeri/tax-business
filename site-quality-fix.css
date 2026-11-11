@@ -167,7 +167,7 @@ body .hero .actions .btn.secondary { color: #172b4d; background: #fff; border-co
   .clients-grid,.about-grid,.contact-grid,.service-grid { grid-template-columns: minmax(0,1fr); }
   .steps { grid-template-columns: minmax(0,1fr); }
   .tiles,.locations,.tool-grid,.cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .tiles-carousel { min-width: 0; max-width: 100%; }
+  .services-grid { min-width: 0; max-width: 100%; }
   #services #serviceTiles.tiles { grid-template-columns: repeat(2,minmax(0,1fr)); grid-auto-rows: minmax(160px,auto); }
   #services #serviceTiles > .tile { min-width: 0; min-height: 160px; padding: 16px 12px; }
   .proof-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
@@ -1056,7 +1056,7 @@ body .faq {
 }
 
 /* Services grid: fixed, predictable card alignment instead of a partial carousel. */
-body #services .tiles-carousel {
+body #services .services-grid {
   display: block;
   width: 100%;
   max-width: none;
