@@ -28,8 +28,9 @@
   window.addEventListener("resize", requestProgress, { passive: true });
   updateProgress();
 
-  if (reduceMotion.matches || !("IntersectionObserver" in window)) return;
+  if (reduceMotion.matches || !("IntersectionObserver" in window) || !items.length) return;
 
+  document.documentElement.classList.add("js-reveal-ready");
   items.forEach((item, index) => {
     item.classList.add("kvb-reveal");
     if (item.matches(".services-grid .tile, #how .step, #why-kvb .glass-card")) {
@@ -40,7 +41,7 @@
   const observer = new IntersectionObserver((entries, activeObserver) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-visible");
+      entry.target.classList.add("is-in");
       activeObserver.unobserve(entry.target);
     });
   }, { threshold: 0.12, rootMargin: "0px 0px -36px 0px" });
@@ -49,7 +50,8 @@
   reduceMotion.addEventListener("change", event => {
     if (!event.matches) return;
     observer.disconnect();
-    items.forEach(item => item.classList.add("is-visible"));
+    document.documentElement.classList.remove("js-reveal-ready");
+    items.forEach(item => item.classList.add("is-in"));
   });
   window.addEventListener("pagehide", () => {
     observer.disconnect();
