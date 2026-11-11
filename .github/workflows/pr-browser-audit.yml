@@ -1,0 +1,68 @@
+name: Pull request browser visual audit
+
+on:
+  pull_request:
+    branches:
+      - main
+      - redesign
+    paths:
+      - "index.html"
+      - "ta/index.html"
+      - "_builder/**"
+      - "styles/**"
+      - "scripts/**"
+      - "style.css"
+      - "theme.css"
+      - "homepage-redesign.css"
+      - "site-quality-fix.css"
+      - ".github/workflows/pr-browser-audit.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-browser-audit-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  browser-audit:
+    name: English and Tamil desktop/mobile checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out pull request
+        uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Build generated pages
+        run: python3 _builder/build.py
+      - name: Install Playwright
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Start local site
+        run: |
+          python3 -m http.server 8000 > /tmp/kvb-http.log 2>&1 &
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8000/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/kvb-http.log
+          exit 1
+      - name: Audit English and Tamil homepages
+        run: python scripts/browser_audit.py
+        env:
+          KVB_AUDIT_URL: http://127.0.0.1:8000/
+      - name: Upload desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: kvb-pr-browser-audit
+          path: browser-audit/
+          if-no-files-found: warn
+          retention-days: 14
