@@ -285,10 +285,9 @@ def index():
           + T("span", "YOUR NEXT STEPS", "உங்கள் அடுத்த படிகள்", "eyebrow")
           + T("h2", "A clear process, from first message to follow-up.", "முதல் செய்தியிலிருந்து தொடர்ந்த தகவல் வரை தெளிவான செயல்முறை.")
           + '<div class="timeline-steps">'
-          + '<article class="step" data-timeline-step><b>01</b>' + T("h3", "Tell us what you need", "உங்களுக்கு தேவையானதைச் சொல்லுங்கள்") + T("p", "Share the service and a short description of your requirement.", "சேவையையும் உங்கள் தேவையின் சுருக்கத்தையும் பகிருங்கள்.") + '</article>'
-          + '<article class="step" data-timeline-step><b>02</b>' + T("h3", "Review the documents", "ஆவணங்களைச் சரிபார்க்கவும்") + T("p", "We explain the documents and information relevant to your case.", "உங்கள் நிலைக்கு தேவையான ஆவணங்கள் மற்றும் தகவல்களை விளக்குகிறோம்.") + '</article>'
-          + '<article class="step" data-timeline-step><b>03</b>' + T("h3", "Confirm the scope", "சேவை விவரங்களை உறுதிப்படுத்துங்கள்") + T("p", "Understand the process, professional charges and any applicable statutory fees before proceeding.", "தொடங்குவதற்கு முன் செயல்முறை, தொழில்முறை கட்டணம் மற்றும் பொருந்தும் சட்டபூர்வ கட்டணங்களை அறிந்து கொள்ளுங்கள்.") + '</article>'
-          + '<article class="step" data-timeline-step><b>04</b>' + T("h3", "Receive updates", "தொடர்ந்த தகவல்களைப் பெறுங்கள்") + T("p", "We keep you informed as the agreed assistance progresses.", "ஒப்புக்கொண்ட உதவி முன்னேறும் போது உங்களுக்கு தகவல் தெரிவிக்கிறோம்.") + '</article>'
+          + '<article class="step" data-timeline-step><b>01</b>' + T("h3", "WhatsApp us", "WhatsApp மூலம் தொடர்புகொள்ளுங்கள்") + T("p", "Tell us which service you need.", "உங்களுக்கு தேவையான சேவையைச் சொல்லுங்கள்.") + '</article>'
+          + '<article class="step" data-timeline-step><b>02</b>' + T("h3", "Share documents", "ஆவணங்களைப் பகிருங்கள்") + T("p", "We will tell you exactly which documents are required.", "தேவையான ஆவணங்களைத் தெளிவாகச் சொல்கிறோம்.") + '</article>'
+          + '<article class="step" data-timeline-step><b>03</b>' + T("h3", "We process and update you", "செயல்முறையை முடித்து தகவல் தெரிவிப்போம்") + T("p", "We handle the process and keep you updated.", "செயல்முறையை கவனித்து தொடர்ந்து தகவல் தெரிவிப்போம்.") + '</article>'
           + '</div><div class="how-cta">' + btn(wa("Hello Vivian, I would like to get started."), "Start on WhatsApp →", "WhatsApp-ல் தொடங்குங்கள் →", "primary", "how-it-works", True) + '</div></div></section>')
     b += ('<section class="proof-strip section alt"><div class="wrap"><div class="section-head">'
           + T("h2", "A practical, transparent service experience.", "நடைமுறை மற்றும் வெளிப்படையான சேவை அனுபவம்.")
