@@ -41,7 +41,7 @@
   const observer = new IntersectionObserver((entries, activeObserver) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-in");
+      entry.target.classList.add("is-visible");
       activeObserver.unobserve(entry.target);
     });
   }, { threshold: 0.12, rootMargin: "0px 0px -36px 0px" });
@@ -51,7 +51,7 @@
     if (!event.matches) return;
     observer.disconnect();
     document.documentElement.classList.remove("js-reveal-ready");
-    items.forEach(item => item.classList.add("is-in"));
+    items.forEach(item => item.classList.add("is-visible"));
   });
   window.addEventListener("pagehide", () => {
     observer.disconnect();
