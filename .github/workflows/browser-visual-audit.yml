@@ -1,0 +1,41 @@
+name: Deployed browser visual audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 3 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deployed-browser-audit
+  cancel-in-progress: true
+
+jobs:
+  browser-audit:
+    name: Desktop and mobile browser checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install Playwright
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Capture deployed site and check browser health
+        run: python scripts/browser_audit.py
+      - name: Upload desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: kvb-browser-audit
+          path: browser-audit/
+          if-no-files-found: warn
+          retention-days: 14
