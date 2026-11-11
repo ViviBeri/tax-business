@@ -1,6 +1,9 @@
 async function initThreeHero() {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (reduceMotion.matches || !("WebGLRenderingContext" in window)) return;
+  const desktop = window.matchMedia("(min-width: 961px)");
+  const connection = navigator.connection;
+  if (reduceMotion.matches || !desktop.matches || !("WebGLRenderingContext" in window)) return;
+  if (connection?.saveData || /^(slow-2g|2g)$/.test(connection?.effectiveType || "")) return;
 
   const hero = document.querySelector(".hero");
   const illustration = hero?.querySelector(".hero-illustration");
@@ -97,4 +100,9 @@ async function initThreeHero() {
     canvas.remove();
   }
 }
-initThreeHero().catch(() => {});
+const scheduleThreeHero = () => {
+  const start = () => initThreeHero().catch(() => {});
+  if ("requestIdleCallback" in window) window.requestIdleCallback(start, { timeout: 1800 });
+  else window.setTimeout(start, 250);
+};
+scheduleThreeHero();
