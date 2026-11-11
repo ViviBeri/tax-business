@@ -2,7 +2,7 @@
 (() => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const selector = [
-    ".section-head", ".tiles-carousel .tile", "#how .step",
+    ".section-head", ".services-grid .tile", "#how .step",
     "#why-kvb .glass-card", ".tool-grid > div", ".about-points > div",
     ".faq-list details", ".contact-box"
   ].join(",");
@@ -32,7 +32,7 @@
 
   items.forEach((item, index) => {
     item.classList.add("kvb-reveal");
-    if (item.matches(".tiles-carousel .tile, #how .step, #why-kvb .glass-card")) {
+    if (item.matches(".services-grid .tile, #how .step, #why-kvb .glass-card")) {
       item.style.setProperty("--kvb-reveal-delay", Math.min(index % 4, 3) * 65 + "ms");
     }
   });
