@@ -279,11 +279,11 @@ def audit_redesign_accessibility() -> None:
     home = ROOT / "index.html"
     source = home.read_text(encoding="utf-8")
     required_markup = (
-        ("glass stylesheet", r'href="styles/glass\\.css(?:\\?[^"]*)?"'),
-        ("scroll module", r'src="scripts/scroll\\.js(?:\\?[^"]*)?"'),
-        ("multiscroll module", r'src="scripts/multiscroll\\.js(?:\\?[^"]*)?"'),
-        ("carousel module", r'src="scripts/carousel\\.js(?:\\?[^"]*)?"'),
-        ("three-hero module", r'src="scripts/three-hero\\.js(?:\\?[^"]*)?"'),
+        ("glass stylesheet", r'href="styles/glass\.css(?:\?[^"]*)?"'),
+        ("scroll module", r'src="scripts/scroll\.js(?:\?[^"]*)?"'),
+        ("multiscroll module", r'src="scripts/multiscroll\.js(?:\?[^"]*)?"'),
+        ("carousel module", r'src="scripts/carousel\.js(?:\?[^"]*)?"'),
+        ("three-hero module", r'src="scripts/three-hero\.js(?:\?[^"]*)?"'),
         ("why-kvb section", r'id="why-kvb"'),
         ("timeline steps", r'data-timeline-step'),
     )
@@ -293,7 +293,7 @@ def audit_redesign_accessibility() -> None:
 
     tamil = ROOT / "ta" / "index.html"
     tamil_source = tamil.read_text(encoding="utf-8")
-    if not re.search(r'href="../styles/glass\\.css(?:\\?[^"]*)?"', tamil_source) or not re.search(r'src="../scripts/carousel\\.js(?:\\?[^"]*)?"', tamil_source):
+    if not re.search(r'href="../styles/glass\.css(?:\?[^"]*)?"', tamil_source) or not re.search(r'src="../scripts/carousel\.js(?:\?[^"]*)?"', tamil_source):
         fail("Generated Tamil homepage is missing its relative glass stylesheet or carousel module.")
 
     carousel = (ROOT / "scripts" / "carousel.js").read_text(encoding="utf-8")
