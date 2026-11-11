@@ -3,7 +3,7 @@
    layout, readable contrast, and consistent controls across English/Tamil pages.
 */
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
   --site-ink: #172b4d;
   --site-body: #34465a;
   --site-muted: #526275;
