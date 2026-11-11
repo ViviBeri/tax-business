@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
@@ -278,21 +279,21 @@ def audit_redesign_accessibility() -> None:
     home = ROOT / "index.html"
     source = home.read_text(encoding="utf-8")
     required_markup = (
-        'href="styles/glass.css"',
-        'src="scripts/scroll.js"',
-        'src="scripts/multiscroll.js"',
-        'src="scripts/carousel.js"',
-        'src="scripts/three-hero.js"',
-        'id="why-kvb"',
-        'data-timeline-step',
+        ("glass stylesheet", r'href="styles/glass\\.css(?:\\?[^"]*)?"'),
+        ("scroll module", r'src="scripts/scroll\\.js(?:\\?[^"]*)?"'),
+        ("multiscroll module", r'src="scripts/multiscroll\\.js(?:\\?[^"]*)?"'),
+        ("carousel module", r'src="scripts/carousel\\.js(?:\\?[^"]*)?"'),
+        ("three-hero module", r'src="scripts/three-hero\\.js(?:\\?[^"]*)?"'),
+        ("why-kvb section", r'id="why-kvb"'),
+        ("timeline steps", r'data-timeline-step'),
     )
-    missing_markup = [item for item in required_markup if item not in source]
+    missing_markup = [label for label, pattern in required_markup if not re.search(pattern, source)]
     if missing_markup:
         fail("Generated English homepage is missing redesign markup/assets: " + ", ".join(missing_markup))
 
     tamil = ROOT / "ta" / "index.html"
     tamil_source = tamil.read_text(encoding="utf-8")
-    if 'href="../styles/glass.css"' not in tamil_source or 'src="../scripts/carousel.js"' not in tamil_source:
+    if not re.search(r'href="../styles/glass\\.css(?:\\?[^"]*)?"', tamil_source) or not re.search(r'src="../scripts/carousel\\.js(?:\\?[^"]*)?"', tamil_source):
         fail("Generated Tamil homepage is missing its relative glass stylesheet or carousel module.")
 
     carousel = (ROOT / "scripts" / "carousel.js").read_text(encoding="utf-8")
