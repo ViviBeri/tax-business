@@ -1318,3 +1318,17 @@ body { background: var(--kvb-premium-paper); color: var(--kvb-premium-ink); }
     opacity: 1 !important;
   }
 }
+
+
+/* Show complete service artwork: cover was cropping titles and top details. */
+body #services #serviceTiles > .tile::before {
+  background-size: contain !important;
+  background-position: center center !important;
+  background-color: #fff !important;
+}
+@media (max-width: 600px) {
+  body #services #serviceTiles > .tile::before {
+    background-size: contain !important;
+    background-position: center center !important;
+  }
+}
