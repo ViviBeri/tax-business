@@ -243,18 +243,20 @@ def audit_redesign_accessibility() -> None:
         "@media (max-width:960px)",
         "@media (prefers-reduced-motion:reduce)",
         "@supports not",
-        ".carousel-control",
+        ".services-grid",
+        "#services .tiles",
+        "grid-template-columns: repeat(4,minmax(0,1fr))",
     )
     missing = [rule for rule in required_css if rule not in css]
     if missing:
         fail("Redesign CSS is missing accessibility rules: " + ", ".join(missing))
 
     tokens = {
-        "--glass-ink": "#142b25",
-        "--glass-muted": "#40584f",
-        "--glass-accent": "#075f46",
-        "--glass-accent-hover": "#064b39",
-        "--glass-focus": "#102a43",
+        "--glass-ink": "#172b3d",
+        "--glass-muted": "#536979",
+        "--glass-accent": "#147a80",
+        "--glass-accent-hover": "#0f6268",
+        "--glass-focus": "#10283f",
     }
     for token, expected in tokens.items():
         if f"{token}: {expected};" not in css:
@@ -266,8 +268,7 @@ def audit_redesign_accessibility() -> None:
         ("Stat number", tokens["--glass-accent"], "#ffffff"),
         ("Primary button text", "#ffffff", tokens["--glass-accent"]),
         ("Primary button hover text", "#ffffff", tokens["--glass-accent-hover"]),
-        ("Carousel control text", tokens["--glass-accent-hover"], "#ffffff"),
-        ("Timeline step number", tokens["--glass-accent-hover"], "#e8f4ed"),
+        ("Gold timeline step number", "#173d31", "#e7d3a7"),
     )
     for label, foreground, background in pairs:
         ratio = _contrast_ratio(foreground, background)
@@ -281,7 +282,7 @@ def audit_redesign_accessibility() -> None:
         ("glass stylesheet", r'href="styles/glass\.css(?:\?[^"]*)?"'),
         ("scroll module", r'src="scripts/scroll\.js(?:\?[^"]*)?"'),
         ("multiscroll module", r'src="scripts/multiscroll\.js(?:\?[^"]*)?"'),
-        ("carousel module", r'src="scripts/carousel\.js(?:\?[^"]*)?"'),
+        ("responsive service grid", r'class="services-grid" role="region" aria-label="Our services"'),
         ("three-hero module", r'src="scripts/three-hero\.js(?:\?[^"]*)?"'),
         ("why-kvb section", r'id="why-kvb"'),
         ("timeline steps", r'data-timeline-step'),
@@ -292,13 +293,12 @@ def audit_redesign_accessibility() -> None:
 
     tamil = ROOT / "ta" / "index.html"
     tamil_source = tamil.read_text(encoding="utf-8")
-    if not re.search(r'href="../styles/glass\.css(?:\?[^"]*)?"', tamil_source) or not re.search(r'src="../scripts/carousel\.js(?:\?[^"]*)?"', tamil_source):
-        fail("Generated Tamil homepage is missing its relative glass stylesheet or carousel module.")
-
-    carousel = (ROOT / "scripts" / "carousel.js").read_text(encoding="utf-8")
-    for feature in ("aria-live", "document.documentElement.lang", "ArrowRight", "ArrowLeft", "setPointerCapture"):
-        if feature not in carousel:
-            fail(f"Carousel accessibility/interaction contract is missing: {feature}")
+    if not re.search(r'href="../styles/glass\.css(?:\?[^"]*)?"', tamil_source):
+        fail("Generated Tamil homepage is missing its relative glass stylesheet.")
+    if not re.search(r'class="services-grid" role="region" aria-label="Our services"', tamil_source):
+        fail("Generated Tamil homepage is missing its responsive service grid.")
+    if re.search(r'src="(?:\.\./)?scripts/carousel\.js', source + tamil_source):
+        fail("Homepage must use the responsive service grid instead of the horizontal carousel.")
 
     scroll = (ROOT / "scripts" / "scroll.js").read_text(encoding="utf-8")
     multiscroll = (ROOT / "scripts" / "multiscroll.js").read_text(encoding="utf-8")
@@ -307,7 +307,7 @@ def audit_redesign_accessibility() -> None:
         fail("GSAP animation modules must explicitly guard reduced-motion preferences.")
     if "prefers-reduced-motion: reduce" not in three or "geometry?.dispose()" not in three:
         fail("Three.js hero must guard reduced motion and dispose its geometry.")
-    print("PASS: redesign focus, responsive, reduced-motion, carousel and contrast checks.")
+    print("PASS: redesign focus, responsive grid, reduced-motion and contrast checks.")
 
 def main() -> None:
     xml_path = ROOT / "sitemap.xml"
