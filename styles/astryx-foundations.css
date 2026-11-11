@@ -1,0 +1,161 @@
+/* Astryx-inspired foundations for the existing KVB static site.
+   Semantic tokens keep surfaces, text, borders and controls consistent.
+   No framework or runtime dependency is required.
+*/
+:root {
+  color-scheme: light;
+  --ui-canvas: #f6f9f7;
+  --ui-surface: #ffffff;
+  --ui-surface-muted: #eef5f1;
+  --ui-surface-raised: #ffffff;
+  --ui-text: #172b4d;
+  --ui-text-muted: #40536a;
+  --ui-border: #d7e3dc;
+  --ui-accent: #086b46;
+  --ui-accent-contrast: #ffffff;
+  --ui-focus: #0b6b52;
+  --ui-shadow: 0 12px 32px rgba(23, 43, 77, .08);
+  --ui-radius: 16px;
+}
+body {
+  color: var(--ui-text);
+  background: var(--ui-canvas);
+}
+:where(.service-card, .panel, .calculator, .tool-grid > div, .about-points > div,
+       .faq-list details, .step, .location-card, .contact-box) {
+  border-color: var(--ui-border);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow);
+}
+:where(.section-head h2, .service-page h1, .service-page h2,
+       .tool-page h1, .legal h1) { color: var(--ui-text); }
+:where(.section-head p, .service-page p, .service-page li, .tool-page p,
+       .tool-page li, .about-grid p, .service-card p, .step p) {
+  color: var(--ui-text-muted);
+}
+:where(.service-card, .panel, .calculator, .tool-grid > div, .about-points > div,
+       .faq-list details, .step, .location-card, .contact-box) {
+  background: var(--ui-surface);
+  color: var(--ui-text);
+}
+:where(.topbar, .topbar nav.open, .topbar nav.is-open) {
+  background: var(--ui-surface);
+  color: var(--ui-text);
+  border-color: var(--ui-border);
+}
+:where(.topbar nav a, .brand, .brand span, .brand b, .menu) { color: var(--ui-text); }
+:where(input, select, textarea) {
+  color: var(--ui-text);
+  background: var(--ui-surface);
+  border-color: var(--ui-border);
+}
+:where(input, select, textarea)::placeholder { color: var(--ui-text-muted); }
+:where(a:not(.btn):not(.tile):not(.floating-wa)) { text-underline-offset: .18em; }
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--ui-focus);
+  outline-offset: 3px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --ui-canvas: #0b1220;
+    --ui-surface: #111c2e;
+    --ui-surface-muted: #17263b;
+    --ui-surface-raised: #17263b;
+    --ui-text: #f1f5f9;
+    --ui-text-muted: #c0ccda;
+    --ui-border: #34445a;
+    --ui-accent: #34d399;
+    --ui-accent-contrast: #06281d;
+    --ui-focus: #6ee7b7;
+    --ui-shadow: 0 14px 36px rgba(0, 0, 0, .28);
+  }
+  html, body { color-scheme: dark; background: var(--ui-canvas); color: var(--ui-text); }
+  body { background-image: none; }
+  .topbar, .topbar nav.open, .topbar nav.is-open {
+    background: #101a2b;
+    color: var(--ui-text);
+    border-color: var(--ui-border);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .24);
+  }
+  .topbar nav a, .brand, .brand span, .brand b, .brand small, .menu { color: var(--ui-text); }
+  .menu, a.lang, .lang { background: var(--ui-surface); color: var(--ui-text); border-color: var(--ui-border); }
+  .section, .section.alt, #how, #business, #locations, #tools, .proof, .clients {
+    background: var(--ui-canvas);
+    color: var(--ui-text);
+  }
+  :where(.section-head h2, .service-page h1, .service-page h2,
+         .tool-page h1, .legal h1, .section-head, .faq-list summary) {
+    color: var(--ui-text);
+    text-shadow: none;
+  }
+  :where(.section-head p, .service-page p, .service-page li, .tool-page p,
+         .tool-page li, .about-grid p, .service-card p, .step p,
+         .about-points span, .faq-list details p, .tool-grid p, .note) {
+    color: var(--ui-text-muted);
+  }
+  :where(.service-card, .panel, .calculator, .tool-grid > div, .about-points > div,
+         .faq-list details, .step, .location-card, .contact-box, .locations a,
+         #services #serviceTiles > .tile, .chips span, .related a) {
+    background: var(--ui-surface);
+    color: var(--ui-text);
+    border-color: var(--ui-border);
+    box-shadow: var(--ui-shadow);
+  }
+  :where(.service-card h3, .panel h2, .calculator h2, .tool-grid h3,
+         .about-points b, .locations a, .locations a strong, .locations a small,
+         .faq-list summary, .step h3, .tile b, .tile small, .chips span) {
+    color: var(--ui-text);
+  }
+  :where(.service-card span, .service-page .back, .tool-page .back,
+         .tool-grid a, .related a, .locations a:hover) { color: var(--ui-accent); }
+  :where(input, select, textarea, .contact-box input, .contact-box select,
+         .contact-box textarea, .calculator input, .calculator select) {
+    color: var(--ui-text);
+    background: #0d1727;
+    border-color: var(--ui-border);
+  }
+  :where(input, select, textarea)::placeholder { color: #9aabc0; }
+  .contact-box label, .calculator label { color: var(--ui-text); }
+  .btn.primary, .contact-box .btn, .calculator .btn,
+  .btn-primary, .btn.primary:hover {
+    color: #06281d;
+    background: var(--ui-accent);
+    border-color: var(--ui-accent);
+  }
+  .btn.secondary { color: var(--ui-text); background: var(--ui-surface); border-color: var(--ui-border); }
+  .result { color: #d1fae5; background: #123629; border-left-color: var(--ui-accent); }
+  .hero { color: #f8fafc; background: linear-gradient(120deg, #080d1c, #172044 55%, #103b3b); }
+  .hero h1, .hero h1 > .hero-title-main { color: #f8fafc; }
+  .hero .lead, .hero .trust { color: #dbe5f0; }
+  .hero .hero-card { background: rgba(17, 28, 46, .88); color: var(--ui-text); border-color: #40516a; }
+  .hero .hero-card :where(p, span, small) { color: var(--ui-text-muted); }
+  .hero .hero-card .mini { background: #17263b; color: var(--ui-text); }
+  .hero .hero-card .mini strong { color: #6ee7b7; }
+  .hero .hero-card .quick a { color: var(--ui-text); background: #17263b; border-color: #40516a; }
+  #compliance-timeline .timeline-steps > .step {
+    background: var(--ui-surface);
+    color: var(--ui-text);
+    border-color: var(--ui-border);
+  }
+  #compliance-timeline .timeline-steps h3 { color: var(--ui-text); }
+  #compliance-timeline .timeline-steps p { color: var(--ui-text-muted); }
+  #compliance-timeline .timeline-steps > .step > b {
+    color: #06281d;
+    background: #6ee7b7;
+    border-color: #34d399;
+  }
+  .tile-ico { color: #6ee7b7; background: #123629; border-color: #23634e; }
+  .proof-chip, .carousel-control { color: var(--ui-text); background: var(--ui-surface); border-color: var(--ui-border); }
+  .strip, .contact, footer, .newbiz, .svc-cta, .cta-panel {
+    color: #f1f5f9;
+  }
+  .contact-box { background: var(--ui-surface); border-color: var(--ui-border); }
+  .contact-box label { color: var(--ui-text); }
+  .mbar { box-shadow: 0 -8px 24px rgba(0, 0, 0, .3); }
+  .mbar a:first-child { background: #087f5b; color: #fff; }
+  .mbar a:last-child { background: #17263b; color: #fff; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :where(*, *::before, *::after) { scroll-behavior: auto; }
+}
