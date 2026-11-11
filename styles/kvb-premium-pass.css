@@ -937,3 +937,20 @@ body #services #serviceTiles > .tile small {
   }
   body #services #serviceTiles > .tile::before { height: 102px !important; }
 }
+
+/* Keep the featured location card inside the single-column mobile directory. */
+@media (max-width: 420px) {
+  html body #locations .locations {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-auto-columns: minmax(0, 1fr) !important;
+  }
+
+  html body #locations .location-card--featured {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 68px !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+  }
+}
