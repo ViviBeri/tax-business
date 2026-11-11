@@ -1125,3 +1125,19 @@ body { background: var(--kvb-premium-paper); color: var(--kvb-premium-ink); }
     transition: none !important;
   }
 }
+
+/* Keep the WhatsApp enquiry action aligned with WhatsApp's green identity. */
+#contact .contact-box .btn.primary {
+  background: linear-gradient(135deg, #2be477 0%, #25d366 58%, #1da851 100%) !important;
+  color: #073b25 !important;
+  border: 1px solid rgba(7,59,37,.12) !important;
+  box-shadow: 0 12px 26px rgba(37,211,102,.22);
+}
+#contact .contact-box .btn.primary:hover,
+#contact .contact-box .btn.primary:focus-visible {
+  background: linear-gradient(135deg, #25d366 0%, #1da851 100%) !important;
+  color: #052f1d !important;
+}
+#contact .contact-box .btn.primary .wa-ico {
+  color: currentColor !important;
+}
