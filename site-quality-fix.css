@@ -403,13 +403,8 @@ body .hero-card {
   box-shadow: 0 16px 36px rgba(23,43,77,.12) !important;
 }
 
-#kvb-progress,
-.kvb-reveal,
-.kvb-reveal.is-in {
+#kvb-progress {
   display: none !important;
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
 }
 
 @media (max-width: 700px) {
