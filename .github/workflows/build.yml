@@ -95,12 +95,12 @@ jobs:
                   "</head>",
                   f'<link rel="stylesheet" href="{quality_href}?v=5">'
                   f'<link rel="stylesheet" href="{taste_href}?v=2">'
-                  f'<link rel="stylesheet" href="{premium_href}?v=2"></head>',
+                  f'<link rel="stylesheet" href="{premium_href}?v=3"></head>',
                   1,
               )
               if ("site-quality-fix.css?v=5" not in source
                       or "taste-direction.css?v=2" not in source
-                      or "kvb-premium-pass.css?v=2" not in source):
+                      or "kvb-premium-pass.css?v=3" not in source):
                   raise SystemExit(f"Required visual stylesheets missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
