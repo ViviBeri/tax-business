@@ -37,3 +37,86 @@ html{scroll-padding-top:96px}body{background:var(--kvb-v2-paper);color:var(--kvb
 }
 @media(max-width:380px){.hero .wrap.hero-grid{width:calc(100% - 28px)}.hero h1{font-size:35px}.hero .actions{grid-template-columns:1fr}.hero .actions .hero-services-cta{grid-column:auto}.hero-card .quick{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.hero-card,.hero .actions .btn,#services .tiles-carousel .tile{transition:none!important}}
+
+/* Layout correction: keep the language switcher inside the header. */
+@media (max-width: 1280px) {
+  .topbar .nav { gap: 12px; }
+  .topbar .nav-right { gap: 10px; min-width: 0; }
+  .topbar #mainNav { display: none; }
+  .topbar #menuBtn { display: inline-flex; align-items: center; justify-content: center; }
+  .topbar #mainNav.is-open,
+  .topbar #mainNav.open {
+    display: flex;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 5%;
+    right: 5%;
+    z-index: 60;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 10px;
+    border: 1px solid #dce6e2;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 18px 42px rgba(12,32,48,.16);
+  }
+  .topbar #mainNav.is-open a,
+  .topbar #mainNav.open a {
+    padding: 12px 14px;
+    color: #172b3d;
+  }
+}
+.topbar .nav { position: relative; }
+.topbar .nav-right { flex-shrink: 0; }
+.topbar .lang { flex: 0 0 auto; white-space: nowrap; }
+.topbar .brand { min-width: 0; flex: 1 1 auto; }
+
+/* Restore the hero information panel as a readable, complete glass card. */
+.hero .hero-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: #f7fbff !important;
+  background: linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.07)) !important;
+}
+.hero .hero-card .quick,
+.hero .hero-card .quick a,
+.hero .hero-card .mini,
+.hero .hero-card .mini strong {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.hero .hero-card .quick a { color: #f7fbff !important; }
+.hero .hero-card .mini { color: #e1eaf1 !important; }
+.hero .hero-card .mini strong { color: #bcefd8 !important; }
+
+/* Full-width footer composition with balanced columns and wave. */
+.footer-wave {
+  display: block;
+  width: 100% !important;
+  max-width: none !important;
+  height: clamp(72px, 10vw, 140px);
+  object-fit: cover;
+  object-position: center;
+}
+footer { width: 100%; }
+footer .wrap.footer {
+  width: min(1160px, 90%) !important;
+  max-width: 1160px;
+  margin-inline: auto;
+  display: grid !important;
+  grid-template-columns: minmax(230px, 1.1fr) minmax(260px, 1fr) minmax(180px, .7fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 56px);
+  padding: 28px 0 34px;
+}
+footer .footer-brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+footer .footer-brand img { flex: 0 0 48px; width: 48px; height: 48px; object-fit: contain; }
+footer .footer-brand p { margin: 5px 0 0; color: #d2e2dc !important; opacity: 1 !important; }
+footer .footer > div { min-width: 0; line-height: 1.8; }
+@media (max-width: 760px) {
+  footer .wrap.footer { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero::before, .hero::after { animation: none !important; }
+}
