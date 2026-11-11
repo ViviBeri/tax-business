@@ -31,7 +31,24 @@ with sync_playwright() as playwright:
         response = page.goto(BASE_URL, wait_until="domcontentloaded", timeout=60000)
         if response is None or response.status >= 400:
             failures.append(f"{name}: homepage returned {response.status if response else 'no response'}")
-        page.wait_for_timeout(3500)
+        page.wait_for_timeout(1500)
+        # Full-page screenshots do not scroll through the document, so native
+        # lazy-loaded images may remain unloaded. Eager-load and decode them first.
+        image_report = page.evaluate("""async () => {
+            const images = [...document.images];
+            images.forEach(image => { image.loading = "eager"; });
+            await Promise.all(images.map(image => image.decode().catch(() => null)));
+            return images.map(image => ({
+                src: image.currentSrc || image.src,
+                alt: image.alt,
+                loaded: image.complete && image.naturalWidth > 0,
+                naturalWidth: image.naturalWidth
+            }));
+        }""")
+        for image in image_report:
+            print(f"{name} image: {image}")
+            if not image["loaded"]:
+                failures.append(f"{name}: image failed to load: {image['src']}")
         page.screenshot(path=str(OUTPUT / f"{name}.png"), full_page=True)
         metrics = page.evaluate("""() => ({
             title: document.title,
