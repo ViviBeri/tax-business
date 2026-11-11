@@ -1265,3 +1265,56 @@ body { background: var(--kvb-premium-paper); color: var(--kvb-premium-ink); }
 @media (prefers-reduced-motion: reduce) {
   #contact .contact-box .btn.primary::after { display: none; }
 }
+
+/* Keep light-surface text readable even when the device uses dark appearance. */
+@media (prefers-color-scheme: dark) {
+  #business .section-head h2,
+  #business .chips a,
+  #business .chips a span,
+  #business .chips a span *,
+  #compliance-timeline .section-head h2,
+  #compliance-timeline .timeline-steps h3,
+  #compliance-timeline .timeline-steps p,
+  #services .section-head h2,
+  #services .section-head p,
+  #tools .section-head h2,
+  #tools .section-head p,
+  .faq .section-head h2,
+  .faq .section-head p,
+  #contact .contact-box label {
+    color: #203747 !important;
+    -webkit-text-fill-color: #203747 !important;
+    opacity: 1 !important;
+  }
+
+  #business .chips a span {
+    background: #fffdf8 !important;
+    border-color: #d8e1e5 !important;
+  }
+
+  #compliance-timeline .timeline-steps > .step {
+    background: #fffdf8 !important;
+    border-color: #e3dece !important;
+  }
+
+  #compliance-timeline .timeline-steps > .step > b {
+    color: #104638 !important;
+    -webkit-text-fill-color: #104638 !important;
+  }
+
+  #contact .contact-box {
+    background: #fffdf8 !important;
+  }
+
+  #contact .contact-box :is(input, select, textarea) {
+    color: #172b3d !important;
+    -webkit-text-fill-color: #172b3d !important;
+    background: #f8fafb !important;
+  }
+
+  footer .footer-brand p {
+    color: #d2e2dc !important;
+    -webkit-text-fill-color: #d2e2dc !important;
+    opacity: 1 !important;
+  }
+}
