@@ -142,3 +142,13 @@ footer .footer > div { min-width: 0; line-height: 1.8; }
     font-size: 11px;
   }
 }
+
+/* Final header fit: reserve a fixed slot for the language switcher. */
+@media (min-width: 1281px) {
+  .topbar .nav { display: flex !important; flex-wrap: nowrap !important; }
+  .topbar .brand { flex: 0 0 165px !important; max-width: 165px; }
+  .topbar .nav-right { display: flex !important; flex: 1 1 0 !important; min-width: 0 !important; gap: 6px !important; }
+  .topbar #mainNav { display: flex !important; flex: 1 1 0 !important; min-width: 0 !important; justify-content: flex-end !important; gap: 6px !important; }
+  .topbar #mainNav a { font-size: 10px !important; letter-spacing: 0 !important; white-space: nowrap !important; }
+  .topbar .lang { display: inline-flex !important; flex: 0 0 auto !important; margin-left: 2px; padding: 7px 9px !important; font-size: 10px !important; }
+}
