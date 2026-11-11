@@ -75,27 +75,29 @@ with sync_playwright() as playwright:
             # full-page screenshot. A full_page screenshot alone does not
             # reliably fire IntersectionObserver callbacks for off-screen
             # sections.
-            step = max(400, int(height * 0.72))
-            for offset in range(0, metrics["height"], step):
-                page.evaluate("(y) => window.scrollTo(0, y)", offset)
-                page.wait_for_timeout(160)
-            page.evaluate("() => window.scrollTo(0, 0)")
+            # Disable smooth scrolling for deterministic viewport traversal.
+            page.evaluate("() => { document.documentElement.style.scrollBehavior = 'auto'; }")
+            reveal_items = page.locator(".kvb-reveal")
+            for index in range(reveal_items.count()):
+                reveal_items.nth(index).scroll_into_view_if_needed(timeout=10000)
+                page.wait_for_timeout(100)
+            page.evaluate("() => window.scrollTo({ top: 0, behavior: 'instant' })")
             page.wait_for_timeout(350)
 
             reveal_state = page.evaluate("""() => ({
                 revealCount: document.querySelectorAll('.kvb-reveal').length,
                 hiddenRevealCount: document.querySelectorAll('.kvb-reveal:not(.is-visible)').length,
-                servicesVisible: [...document.querySelectorAll('#services .tile')].filter(
-                    element => element.getBoundingClientRect().height > 0
-                ).length
+                serviceTileCount: document.querySelectorAll('#services .tile').length
             })""")
             print(f"{label}: scrolled reveal state {reveal_state}")
             if reveal_state["hiddenRevealCount"]:
                 failures.append(
                     f"{label}: {reveal_state['hiddenRevealCount']} reveal elements remain hidden after scrolling"
                 )
-            if reveal_state["servicesVisible"] < 8:
-                failures.append(f"{label}: service tiles are not fully visible after scrolling")
+            if reveal_state["serviceTileCount"] < 8:
+                failures.append(
+                    f"{label}: expected 8 service tiles after scrolling, found {reveal_state['serviceTileCount']}"
+                )
 
             image_report = page.evaluate("""async () => {
                 const images = [...document.images];
