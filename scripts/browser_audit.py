@@ -71,29 +71,38 @@ with sync_playwright() as playwright:
             if EXPECT_PREMIUM_STYLESHEET and not metrics["premiumStylesheet"]:
                 failures.append(f"{label}: premium stylesheet was not loaded")
 
-            # Trigger reveals only for elements that participate in layout.
-            # Some responsive carousel implementations retain off-canvas or
-            # hidden slides in the DOM; Playwright actionability checks cannot
-            # scroll those elements, and they cannot intersect the viewport.
-            page.evaluate("""() => {
+            # Exercise each reveal target in sequence. Waiting between scrolls
+            # gives IntersectionObserver a frame to reveal intermediate cards,
+            # including horizontally off-screen carousel slides on mobile.
+            page.evaluate("""async () => {
                 document.documentElement.style.scrollBehavior = "auto";
                 const items = [...document.querySelectorAll(".kvb-reveal")];
-                items.forEach(item => {
-                    if (item.getClientRects().length) {
-                        item.scrollIntoView({ block: "center", behavior: "instant" });
-                    }
-                });
+                for (const item of items) {
+                    if (!item.getClientRects().length) continue;
+                    item.scrollIntoView({ block: "center", inline: "center", behavior: "instant" });
+                    await new Promise(resolve => requestAnimationFrame(() =>
+                        requestAnimationFrame(() => setTimeout(resolve, 35))
+                    ));
+                }
+                window.scrollTo({ top: 0, behavior: "instant" });
+                await new Promise(resolve => requestAnimationFrame(() =>
+                    requestAnimationFrame(resolve)
+                ));
             }""")
             page.wait_for_timeout(700)
 
             reveal_state = page.evaluate("""() => {
                 const items = [...document.querySelectorAll(".kvb-reveal")];
                 const inLayout = items.filter(item => item.getClientRects().length > 0);
+                const serviceTiles = [...document.querySelectorAll("#services .tile")];
                 return {
                     revealCount: items.length,
                     visibleRevealCount: inLayout.length,
                     hiddenVisibleRevealCount: inLayout.filter(item => !item.classList.contains("is-visible")).length,
-                    serviceTileCount: document.querySelectorAll("#services .tile").length
+                    serviceTileCount: serviceTiles.length,
+                    unrevealedServiceTileCount: serviceTiles.filter(item =>
+                        item.classList.contains("kvb-reveal") && !item.classList.contains("is-visible")
+                    ).length
                 };
             }""")
             print(f"{label}: scrolled reveal state {reveal_state}")
@@ -104,6 +113,10 @@ with sync_playwright() as playwright:
             if reveal_state["serviceTileCount"] < 8:
                 failures.append(
                     f"{label}: expected 8 service tiles after scrolling, found {reveal_state['serviceTileCount']}"
+                )
+            if reveal_state["unrevealedServiceTileCount"]:
+                failures.append(
+                    f"{label}: {reveal_state['unrevealedServiceTileCount']} service tiles remain unrevealed"
                 )
 
             image_report = page.evaluate("""async () => {
