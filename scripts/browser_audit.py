@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Capture deployed-site desktop/mobile screenshots and check browser health."""
+# Browser audit runs against the published GitHub Pages deployment.
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
