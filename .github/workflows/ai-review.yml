@@ -1,0 +1,31 @@
+name: AI Pull Request Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: write
+
+concurrency:
+  group: anthropic-pr-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  ai-code-review:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - name: AI Code Review
+        if: ${{ env.ANTHROPIC_API_KEY != '' }}
+        uses: nitaiaharoni1/anthropic-pr-code-review@66ed5616ac0490efca39b9e3c47ad876d644422f
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Explain skipped review
+        if: ${{ env.ANTHROPIC_API_KEY == '' }}
+        run: echo "Anthropic review skipped because the ANTHROPIC_API_KEY Actions secret is not configured."

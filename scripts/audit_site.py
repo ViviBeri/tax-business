@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
@@ -196,26 +197,25 @@ def _contrast_ratio(foreground: str, background: str) -> float:
 
 
 def audit_accessibility_colors() -> None:
-    css = (ROOT / "site-quality-fix.css").read_text(encoding="utf-8")
+    css = (ROOT / "styles" / "kvb-premium-pass.css").read_text(encoding="utf-8")
     required_rules = (
-        ".hero-title-main .split-flap-text__char",
-        ".hero-title-accent .split-flap-text__char",
-        ".hero-copy > .trust",
-        ".hero-card .trust-item > span",
-        ".location-card--featured .location-card__copy strong",
+        "body .hero h1 .hero-title-main",
+        "body .hero h1 .hero-title-accent",
+        "body .hero .actions .btn.primary",
+        "body .hero .hero-card",
+        "#services .tile small",
     )
     missing = [selector for selector in required_rules if selector not in css]
     if missing:
-        fail("Missing final contrast override(s): " + ", ".join(missing))
+        fail("Missing signature visual rules: " + ", ".join(missing))
 
-    # Check the foreground/background pairs enforced by the final CSS layer.
     pairs = (
-        ("Hero main heading", "#172b4d", "#f5fbf7"),
-        ("Hero accent heading", "#086b46", "#f5fbf7"),
+        ("Hero main heading", "#ffffff", "#10283f"),
+        ("Hero accent heading", "#b8e2df", "#10283f"),
         ("Hero trust text", "#334155", "#ffffff"),
         ("Hero-card trust text", "#334155", "#f8fbf9"),
-        ("Primary button text", "#ffffff", "#086b46"),
-        ("Service-card supporting text", "#526275", "#ffffff"),
+        ("Primary button text", "#10283f", "#cda45b"),
+        ("Service-card supporting text", "#637786", "#ffffff"),
         ("Featured location heading", "#ffffff", "#203e63"),
         ("Featured location supporting text", "#e2e8f0", "#203e63"),
         ("Dark-section text", "#f4f7fb", "#101f38"),
@@ -230,7 +230,92 @@ def audit_accessibility_colors() -> None:
         for failure in failures:
             print(f"::error::{failure}")
         fail(f"Found {len(failures)} WCAG AA contrast failure(s).")
-    print("PASS: all configured normal-text color pairs meet WCAG AA (4.5:1).")
+    print("PASS: signature palette text pairs meet WCAG AA (4.5:1).")
+
+def audit_redesign_accessibility() -> None:
+    """Check the redesign's core text, control, focus and motion contracts."""
+    css_path = ROOT / "styles" / "glass.css"
+    css = css_path.read_text(encoding="utf-8")
+    required_css = (
+        ":focus-visible",
+        "outline:3px solid var(--glass-focus)",
+        "outline-offset:3px",
+        "@media (max-width:960px)",
+        "@media (prefers-reduced-motion:reduce)",
+        "@supports not",
+    )
+    missing = [rule for rule in required_css if rule not in css]
+    if missing:
+        fail("Redesign CSS is missing accessibility rules: " + ", ".join(missing))
+
+    premium_css = (ROOT / "styles" / "kvb-premium-pass.css").read_text(encoding="utf-8")
+    required_layout = (
+        ".services-grid",
+        "#services .tiles",
+        "grid-template-columns: repeat(4,minmax(0,1fr))",
+        "@media (max-width: 980px)",
+    )
+    missing_layout = [rule for rule in required_layout if rule not in premium_css]
+    if missing_layout:
+        fail("Premium layout is missing responsive service-grid rules: " + ", ".join(missing_layout))
+
+    tokens = {
+        "--glass-ink": "#172b3d",
+        "--glass-muted": "#536979",
+        "--glass-accent": "#147a80",
+        "--glass-accent-hover": "#0f6268",
+        "--glass-focus": "#10283f",
+    }
+    for token, expected in tokens.items():
+        if f"{token}: {expected};" not in css:
+            fail(f"Redesign token {token} must remain {expected} for the audited contrast pairs.")
+
+    pairs = (
+        ("Glass card primary text", tokens["--glass-ink"], "#ffffff"),
+        ("Glass card supporting text", tokens["--glass-muted"], "#ffffff"),
+        ("Stat number", tokens["--glass-accent"], "#ffffff"),
+        ("Primary button text", "#ffffff", tokens["--glass-accent"]),
+        ("Primary button hover text", "#ffffff", tokens["--glass-accent-hover"]),
+        ("Gold timeline step number", "#173d31", "#e7d3a7"),
+    )
+    for label, foreground, background in pairs:
+        ratio = _contrast_ratio(foreground, background)
+        print(f"Redesign contrast: {label}: {ratio:.2f}:1")
+        if ratio < 4.5:
+            fail(f"Redesign contrast failure: {label} is {ratio:.2f}:1; WCAG AA requires 4.5:1.")
+
+    home = ROOT / "index.html"
+    source = home.read_text(encoding="utf-8")
+    required_markup = (
+        ("glass stylesheet", r'href="styles/glass\.css(?:\?[^"]*)?"'),
+        ("scroll module", r'src="scripts/scroll\.js(?:\?[^"]*)?"'),
+        ("multiscroll module", r'src="scripts/multiscroll\.js(?:\?[^"]*)?"'),
+        ("responsive service grid", r'class="services-grid" role="region" aria-label="Our services"'),
+        ("three-hero module", r'src="scripts/three-hero\.js(?:\?[^"]*)?"'),
+        ("why-kvb section", r'id="why-kvb"'),
+        ("timeline steps", r'data-timeline-step'),
+    )
+    missing_markup = [label for label, pattern in required_markup if not re.search(pattern, source)]
+    if missing_markup:
+        fail("Generated English homepage is missing redesign markup/assets: " + ", ".join(missing_markup))
+
+    tamil = ROOT / "ta" / "index.html"
+    tamil_source = tamil.read_text(encoding="utf-8")
+    if not re.search(r'href="../styles/glass\.css(?:\?[^"]*)?"', tamil_source):
+        fail("Generated Tamil homepage is missing its relative glass stylesheet.")
+    if not re.search(r'class="services-grid" role="region" aria-label="Our services"', tamil_source):
+        fail("Generated Tamil homepage is missing its responsive service grid.")
+    if re.search(r'src="(?:\.\./)?scripts/carousel\.js', source + tamil_source):
+        fail("Homepage must use the responsive service grid instead of the horizontal carousel.")
+
+    scroll = (ROOT / "scripts" / "scroll.js").read_text(encoding="utf-8")
+    multiscroll = (ROOT / "scripts" / "multiscroll.js").read_text(encoding="utf-8")
+    three = (ROOT / "scripts" / "three-hero.js").read_text(encoding="utf-8")
+    if "prefers-reduced-motion: reduce" not in scroll or "prefers-reduced-motion: reduce" not in multiscroll:
+        fail("GSAP animation modules must explicitly guard reduced-motion preferences.")
+    if "prefers-reduced-motion: reduce" not in three or "geometry?.dispose()" not in three:
+        fail("Three.js hero must guard reduced motion and dispose its geometry.")
+    print("PASS: redesign focus, responsive grid, reduced-motion and contrast checks.")
 
 def main() -> None:
     xml_path = ROOT / "sitemap.xml"
@@ -308,6 +393,7 @@ def main() -> None:
     audit_internal_references(html_files)
     audit_page_metadata(html_files)
     audit_accessibility_colors()
+    audit_redesign_accessibility()
 
 
 if __name__ == "__main__":

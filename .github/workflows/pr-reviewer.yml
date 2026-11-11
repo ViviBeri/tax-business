@@ -1,0 +1,41 @@
+name: PR Reviewer Agent
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: pr-reviewer-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@v4
+
+      - name: Run PR Reviewer Agent
+        if: ${{ env.OPENAI_API_KEY != '' }}
+        uses: smartdev09/pr-reviewer@b400f1d63f0bfd12ca9a8cd5f57645c31427bd1a
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          provider: openai
+          model: gpt-4o-mini
+          mode: auto
+          enable-security: 'true'
+          enable-quality: 'true'
+          enable-suggestions: 'true'
+          inline-severity-threshold: high
+          aggregated-severity-threshold: medium
+
+      - name: Explain skipped review
+        if: ${{ env.OPENAI_API_KEY == '' }}
+        run: echo "PR review skipped because the OPENAI_API_KEY Actions secret is not configured."

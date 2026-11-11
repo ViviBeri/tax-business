@@ -4,23 +4,31 @@ on:
   pull_request:
     branches:
       - main
+      - redesign
     paths:
       - '**/*.html'
       - 'sitemap.xml'
       - 'sitemap.txt'
       - 'robots.txt'
+      - '_builder/**'
       - 'scripts/**'
+      - 'styles/**'
+      - 'theme.css'
+      - 'homepage-redesign.css'
+      - 'site-quality-fix.css'
       - 'README.md'
       - '.github/workflows/static-site-audit.yml'
   push:
     branches:
       - main
+      - redesign
     paths:
       - '**/*.html'
       - 'sitemap.xml'
       - 'sitemap.txt'
       - 'robots.txt'
       - 'scripts/**'
+      - 'styles/**'
       - 'README.md'
       - '.github/workflows/static-site-audit.yml'
   workflow_dispatch:
@@ -40,5 +48,7 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
+      - name: Generate site from source
+        run: python3 _builder/build.py
       - name: Run dependency-free site audit
         run: python3 scripts/audit_site.py
