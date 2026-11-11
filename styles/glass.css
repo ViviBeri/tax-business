@@ -1,14 +1,14 @@
 :root {
   color-scheme: light;
-  --glass-ink: #142b25;
-  --glass-muted: #40584f;
+  --glass-ink: #172b3d;
+  --glass-muted: #536979;
   --glass-surface: rgba(255,255,255,.86);
   --glass-surface-solid: #fff;
-  --glass-border: #b8cec3;
-  --glass-accent: #075f46;
-  --glass-accent-hover: #064b39;
-  --glass-accent-soft: #e8f4ed;
-  --glass-focus: #102a43;
+  --glass-border: #c8d8df;
+  --glass-accent: #147a80;
+  --glass-accent-hover: #0f6268;
+  --glass-accent-soft: #e5f0f2;
+  --glass-focus: #10283f;
   --glass-focus-gap: #fff;
   --glass-shadow: 0 16px 42px rgba(13,48,36,.10);
   --glass-shadow-hover: 0 22px 50px rgba(13,48,36,.16);
