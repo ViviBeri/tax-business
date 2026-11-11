@@ -1,6 +1,12 @@
 name: Deployed browser visual audit
 
 on:
+  push:
+    branches:
+      - redesign
+    paths:
+      - "scripts/browser_audit.py"
+      - ".github/workflows/browser-visual-audit.yml"
   workflow_dispatch:
   schedule:
     - cron: "30 3 * * 1"
