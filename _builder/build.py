@@ -152,7 +152,7 @@ def foot(r):
             f'<div><b>KVB ENTERPRISES</b><p>{L("Tax &amp; Business Compliance Services")}</p></div></div>'
             f'<div>GST • ITR • FSSAI • PAN • MSME • Trademark • DSC<br>{L("Puducherry &amp; nearby areas")}</div>'
             f'<div><a href="{r}privacy.html">Privacy</a> • <a href="{r}terms.html">Terms</a><br>© <span class="yr">{TD.year}</span> KVB ENTERPRISES</div></div></footer>'
-            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script src="{r}scripts/scroll-craft.js?v=2" defer></script><script type="module" src="{r}scripts/scroll.js"></script><script type="module" src="{r}scripts/multiscroll.js"></script><script type="module" src="{r}scripts/three-hero.js?v=2"></script></body></html>')
+            f'<script src="{r}script.js?v=menu-fix-6" defer></script><script src="{r}scripts/scroll-craft.js?v=3" defer></script><script type="module" src="{r}scripts/scroll.js"></script><script type="module" src="{r}scripts/multiscroll.js"></script><script type="module" src="{r}scripts/three-hero.js?v=2"></script></body></html>')
 
 def btn(href, en, ta, cls="primary", loc="", ico=False, ext=True):
     t = ' target="_blank" rel="noopener"' if ext else ""
@@ -201,7 +201,7 @@ def tiles_html(r):
             f'<b>{label}</b>'
             f'<small>{cap}</small>'
             f'</a>')
-    return ('<div class="tiles-carousel" role="region" aria-label="Our services">'
+    return ('<div class="services-grid" role="region" aria-label="Our services">'
             '<div class="tiles" id="serviceTiles">' + "".join(out) + '</div>'
             '</div>')
 
