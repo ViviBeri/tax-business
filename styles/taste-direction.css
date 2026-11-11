@@ -171,3 +171,10 @@ footer { background: #09251f; }
   .chips span { background: #1d3a2d; border-color: #345943; color: #e4f3e8; }
   .contact-box input, .contact-box select, .contact-box textarea { background: #101a17; color: #edf5ef; border-color: #40574a; }
 }
+
+/* Scroll-Craft: restrained reading progress and one-time section reveals. */
+.kvb-scroll-progress { position:fixed; inset:0 auto auto 0; z-index:1200; width:100%; height:3px; background:var(--kvb-gold); transform:scaleX(0); transform-origin:left center; pointer-events:none; will-change:transform; }
+.kvb-reveal { opacity:0; transform:translate3d(0,18px,0); transition:opacity 560ms cubic-bezier(.2,.75,.25,1), transform 560ms cubic-bezier(.2,.75,.25,1); transition-delay:var(--kvb-reveal-delay,0ms); }
+.kvb-reveal.is-visible { opacity:1; transform:translate3d(0,0,0); }
+@media (max-width:700px) { .kvb-reveal { transform:translate3d(0,12px,0); transition-duration:440ms; } }
+@media (prefers-reduced-motion:reduce) { .kvb-scroll-progress { display:none; } .kvb-reveal,.kvb-reveal.is-visible { opacity:1; transform:none; transition:none; } }
