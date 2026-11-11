@@ -197,26 +197,25 @@ def _contrast_ratio(foreground: str, background: str) -> float:
 
 
 def audit_accessibility_colors() -> None:
-    css = (ROOT / "site-quality-fix.css").read_text(encoding="utf-8")
+    css = (ROOT / "styles" / "kvb-premium-pass.css").read_text(encoding="utf-8")
     required_rules = (
-        ".hero-title-main .split-flap-text__char",
-        ".hero-title-accent .split-flap-text__char",
-        ".hero-copy > .trust",
-        ".hero-card .trust-item > span",
-        ".location-card--featured .location-card__copy strong",
+        "body .hero h1 .hero-title-main",
+        "body .hero h1 .hero-title-accent",
+        "body .hero .actions .btn.primary",
+        "body .hero .hero-card",
+        "#services .tile small",
     )
     missing = [selector for selector in required_rules if selector not in css]
     if missing:
-        fail("Missing final contrast override(s): " + ", ".join(missing))
+        fail("Missing signature visual rules: " + ", ".join(missing))
 
-    # Check the foreground/background pairs enforced by the final CSS layer.
     pairs = (
-        ("Hero main heading", "#172b4d", "#f5fbf7"),
-        ("Hero accent heading", "#086b46", "#f5fbf7"),
+        ("Hero main heading", "#ffffff", "#10283f"),
+        ("Hero accent heading", "#b8e2df", "#10283f"),
         ("Hero trust text", "#334155", "#ffffff"),
         ("Hero-card trust text", "#334155", "#f8fbf9"),
-        ("Primary button text", "#ffffff", "#086b46"),
-        ("Service-card supporting text", "#526275", "#ffffff"),
+        ("Primary button text", "#10283f", "#cda45b"),
+        ("Service-card supporting text", "#637786", "#ffffff"),
         ("Featured location heading", "#ffffff", "#203e63"),
         ("Featured location supporting text", "#e2e8f0", "#203e63"),
         ("Dark-section text", "#f4f7fb", "#101f38"),
@@ -231,7 +230,7 @@ def audit_accessibility_colors() -> None:
         for failure in failures:
             print(f"::error::{failure}")
         fail(f"Found {len(failures)} WCAG AA contrast failure(s).")
-    print("PASS: all configured normal-text color pairs meet WCAG AA (4.5:1).")
+    print("PASS: signature palette text pairs meet WCAG AA (4.5:1).")
 
 def audit_redesign_accessibility() -> None:
     """Check the redesign's core text, control, focus and motion contracts."""
