@@ -705,3 +705,23 @@ footer a { color: #e9d5a8; }
 @media (prefers-reduced-motion: reduce) {
   *,*:before,*:after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Keep the industry grid visually consistent on the Tamil homepage, where labels are non-linked spans. */
+#business .chips > span {
+  display: flex; align-items: center; min-height: 62px;
+  padding: 14px 16px; border: 1px solid rgba(16,40,63,.12);
+  border-radius: 2px 13px 2px 13px; background: #fff;
+  color: #294b5c; font-size: 12px; font-weight: 750; line-height: 1.45;
+}
+#business .chips > span:before {
+  content: ""; width: 5px; height: 24px; margin-right: 12px;
+  flex: 0 0 5px; border-radius: 4px; background: var(--kvb-premium-teal);
+}
+#contact .section-kicker { color: #b8e2df; }
+@media (max-width:700px) {
+  #business .chips > span { min-height: 58px; padding: 11px; font-size: 10px; }
+  #business .chips > span:before { margin-right: 8px; }
+}
+@media (prefers-color-scheme:dark) {
+  #business .chips > span { background: #14283a; border-color: #2b4658; color: #eaf1f4; }
+}
