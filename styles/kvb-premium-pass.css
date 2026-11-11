@@ -725,3 +725,125 @@ footer a { color: #e9d5a8; }
 @media (prefers-color-scheme:dark) {
   #business .chips > span { background: #14283a; border-color: #2b4658; color: #eaf1f4; }
 }
+
+/* Signature direction: restore the intended midnight, teal and brass hero.
+   The legacy quality layer contains light-hero !important rules; these final
+   declarations intentionally take precedence without changing shared pages. */
+body .hero {
+  min-height: 690px !important;
+  padding: clamp(88px, 10vw, 132px) 0 clamp(76px, 8vw, 108px) !important;
+  overflow: hidden !important;
+  color: #f7faf5 !important;
+  background:
+    radial-gradient(ellipse at 82% 23%, rgba(49,157,165,.24), transparent 32%),
+    radial-gradient(ellipse at 12% 100%, rgba(205,164,91,.16), transparent 34%),
+    linear-gradient(118deg, #0a1b2e 0%, #10283f 58%, #145c62 100%) !important;
+}
+body .hero::before,
+body .hero::after {
+  display: block !important;
+}
+body .hero .wrap.hero-grid {
+  width: min(1240px, 88%) !important;
+  grid-template-columns: minmax(0, 1.16fr) minmax(310px, .7fr) !important;
+  gap: clamp(42px, 7vw, 112px) !important;
+}
+body .hero .eyebrow {
+  color: #b8e2df !important;
+}
+body .hero h1,
+body .hero h1 .hero-title-main,
+body .hero h1 .hero-title-main .split-flap-text,
+body .hero h1 .hero-title-main .split-flap-text__char {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(48px, 6.1vw, 82px) !important;
+  font-weight: 500 !important;
+  line-height: .99 !important;
+  letter-spacing: -.055em !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  text-shadow: none !important;
+}
+body .hero h1 .hero-title-accent,
+body .hero h1 .hero-title-accent .split-flap-text,
+body .hero h1 .hero-title-accent .split-flap-text__char {
+  color: #b8e2df !important;
+  -webkit-text-fill-color: #b8e2df !important;
+  font-family: inherit !important;
+  font-size: clamp(20px, 2.3vw, 30px) !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -.035em !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+}
+body .hero .lead {
+  color: rgba(246,250,246,.8) !important;
+}
+body .hero .actions .btn.primary {
+  border-color: transparent !important;
+  color: #10283f !important;
+  background: linear-gradient(135deg, #ead8b0, #cda45b) !important;
+  box-shadow: 0 14px 32px rgba(0,0,0,.2) !important;
+}
+body .hero .actions .btn.secondary {
+  border-color: rgba(255,255,255,.3) !important;
+  color: #f8fbf7 !important;
+  background: rgba(255,255,255,.07) !important;
+}
+body .hero .hero-card {
+  border-color: rgba(255,255,255,.68) !important;
+  border-radius: 4px 28px 4px 28px !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(244,248,247,.94)) !important;
+  box-shadow: 0 38px 90px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.9) !important;
+  transform: perspective(1200px) rotateY(-3deg) rotateX(1.5deg) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(135%) !important;
+  backdrop-filter: blur(18px) saturate(135%) !important;
+}
+body .hero > .hero-illustration {
+  opacity: .23 !important;
+  filter: saturate(.85) contrast(1.1) !important;
+}
+@media (max-width: 980px) {
+  body .hero {
+    min-height: 0 !important;
+    padding: 76px 0 68px !important;
+  }
+  body .hero .wrap.hero-grid {
+    width: min(100% - 48px, 760px) !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 34px !important;
+  }
+  body .hero .hero-card {
+    max-width: 620px !important;
+    transform: none !important;
+  }
+}
+@media (max-width: 600px) {
+  body .hero { padding: 58px 0 52px !important; }
+  body .hero .wrap.hero-grid { width: calc(100% - 36px) !important; gap: 28px !important; }
+  body .hero h1,
+  body .hero h1 .hero-title-main {
+    font-size: clamp(40px, 10.5vw, 56px) !important;
+    line-height: 1.02 !important;
+  }
+  body .hero h1 .hero-title-accent { font-size: clamp(18px, 4.8vw, 23px) !important; }
+  body .hero .lead { font-size: 15px !important; line-height: 1.72 !important; }
+  body .hero .actions { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 9px !important; }
+  body .hero .actions .btn { min-height: 49px !important; padding-inline: 10px !important; font-size: 12px !important; }
+  body .hero .actions .hero-services-cta { grid-column: 1 / -1 !important; }
+  body .hero .hero-card { padding: 22px !important; border-radius: 4px 20px 4px 20px !important; }
+  body .hero .hero-card .quick { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 6px !important; }
+  body .hero .hero-card .quick a { min-height: 39px !important; padding: 7px 3px !important; font-size: 10px !important; }
+}
+@media (max-width: 360px) {
+  body .hero .actions { grid-template-columns: 1fr !important; }
+  body .hero .actions .hero-services-cta { grid-column: auto !important; }
+  body .hero .hero-card .quick { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
