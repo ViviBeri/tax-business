@@ -847,3 +847,93 @@ body .hero > .hero-illustration {
   body .hero .actions .hero-services-cta { grid-column: auto !important; }
   body .hero .hero-card .quick { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
+
+/* Restore the editorial service imagery over the older generic tile reset. */
+body #services #serviceTiles > .tile {
+  min-height: 286px !important;
+  padding: 158px 22px 22px !important;
+  justify-content: flex-start !important;
+  gap: 9px !important;
+  border: 1px solid rgba(16,40,63,.12) !important;
+  border-radius: 3px 20px 3px 20px !important;
+  background: #fff !important;
+  box-shadow: 0 12px 30px rgba(10,27,46,.07) !important;
+}
+body #services #serviceTiles > .tile::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 0 auto !important;
+  width: 100% !important;
+  height: 145px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: #e8eff2 !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: cover !important;
+  opacity: 1 !important;
+}
+body #services #serviceTiles > .tile.tile--gst::before { background-image: url("../assets/visuals/service-gst.jpg") !important; }
+body #services #serviceTiles > .tile.tile--itr::before { background-image: url("../assets/visuals/service-itr.jpg") !important; }
+body #services #serviceTiles > .tile.tile--fssai::before { background-image: url("../assets/visuals/service-fssai.jpg") !important; }
+body #services #serviceTiles > .tile.tile--pan::before { background-image: url("../assets/visuals/service-pan.jpg") !important; }
+body #services #serviceTiles > .tile.tile--msme::before { background-image: url("../assets/visuals/service-msme.jpg") !important; }
+body #services #serviceTiles > .tile.tile--tm::before { background-image: url("../assets/visuals/service-trademark.jpg") !important; }
+body #services #serviceTiles > .tile.tile--dsc::before { background-image: url("../assets/visuals/service-dsc.jpg") !important; }
+body #services #serviceTiles > .tile.tile--biz::before { background-image: url("../assets/visuals/service-business-registration.jpg") !important; }
+body #services #serviceTiles > .tile::after {
+  display: block !important;
+  content: "" !important;
+  position: absolute !important;
+  left: 22px !important;
+  bottom: 0 !important;
+  width: 34px !important;
+  height: 3px !important;
+  background: var(--kvb-premium-brass) !important;
+}
+body #services #serviceTiles > .tile .tile-ico {
+  position: absolute !important;
+  z-index: 1 !important;
+  top: 12px !important;
+  left: 12px !important;
+  width: 38px !important;
+  height: 38px !important;
+  margin: 0 !important;
+  border: 1px solid rgba(16,40,63,.1) !important;
+  border-radius: 3px 12px 3px 12px !important;
+  background: rgba(255,255,255,.95) !important;
+  color: #147a80 !important;
+  box-shadow: 0 5px 15px rgba(10,27,46,.1) !important;
+}
+body #services #serviceTiles > .tile small {
+  color: #637786 !important;
+  font-size: 10px !important;
+  letter-spacing: .07em !important;
+  line-height: 1.4 !important;
+  text-transform: uppercase !important;
+}
+@media (max-width: 600px) {
+  body #services #serviceTiles > .tile {
+    min-height: 218px !important;
+    padding: 122px 15px 18px !important;
+    gap: 8px !important;
+  }
+  body #services #serviceTiles > .tile::before { height: 108px !important; }
+  body #services #serviceTiles > .tile::after { left: 15px !important; }
+  body #services #serviceTiles > .tile .tile-ico {
+    top: 9px !important;
+    left: 9px !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+  body #services #serviceTiles > .tile b { font-size: 14px !important; }
+  body #services #serviceTiles > .tile small { font-size: 9px !important; }
+}
+@media (max-width: 380px) {
+  body #services #serviceTiles > .tile {
+    min-height: 200px !important;
+    padding-top: 116px !important;
+  }
+  body #services #serviceTiles > .tile::before { height: 102px !important; }
+}
