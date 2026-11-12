@@ -1332,3 +1332,15 @@ body #services #serviceTiles > .tile::before {
     background-position: center center !important;
   }
 }
+
+
+/* Tamil industry chips are direct spans, not links. Keep their text readable in dark-mode browsers. */
+@media (prefers-color-scheme: dark) {
+  #business .chips > span {
+    color: #203747 !important;
+    -webkit-text-fill-color: #203747 !important;
+    opacity: 1 !important;
+    background: #fffdf8 !important;
+    border-color: #d8e1e5 !important;
+  }
+}
