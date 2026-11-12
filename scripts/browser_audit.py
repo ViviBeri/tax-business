@@ -244,9 +244,7 @@ with sync_playwright() as playwright:
         page = browser.new_page(viewport={"width": 390, "height": 844})
         label = f"enquiry-form-{language}"
         try:
-            page.add_init_script("""() => {
-                window.open = (url) => { window.__capturedWhatsAppUrl = url; return {}; };
-            }""")
+            page.add_init_script("""window.open = (url) => { window.__capturedWhatsAppUrl = url; return {}; };""")
             response = page.goto(f"{BASE_URL}{route}", wait_until="domcontentloaded", timeout=30000)
             if response is None or response.status >= 400:
                 failures.append(f"{label}: homepage did not load")
