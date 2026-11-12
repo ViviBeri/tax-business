@@ -1790,3 +1790,18 @@ body #contact .contact-box :is(input, select, textarea):focus-visible {
   outline-offset: 2px !important;
   border-color: #a8ff00 !important;
 }
+
+
+/* Contact form WhatsApp submit button: enforce dark, readable text and icon. */
+body #contact .contact-box button.btn.primary,
+body #contact .contact-box button.btn.primary span,
+body #contact .contact-box button.btn.primary svg {
+  color: #172000 !important;
+  -webkit-text-fill-color: #172000 !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
+body #contact .contact-box button.btn.primary {
+  background: #a8ff00 !important;
+  border-color: #a8ff00 !important;
+}
