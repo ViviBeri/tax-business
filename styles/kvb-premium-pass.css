@@ -1632,3 +1632,33 @@ body :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible 
 @media (prefers-color-scheme: light) {
   html, body { color-scheme: dark !important; }
 }
+
+
+/* Improve contrast for the business resources section heading and cards. */
+body #tools .section-head h2,
+body section#tools .section-head h2 {
+  color: #a8ff00 !important;
+  -webkit-text-fill-color: #a8ff00 !important;
+  opacity: 1 !important;
+  text-shadow: 0 2px 18px rgba(168,255,0,.18) !important;
+}
+body #tools .section-head {
+  opacity: 1 !important;
+}
+body #tools .tool-grid > div {
+  background: #141719 !important;
+  border: 1px solid #4a5258 !important;
+}
+body #tools .tool-grid h3 {
+  color: #d9dde0 !important;
+  -webkit-text-fill-color: #d9dde0 !important;
+}
+body #tools .tool-grid p {
+  color: #b7bec4 !important;
+  -webkit-text-fill-color: #b7bec4 !important;
+}
+body #tools .tool-grid a {
+  color: #a8ff00 !important;
+  -webkit-text-fill-color: #a8ff00 !important;
+  font-weight: 700 !important;
+}
