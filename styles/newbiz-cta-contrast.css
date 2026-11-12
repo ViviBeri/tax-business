@@ -1,0 +1,20 @@
+/* Keep the Talk to Vivian CTA readable on the dark business callout. */
+body #business .newbiz > a.btn.primary,
+body #business .newbiz > a.btn.primary span,
+body #business .newbiz > a.btn.primary svg {
+  color: #172000 !important;
+  -webkit-text-fill-color: #172000 !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
+body #business .newbiz > a.btn.primary {
+  background: #a8ff00 !important;
+  border: 1px solid #a8ff00 !important;
+}
+body #business .newbiz > a.btn.primary:hover,
+body #business .newbiz > a.btn.primary:focus-visible {
+  color: #0b0d0e !important;
+  -webkit-text-fill-color: #0b0d0e !important;
+  background: #c4ff42 !important;
+  border-color: #c4ff42 !important;
+}
