@@ -176,10 +176,72 @@ with sync_playwright() as playwright:
             finally:
                 page.close()
             print(f"{label}: checked {url}")
+    # Verify calculations using known, deterministic values. These checks
+    # exercise the deployed JavaScript rather than only checking page layout.
+    for tool in ("gst-calculator", "invoice-generator", "quotation-generator"):
+        page = browser.new_page(viewport={"width": 390, "height": 844})
+        label = f"functional-{tool}"
+        page.on("pageerror", lambda error, view=label: failures.append(f"{view}: page error: {error}"))
+        try:
+            response = page.goto(
+                f"{BASE_URL.rstrip('/')}/tools/{tool}.html",
+                wait_until="domcontentloaded",
+                timeout=30000,
+            )
+            if response is None or response.status >= 400:
+                failures.append(f"{label}: tool did not load")
+                continue
+            if tool == "gst-calculator":
+                page.locator("#amt").fill("1000")
+                page.locator("#rate").select_option("18")
+                page.locator("#mode").select_option("exclusive")
+                page.get_by_role("button", name="Calculate").click()
+                result = page.locator("#out").inner_text()
+                if not all(value in result for value in ("1,000.00", "180.00", "1,180.00")):
+                    # The GST calculator formats numbers without grouping.
+                    if not all(value in result for value in ("1000.00", "180.00", "1180.00")):
+                        failures.append(f"{label}: exclusive GST calculation incorrect: {result}")
+                page.locator("#mode").select_option("inclusive")
+                page.locator("#amt").fill("1180")
+                page.get_by_role("button", name="Calculate").click()
+                result = page.locator("#out").inner_text()
+                if not all(value in result for value in ("1000.00", "180.00", "1180.00")):
+                    failures.append(f"{label}: inclusive GST calculation incorrect: {result}")
+            elif tool == "invoice-generator":
+                page.locator("#items tr").first.locator(".qty").fill("2")
+                page.locator("#items tr").first.locator(".rate").fill("500")
+                page.locator("#items tr").first.locator(".gst").select_option("18")
+                page.locator("#taxMode").select_option("intra")
+                grand = page.locator("#pGrand").inner_text()
+                cgst = page.locator("#pCgst").inner_text()
+                sgst = page.locator("#pSgst").inner_text()
+                if "1,180.00" not in grand or "90.00" not in cgst or "90.00" not in sgst:
+                    failures.append(f"{label}: intra-state calculation incorrect: {grand}, {cgst}, {sgst}")
+                page.locator("#taxMode").select_option("inter")
+                igst = page.locator("#pIgst").inner_text()
+                if "180.00" not in igst or "1,180.00" not in page.locator("#pGrand").inner_text():
+                    failures.append(f"{label}: inter-state calculation incorrect: {igst}")
+            else:
+                page.locator("#rows tr").first.locator(".q").fill("2")
+                page.locator("#rows tr").first.locator(".r").fill("500")
+                page.locator("#rows tr").first.locator(".g").select_option("18")
+                result = page.locator("#total").inner_text()
+                if "1,180.00" not in result or "180.00" not in result:
+                    failures.append(f"{label}: exclusive calculation incorrect: {result}")
+                page.locator("#basis").select_option("inclusive")
+                page.locator("#rows tr").first.locator(".r").fill("590")
+                result = page.locator("#total").inner_text()
+                if "1,180.00" not in result or "180.00" not in result:
+                    failures.append(f"{label}: inclusive calculation incorrect: {result}")
+            print(f"{label}: checked")
+        except Exception as error:
+            failures.append(f"{label}: interaction failed: {error}")
+        finally:
+            page.close()
     browser.close()
 
 if failures:
     print("\n".join(f"FAIL: {failure}" for failure in failures))
     raise SystemExit(1)
 
-print(f"Browser audit passed for {len(urls)} sitemap URLs at desktop and mobile widths, plus detailed homepage checks.")
+print(f"Browser audit passed for {len(urls)} sitemap URLs at desktop and mobile widths, plus detailed homepage and calculator checks.")
