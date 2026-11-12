@@ -7,6 +7,7 @@ in their initial hidden state.
 """
 import os
 from pathlib import Path
+from xml.etree import ElementTree
 
 from playwright.sync_api import sync_playwright
 
@@ -134,10 +135,51 @@ with sync_playwright() as playwright:
 
             page.screenshot(path=str(OUTPUT / f"{label}.png"), full_page=True)
             page.close()
+
+    # Smoke-test every sitemap URL at desktop and mobile widths. The detailed
+    # reveal/image checks above remain focused on the two homepages.
+    sitemap = ElementTree.parse("sitemap.xml").getroot()
+    namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    urls = [node.text for node in sitemap.findall("sm:url/sm:loc", namespace) if node.text]
+    print(f"Running responsive smoke checks for {len(urls)} sitemap URLs")
+    for index, url in enumerate(urls, start=1):
+        for name, width, height in [("desktop", 1440, 900), ("mobile", 390, 844)]:
+            label = f"sitemap-{index}-{name}"
+            page = browser.new_page(
+                viewport={"width": width, "height": height},
+                device_scale_factor=1,
+                is_mobile=name == "mobile",
+                has_touch=name == "mobile",
+            )
+            page.on("pageerror", lambda error, view=label: failures.append(f"{view}: page error: {error}"))
+            try:
+                response = page.goto(url, wait_until="domcontentloaded", timeout=20000)
+                if response is None or response.status >= 400:
+                    failures.append(f"{label}: {url} returned {response.status if response else 'no response'}")
+                else:
+                    metrics = page.evaluate("""() => ({
+                        title: document.title.trim(),
+                        h1: document.querySelectorAll("h1").length,
+                        width: document.documentElement.clientWidth,
+                        scrollWidth: document.documentElement.scrollWidth
+                    })""")
+                    if not metrics["title"]:
+                        failures.append(f"{label}: missing title at {url}")
+                    if metrics["h1"] != 1:
+                        failures.append(f"{label}: expected one h1, found {metrics['h1']} at {url}")
+                    if metrics["scrollWidth"] > metrics["width"] + 2:
+                        failures.append(
+                            f"{label}: horizontal overflow ({metrics['scrollWidth']} > {metrics['width']}) at {url}"
+                        )
+            except Exception as error:
+                failures.append(f"{label}: failed to load {url}: {error}")
+            finally:
+                page.close()
+            print(f"{label}: checked {url}")
     browser.close()
 
 if failures:
     print("\n".join(f"FAIL: {failure}" for failure in failures))
     raise SystemExit(1)
 
-print("Browser audit passed for English and Tamil homepages on desktop and mobile.")
+print(f"Browser audit passed for {len(urls)} sitemap URLs at desktop and mobile widths, plus detailed homepage checks.")
