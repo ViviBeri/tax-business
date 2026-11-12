@@ -3,9 +3,14 @@ name: Deployed browser visual audit
 on:
   push:
     branches:
+      - main
       - redesign
     paths:
       - "scripts/browser_audit.py"
+      - "styles/**"
+      - "site-quality-fix.css"
+      - "homepage-redesign.css"
+      - "_builder/**"
       - ".github/workflows/browser-visual-audit.yml"
   workflow_dispatch:
   schedule:
