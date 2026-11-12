@@ -91,8 +91,12 @@ jobs:
                   "",
                   source,
               )
+              source = re.sub(r'<meta http-equiv="Content-Security-Policy"[^>]*>', "", source, flags=re.IGNORECASE)
+              source = re.sub(r'<meta name="referrer"[^>]*>', "", source, flags=re.IGNORECASE)
               source = source.replace(
                   "</head>",
+                  '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; base-uri \'self\'; object-src \'none\'; script-src \'self\' \'unsafe-inline\' https://www.googletagmanager.com https://cdn.jsdelivr.net; connect-src \'self\' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; img-src \'self\' data: blob: https:; style-src \'self\' \'unsafe-inline\' https:; font-src \'self\' data: https:; form-action \'self\' https://wa.me; upgrade-insecure-requests">'
+                  '<meta name="referrer" content="strict-origin-when-cross-origin">'
                   f'<link rel="stylesheet" href="{quality_href}?v=5">'
                   f'<link rel="stylesheet" href="{taste_href}?v=2">'
                   f'<link rel="stylesheet" href="{premium_href}?v=11"></head>',
