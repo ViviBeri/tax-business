@@ -1344,3 +1344,156 @@ body #services #serviceTiles > .tile::before {
     border-color: #d8e1e5 !important;
   }
 }
+
+
+/* KVB colour system — Stealth Black 60 / Titanium Grey 30 / Venom Green 10.
+   Keep green as a deliberate accent for actions, focus states and key details. */
+:root {
+  color-scheme: dark;
+  --kvb-stealth: #0b0d0e;
+  --kvb-stealth-raised: #141719;
+  --kvb-titanium: #aeb4ba;
+  --kvb-titanium-soft: #d9dde0;
+  --kvb-titanium-muted: #7d858c;
+  --kvb-titanium-line: #343a3f;
+  --kvb-venom: #a8ff00;
+  --kvb-venom-deep: #78bd00;
+  --kvb-venom-ink: #172000;
+  --kvb-premium-paper: var(--kvb-stealth);
+  --kvb-premium-ink: var(--kvb-titanium-soft);
+  --kvb-premium-muted: var(--kvb-titanium-muted);
+  --kvb-premium-line: var(--kvb-titanium-line);
+}
+html, body {
+  color-scheme: dark;
+  background: var(--kvb-stealth);
+  color: var(--kvb-titanium-soft);
+}
+body { background-image: none; }
+.topbar {
+  color: var(--kvb-titanium-soft);
+  background: rgba(11,13,14,.96);
+  border-color: var(--kvb-titanium-line);
+  box-shadow: 0 8px 28px rgba(0,0,0,.32);
+}
+.brand, .brand span, .topbar nav a, .lang, .menu {
+  color: var(--kvb-titanium-soft);
+}
+.brand b, .topbar nav a:hover { color: var(--kvb-venom); }
+.lang, .menu {
+  background: var(--kvb-stealth-raised);
+  border-color: var(--kvb-titanium-line);
+}
+.hero {
+  color: var(--kvb-titanium-soft);
+  background:
+    radial-gradient(ellipse at 82% 18%, rgba(168,255,0,.10), transparent 30%),
+    linear-gradient(118deg, #080a0b 0%, #111517 64%, #202529 100%);
+}
+.hero .eyebrow, .hero h1 .hero-title-accent { color: var(--kvb-venom); }
+.hero .eyebrow:before { background: var(--kvb-venom); }
+.hero .lead, .hero .trust { color: #c0c6ca; }
+.hero .btn.primary {
+  color: var(--kvb-venom-ink);
+  background: linear-gradient(135deg, #c4ff42, var(--kvb-venom) 62%, #8ed900);
+  border-color: transparent;
+  box-shadow: 0 12px 28px rgba(168,255,0,.16);
+}
+.hero .btn.secondary {
+  color: var(--kvb-titanium-soft);
+  background: rgba(174,180,186,.07);
+  border-color: rgba(174,180,186,.38);
+}
+.hero-card {
+  color: var(--kvb-titanium-soft);
+  background: linear-gradient(145deg, #202629, #111517 76%);
+  border-color: #555e64;
+  box-shadow: 0 30px 72px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.hero-card:before { border-color: rgba(168,255,0,.38); }
+.hero-card .quick a {
+  color: var(--kvb-titanium-soft);
+  background: rgba(174,180,186,.07);
+  border-color: rgba(174,180,186,.2);
+}
+.hero-card .quick a:hover {
+  color: var(--kvb-venom);
+  border-color: rgba(168,255,0,.65);
+  background: rgba(168,255,0,.08);
+}
+.hero-card .mini-number, .hero-card .mini strong { color: var(--kvb-venom); }
+:where(.section, .section.alt, #services, #how, #business, #locations, #tools,
+       .proof, .proof-strip, .clients) {
+  color: var(--kvb-titanium-soft);
+  background: var(--kvb-stealth);
+}
+:where(.section-head h2, #about h2, .faq .section-head h2,
+       .service-page h1, .service-page h2, .tool-page h1, .legal h1) {
+  color: var(--kvb-titanium-soft);
+}
+:where(.section-head p, .service-page p, .service-page li, .tool-page p,
+       .tool-page li, .about-grid p, .service-card p, .step p,
+       .about-points span, .faq-list p) { color: var(--kvb-titanium-muted); }
+:where(.service-card, .tool-grid > div, .about-points > div, .faq-list details,
+       .step, .location-card, .panel, .calculator, .contact-box, .locations a) {
+  color: var(--kvb-titanium-soft);
+  background: var(--kvb-stealth-raised);
+  border-color: var(--kvb-titanium-line);
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+:where(.service-card h3, .tool-grid h3, .about-points b, .faq-list summary,
+       .step h3, .locations a) { color: var(--kvb-titanium-soft); }
+:where(.service-card span, .service-page .back, .tool-grid a,
+       .related a, .locations a:hover, .proof-main strong) { color: var(--kvb-venom); }
+:where(.chips span, .proof-chip) {
+  color: var(--kvb-titanium-soft);
+  background: #202629;
+  border-color: var(--kvb-titanium-line);
+}
+.newbiz, .contact, .strip, footer {
+  color: var(--kvb-titanium-soft);
+  background: #080a0b;
+  border-color: var(--kvb-titanium-line);
+}
+.newbiz .eyebrow, .strip strong { color: var(--kvb-venom); }
+.contact-box { background: #171b1e; border-color: #454d53; }
+:where(input, select, textarea, .contact-box input, .contact-box select,
+       .contact-box textarea, .calculator input, .calculator select) {
+  color: var(--kvb-titanium-soft);
+  background: #0d1012;
+  border-color: #4a5258;
+}
+:where(input, select, textarea)::placeholder { color: var(--kvb-titanium-muted); }
+:where(.btn.primary, .contact-box .btn, .contact-box .btn.primary,
+       .calculator .btn, .btn-primary) {
+  color: var(--kvb-venom-ink);
+  background: var(--kvb-venom);
+  border-color: var(--kvb-venom);
+}
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--kvb-venom);
+  outline-offset: 3px;
+}
+#kvb-progress, .kvb-scroll-progress {
+  background: var(--kvb-venom);
+  box-shadow: 0 0 12px rgba(168,255,0,.35);
+}
+.floating-wa { box-shadow: 0 8px 24px rgba(0,0,0,.42); }
+@media (prefers-color-scheme: dark) {
+  body { background: var(--kvb-stealth); color: var(--kvb-titanium-soft); }
+  :where(.section-head h2, #about h2, .faq .section-head h2,
+         .service-page h1, .service-page h2, .tool-page h1, .legal h1,
+         .service-card h3, .tool-grid h3, .about-points b, .faq-list summary) {
+    color: var(--kvb-titanium-soft) !important;
+    -webkit-text-fill-color: var(--kvb-titanium-soft) !important;
+  }
+  :where(.section-head p, .service-page p, .service-page li, .tool-page p,
+         .tool-page li, .about-grid p, .service-card p, .step p,
+         .about-points span, .faq-list p) { color: var(--kvb-titanium-muted) !important; }
+  :where(.service-card, .tool-grid > div, .about-points > div, .faq-list details,
+         .step, .location-card, .panel, .calculator, .contact-box, .locations a) {
+    background: var(--kvb-stealth-raised) !important;
+    color: var(--kvb-titanium-soft) !important;
+    border-color: var(--kvb-titanium-line) !important;
+  }
+}
