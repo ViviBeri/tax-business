@@ -100,6 +100,8 @@ jobs:
                   '<meta name="referrer" content="strict-origin-when-cross-origin">',
                   1,
               )
+              source = source.replace(
+                  "</head>",
                   f'<link rel="stylesheet" href="{quality_href}?v=5">'
                   f'<link rel="stylesheet" href="{taste_href}?v=2">'
                   f'<link rel="stylesheet" href="{premium_href}?v=11"></head>',
