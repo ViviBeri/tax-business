@@ -238,6 +238,43 @@ with sync_playwright() as playwright:
             failures.append(f"{label}: interaction failed: {error}")
         finally:
             page.close()
+    # Validate the enquiry form and capture its WhatsApp hand-off without
+    # opening an external chat or sending any message during CI.
+    for route, language in (("", "en"), ("ta/", "ta")):
+        page = browser.new_page(viewport={"width": 390, "height": 844})
+        label = f"enquiry-form-{language}"
+        try:
+            page.add_init_script("""() => {
+                window.open = (url) => { window.__capturedWhatsAppUrl = url; return {}; };
+            }""")
+            response = page.goto(f"{BASE_URL}{route}", wait_until="domcontentloaded", timeout=30000)
+            if response is None or response.status >= 400:
+                failures.append(f"{label}: homepage did not load")
+                continue
+            form = page.locator("#enquiryForm")
+            if form.count() != 1:
+                failures.append(f"{label}: enquiry form missing")
+                continue
+            page.locator('#enquiryForm [name="name"]').fill("Test Customer")
+            page.locator('#enquiryForm [name="phone"]').fill("9876543210")
+            page.locator('#enquiryForm [name="service"]').select_option(label="GST Registration" if language == "en" else "GST பதிவு")
+            page.locator('#enquiryForm [name="message"]').fill("Automated test enquiry")
+            page.locator('#enquiryForm button[type="submit"]').click()
+            page.wait_for_timeout(150)
+            captured = page.evaluate("() => window.__capturedWhatsAppUrl || ''")
+            from urllib.parse import parse_qs, urlparse
+            parsed = urlparse(captured)
+            query = parse_qs(parsed.query)
+            message = query.get("text", [""])[0]
+            if parsed.netloc != "wa.me" or parsed.path != "/919003633696":
+                failures.append(f"{label}: form did not prepare the expected WhatsApp destination")
+            if not all(value in message for value in ("Test Customer", "9876543210", "Automated test enquiry")):
+                failures.append(f"{label}: enquiry details missing from WhatsApp message")
+            print(f"{label}: checked")
+        except Exception as error:
+            failures.append(f"{label}: interaction failed: {error}")
+        finally:
+            page.close()
     browser.close()
 
 if failures:
