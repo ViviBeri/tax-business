@@ -1681,3 +1681,74 @@ body .topbar .brand small {
   -webkit-text-fill-color: #526174 !important;
   opacity: 1 !important;
 }
+
+
+/* High-contrast section treatment: Services and Who We Help. */
+body #services,
+body #business {
+  background: #0b0d0e !important;
+  color: #d9dde0 !important;
+}
+body #services .section-head h2,
+body #business .section-head h2 {
+  color: #f1f4f6 !important;
+  -webkit-text-fill-color: #f1f4f6 !important;
+  opacity: 1 !important;
+  text-shadow: 0 2px 18px rgba(217,221,224,.12) !important;
+}
+body #services .section-head p,
+body #business .section-head p {
+  color: #bfc6cc !important;
+  -webkit-text-fill-color: #bfc6cc !important;
+  opacity: 1 !important;
+}
+body #business .chips a span,
+body #business .chips a span *,
+body #business .chips > span {
+  color: #e3e7ea !important;
+  -webkit-text-fill-color: #e3e7ea !important;
+  background: #171b1e !important;
+  border: 1px solid #41494f !important;
+  opacity: 1 !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.24) !important;
+}
+body #business .chips a span::before {
+  color: #a8ff00 !important;
+  border-color: #a8ff00 !important;
+}
+body #business .chips a:hover span,
+body #business .chips a:focus-visible span {
+  color: #a8ff00 !important;
+  -webkit-text-fill-color: #a8ff00 !important;
+  border-color: #a8ff00 !important;
+  background: #202629 !important;
+}
+body #business .newbiz {
+  color: #e3e7ea !important;
+  background: linear-gradient(125deg,#141719 0%,#202629 100%) !important;
+  border: 1px solid #4a5258 !important;
+  box-shadow: 0 16px 36px rgba(0,0,0,.34) !important;
+}
+body #business .newbiz h3,
+body #business .newbiz p,
+body #business .newbiz li {
+  color: #e3e7ea !important;
+  -webkit-text-fill-color: #e3e7ea !important;
+  opacity: 1 !important;
+}
+body #business .newbiz h3 {
+  color: #a8ff00 !important;
+  -webkit-text-fill-color: #a8ff00 !important;
+}
+body #business .newbiz .eyebrow,
+body #business .newbiz .nb-list li::marker {
+  color: #a8ff00 !important;
+}
+body #services .tile b {
+  color: #f1f4f6 !important;
+  -webkit-text-fill-color: #f1f4f6 !important;
+}
+body #services .tile small {
+  color: #bfc6cc !important;
+  -webkit-text-fill-color: #bfc6cc !important;
+}
