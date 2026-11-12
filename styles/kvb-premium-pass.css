@@ -1886,3 +1886,43 @@ body #locations .location-card--featured:focus-visible .location-card__icon {
   background: #c4ff42 !important;
   border-color: #c4ff42 !important;
 }
+
+
+/* Integrate the hero contact number into the card's visual system. */
+body .hero-card .mini {
+  display: grid;
+  gap: 6px;
+  margin-top: 20px;
+  padding: 14px 16px;
+  border: 1px solid rgba(168,255,0,.24);
+  border-left: 3px solid #a8ff00;
+  border-radius: 3px 12px 3px 12px;
+  background: rgba(168,255,0,.07);
+}
+body .hero-card .mini-label {
+  color: #bfc6cc !important;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+body .hero-card .mini-number {
+  display: inline-flex;
+  width: fit-content;
+  color: #a8ff00 !important;
+  -webkit-text-fill-color: #a8ff00 !important;
+  font-size: clamp(20px,2.2vw,25px);
+  font-weight: 750;
+  letter-spacing: .015em;
+  line-height: 1.25;
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+body .hero-card .mini-number:hover,
+body .hero-card .mini-number:focus-visible {
+  color: #c4ff42 !important;
+  -webkit-text-fill-color: #c4ff42 !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
