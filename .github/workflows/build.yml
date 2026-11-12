@@ -109,7 +109,7 @@ jobs:
               )
               if ("site-quality-fix.css?v=5" not in source
                       or "taste-direction.css?v=2" not in source
-                      or "kvb-premium-pass.css?v=12" not in source):
+                      or "kvb-premium-pass.css?v=13" not in source):
                   raise SystemExit(f"Required visual stylesheets missing from {path}")
               path.write_text(source, encoding="utf-8")
           PY
