@@ -1856,3 +1856,15 @@ body #locations .location-card__arrow {
 body #locations .location-note {
   background: #202529 !important; border-color: #4a5258 !important;
 }
+
+
+/* Featured Puducherry location accent for clearer visual hierarchy. */
+body #locations .location-card--featured .location-card__copy strong {
+  color: #a8ff00 !important;
+  -webkit-text-fill-color: #a8ff00 !important;
+}
+body #locations .location-card--featured:hover .location-card__copy strong,
+body #locations .location-card--featured:focus-visible .location-card__copy strong {
+  color: #c4ff42 !important;
+  -webkit-text-fill-color: #c4ff42 !important;
+}
