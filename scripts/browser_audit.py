@@ -273,6 +273,32 @@ with sync_playwright() as playwright:
             failures.append(f"{label}: interaction failed: {error}")
         finally:
             page.close()
+    # Check the mobile navigation's open, Escape-close and link-close paths.
+    for route, language in (("", "en"), ("ta/", "ta")):
+        page = browser.new_page(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
+        label = f"mobile-menu-{language}"
+        try:
+            response = page.goto(f"{BASE_URL}{route}", wait_until="domcontentloaded", timeout=30000)
+            if response is None or response.status >= 400:
+                failures.append(f"{label}: homepage did not load")
+                continue
+            menu = page.locator("#menuBtn")
+            nav = page.locator("#mainNav")
+            menu.click()
+            if menu.get_attribute("aria-expanded") != "true" or "is-open" not in (nav.get_attribute("class") or ""):
+                failures.append(f"{label}: menu did not open")
+            page.keyboard.press("Escape")
+            if menu.get_attribute("aria-expanded") != "false" or "is-open" in (nav.get_attribute("class") or ""):
+                failures.append(f"{label}: Escape did not close the menu")
+            menu.click()
+            nav.locator("a").first.click()
+            if menu.get_attribute("aria-expanded") != "false" or "is-open" in (nav.get_attribute("class") or ""):
+                failures.append(f"{label}: selecting a navigation link did not close the menu")
+            print(f"{label}: checked")
+        except Exception as error:
+            failures.append(f"{label}: interaction failed: {error}")
+        finally:
+            page.close()
     browser.close()
 
 if failures:
