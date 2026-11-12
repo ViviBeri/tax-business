@@ -257,7 +257,7 @@ with sync_playwright() as playwright:
                 continue
             page.locator('#enquiryForm [name="name"]').fill("Test Customer")
             page.locator('#enquiryForm [name="phone"]').fill("9876543210")
-            page.locator('#enquiryForm [name="service"]').select_option(label="GST Registration" if language == "en" else "GST பதிவு")
+            page.locator('#enquiryForm [name="service"]').select_option(label="GST Registration")
             page.locator('#enquiryForm [name="message"]').fill("Automated test enquiry")
             page.locator('#enquiryForm button[type="submit"]').click()
             page.wait_for_timeout(150)
