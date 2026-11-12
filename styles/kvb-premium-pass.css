@@ -1868,3 +1868,21 @@ body #locations .location-card--featured:focus-visible .location-card__copy stro
   color: #c4ff42 !important;
   -webkit-text-fill-color: #c4ff42 !important;
 }
+
+
+/* Give the featured Puducherry map pin a distinct, high-contrast treatment. */
+body #locations .location-card--featured .location-card__icon {
+  color: #172000 !important;
+  -webkit-text-fill-color: #172000 !important;
+  background: #a8ff00 !important;
+  border-color: #a8ff00 !important;
+}
+body #locations .location-card--featured .location-card__icon svg {
+  color: #172000 !important;
+  stroke: #172000 !important;
+}
+body #locations .location-card--featured:hover .location-card__icon,
+body #locations .location-card--featured:focus-visible .location-card__icon {
+  background: #c4ff42 !important;
+  border-color: #c4ff42 !important;
+}
