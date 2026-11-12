@@ -1662,3 +1662,22 @@ body #tools .tool-grid a {
   -webkit-text-fill-color: #a8ff00 !important;
   font-weight: 700 !important;
 }
+
+
+/* Header wordmark: keep both name lines equally dark on the light header. */
+body .topbar .brand,
+body .topbar .brand span,
+body .topbar .brand b {
+  color: #101827 !important;
+  -webkit-text-fill-color: #101827 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+body .topbar .brand b {
+  font-weight: 800 !important;
+}
+body .topbar .brand small {
+  color: #526174 !important;
+  -webkit-text-fill-color: #526174 !important;
+  opacity: 1 !important;
+}
