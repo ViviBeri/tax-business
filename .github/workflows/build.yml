@@ -96,7 +96,7 @@ jobs:
               source = source.replace(
                   "<head>",
                   "<head>"
-                  '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; base-uri \'self\'; object-src \'none\'; script-src \'self\' \'unsafe-inline\' https://www.googletagmanager.com https://cdn.jsdelivr.net; connect-src \'self\' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; img-src \'self\' data: blob: https:; style-src \'self\' \'unsafe-inline\' https:; font-src \'self\' data: https:; form-action \'self\' https://wa.me; upgrade-insecure-requests">'
+                  '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; base-uri \'self\'; object-src \'none\'; script-src \'self\' \'unsafe-inline\' https://www.googletagmanager.com https://cdn.jsdelivr.net; connect-src \'self\' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; img-src \'self\' data: blob: https:; style-src \'self\' \'unsafe-inline\' https:; font-src \'self\' data: https:; form-action \'self\' https://wa.me; frame-src \'none\'; worker-src \'self\' blob:; manifest-src \'self\'; media-src \'self\'; upgrade-insecure-requests">'
                   '<meta name="referrer" content="strict-origin-when-cross-origin">',
                   1,
               )
@@ -112,6 +112,40 @@ jobs:
                       or "kvb-premium-pass.css?v=11" not in source):
                   raise SystemExit(f"Required visual stylesheets missing from {path}")
               path.write_text(source, encoding="utf-8")
+          PY
+      - name: Verify generated security policy
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          pages = list(Path('.').rglob('*.html'))
+          if not pages:
+              raise SystemExit('No generated HTML pages found')
+          for path in pages:
+              if '.git' in path.parts:
+                  continue
+              html = path.read_text(encoding='utf-8')
+              head = html.lower().find('<head>')
+              csp = html.find('http-equiv="Content-Security-Policy"')
+              script = html.lower().find('<script')
+              if head < 0 or csp < head or (script >= 0 and csp > script):
+                  raise SystemExit(f'CSP missing or appears after scripts: {path}')
+              if html.count('http-equiv="Content-Security-Policy"') != 1:
+                  raise SystemExit(f'Expected exactly one CSP: {path}')
+              if 'frame-src \'none\'' not in html or 'object-src \'none\'' not in html:
+                  raise SystemExit(f'Required restrictive CSP directives missing: {path}')
+              if re.search(r'(?:src|href)="http://', html, re.IGNORECASE):
+                  raise SystemExit(f'Insecure HTTP resource URL found: {path}')
+
+          security = Path('.well-known/security.txt')
+          if not security.is_file():
+              raise SystemExit('Missing .well-known/security.txt')
+          content = security.read_text(encoding='utf-8')
+          for field in ('Contact:', 'Expires:', 'Canonical:', 'Policy:'):
+              if not re.search(rf'^{field}', content, re.MULTILINE):
+                  raise SystemExit(f'Missing {field} in security.txt')
+          print(f'Security policy validated across {len(pages)} HTML pages')
           PY
       - name: Commit generated site
         run: |
