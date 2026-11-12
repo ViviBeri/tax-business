@@ -1497,3 +1497,138 @@ body { background-image: none; }
     border-color: var(--kvb-titanium-line) !important;
   }
 }
+
+
+/* Final palette enforcement — override legacy page-specific and high-specificity themes. */
+:root {
+  color-scheme: dark !important;
+  --kvb-stealth: #0b0d0e;
+  --kvb-stealth-raised: #141719;
+  --kvb-titanium: #aeb4ba;
+  --kvb-titanium-soft: #d9dde0;
+  --kvb-titanium-muted: #929aa1;
+  --kvb-titanium-line: #343a3f;
+  --kvb-venom: #a8ff00;
+  --kvb-venom-deep: #78bd00;
+  --kvb-venom-ink: #172000;
+}
+html, body {
+  background: #0b0d0e !important;
+  color: #d9dde0 !important;
+}
+body :is(main, .main, .page, .page-content) {
+  color: #d9dde0;
+}
+body :is(.topbar, header.topbar, .nav-wrap) {
+  background: rgba(11,13,14,.98) !important;
+  border-color: #343a3f !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,.38) !important;
+}
+body :is(.brand, .brand span, .topbar nav a, .lang, .menu) {
+  color: #d9dde0 !important;
+}
+body .brand b,
+body .topbar nav a:hover,
+body .topbar nav a:focus-visible {
+  color: #a8ff00 !important;
+}
+body :is(.lang, .menu) {
+  background: #141719 !important;
+  border: 1px solid #343a3f !important;
+}
+body :is(.hero, section.hero, #why-kvb, body #why-kvb, #business .newbiz,
+         #contact.contact, .contact, footer, .newbiz) {
+  color: #d9dde0 !important;
+  background: radial-gradient(ellipse at 82% 18%, rgba(168,255,0,.09), transparent 32%),
+              linear-gradient(118deg,#080a0b 0%,#111517 66%,#202529 100%) !important;
+}
+body .hero :is(h1, h2, p, .lead, .trust) { color: #d9dde0; }
+body .hero :is(.eyebrow, h1 .hero-title-accent, .mini-number, .mini strong) {
+  color: #a8ff00 !important;
+}
+body :is(.section, .section.alt, #services, #how, #business, #locations, #tools,
+         .proof, .proof-strip, .clients, .faq, #about, #compliance-timeline) {
+  color: #d9dde0 !important;
+  background: #0b0d0e !important;
+}
+body :is(.section-head h2, #about h2, .faq .section-head h2, #compliance-timeline h2,
+         .service-page h1, .service-page h2, .tool-page h1, .legal h1) {
+  color: #d9dde0 !important;
+  -webkit-text-fill-color: #d9dde0 !important;
+}
+body :is(.section-head p, .service-page p, .service-page li, .tool-page p,
+         .tool-page li, .about-grid p, .service-card p, .step p,
+         .about-points span, .faq-list p) {
+  color: #929aa1 !important;
+  -webkit-text-fill-color: #929aa1 !important;
+}
+body :is(.service-card, .tool-grid > div, .about-points > div, .faq-list details,
+         .step, .location-card, .panel, .calculator, .contact-box, .locations a,
+         #services #serviceTiles > .tile, #services .tile) {
+  color: #d9dde0 !important;
+  background: #141719 !important;
+  border: 1px solid #343a3f !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,.28) !important;
+}
+body :is(.service-card h3, .tool-grid h3, .about-points b, .faq-list summary,
+         .step h3, .locations a, #services #serviceTiles > .tile b, #services .tile b) {
+  color: #d9dde0 !important;
+  -webkit-text-fill-color: #d9dde0 !important;
+}
+body :is(.service-card span, .service-page .back, .tool-grid a,
+         .related a, .locations a:hover, .proof-main strong,
+         #services .tile-ico, #services #serviceTiles .tile-ico) {
+  color: #a8ff00 !important;
+}
+body :is(.chips span, .proof-chip) {
+  color: #d9dde0 !important;
+  background: #202529 !important;
+  border-color: #343a3f !important;
+}
+body :is(.btn.primary, .contact-box .btn, .contact-box .btn.primary,
+         .calculator .btn, .btn-primary, #contact .contact-box .btn.primary) {
+  color: #172000 !important;
+  background: #a8ff00 !important;
+  border: 1px solid #a8ff00 !important;
+  box-shadow: 0 8px 24px rgba(168,255,0,.16) !important;
+}
+body :is(.btn.secondary, .mbar a:last-child) {
+  color: #d9dde0 !important;
+  background: #141719 !important;
+  border: 1px solid #555e64 !important;
+}
+body .mbar {
+  background: rgba(11,13,14,.98) !important;
+  border-color: #343a3f !important;
+  box-shadow: 0 -8px 28px rgba(0,0,0,.42) !important;
+}
+body .mbar a:first-child {
+  color: #172000 !important;
+  background: #a8ff00 !important;
+  border: 1px solid #a8ff00 !important;
+  box-shadow: 0 5px 16px rgba(168,255,0,.18) !important;
+}
+body .mbar a:last-child {
+  color: #d9dde0 !important;
+  background: #141719 !important;
+  border: 1px solid #555e64 !important;
+}
+body .floating-wa { filter: none !important; }
+body :is(input, select, textarea, .contact-box input, .contact-box select,
+         .contact-box textarea, .calculator input, .calculator select) {
+  color: #d9dde0 !important;
+  background: #0d1012 !important;
+  border-color: #4a5258 !important;
+}
+body :is(input, select, textarea)::placeholder { color: #929aa1 !important; }
+body :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #a8ff00 !important;
+  outline-offset: 3px !important;
+}
+#kvb-progress, .kvb-scroll-progress {
+  background: #a8ff00 !important;
+  box-shadow: 0 0 12px rgba(168,255,0,.35) !important;
+}
+@media (prefers-color-scheme: light) {
+  html, body { color-scheme: dark !important; }
+}
