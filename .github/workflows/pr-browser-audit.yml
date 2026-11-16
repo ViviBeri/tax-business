@@ -59,7 +59,7 @@ jobs:
           KVB_AUDIT_URL: http://127.0.0.1:8000/
       - name: Upload desktop and mobile screenshots
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: kvb-pr-browser-audit
           path: browser-audit/

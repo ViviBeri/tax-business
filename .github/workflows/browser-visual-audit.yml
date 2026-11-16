@@ -43,7 +43,7 @@ jobs:
         run: python scripts/browser_audit.py
       - name: Upload desktop and mobile screenshots
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: kvb-browser-audit
           path: browser-audit/
